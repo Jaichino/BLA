@@ -8,12 +8,14 @@ import psycopg2
 
 class BaseDatos:
 
+    # Se definen los atributos estáticos para realizar la conexión a la base de datos
     database = 'BLA'
     user = 'postgres'
     password = 'JuaniSQL'
     host = 'localhost'
     port = '5432'
 
+    # Función que se encarga de realizar la conexión a la base de datos mediante psycopg2.connect()
     @staticmethod
     def connect():
         try:
@@ -30,11 +32,14 @@ class BaseDatos:
             print(f'Error al conectar con la base de datos - {error}')
             raise
 
+    # Función para cerrar conexión
     @staticmethod
     def close(conn):
         if conn:
             conn.close()
-    
+            
+    # Función para realizar consultas SQL del modelo. En caso de que la consulta sea del tipo "SELECT" también se devolverán los valores arrojados por dicha
+    # consulta mediante cursor.fetchall()
     @staticmethod
     def realizar_consulta(query,valores=None,tipo=None):
         conn = BaseDatos.connect()
