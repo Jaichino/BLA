@@ -1,3 +1,0 @@
-# BLA Estética
-
-asdf
