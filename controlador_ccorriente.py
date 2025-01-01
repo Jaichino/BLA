@@ -19,8 +19,8 @@ class ControladorCuentaCorriente:
         self.cliente = None
         # Seteo de botones
         self.vista_ccorriente.boton_buscar.config(command=self.filtrar_cuenta_corriente)
-        self.vista_ccorriente.boton_agregarpago.config(command=self.ventana_saldar_cc)
-        self.vista_ccorriente.boton_actualizarpago.config(command=self.ventana_actualizar_cc)
+        self.vista_ccorriente.boton_agregarpago.config(command=self.abrir_ventana_saldar_cc)
+        self.vista_ccorriente.boton_actualizarpago.config(command=self.abrir_ventana_actualizar_cc)
         self.vista_ccorriente.boton_borraroperacion.config(command=self.eliminar_ultima_operacion)
 
         # Inicialización de ComboBox con clientes que tienen cuentas corrientes abiertas
@@ -29,30 +29,30 @@ class ControladorCuentaCorriente:
     ###############################################################################################################################################
     #################################################### INICIALIZACIÓN DE VENTANAS ###############################################################
 
-    def ventana_saldar_cc(self):
+    def abrir_ventana_saldar_cc(self):
         # Si no se elige un cliente, entonces no permitirá abrir la ventana de saldar cuenta corriente
         if self.cliente == None:
             messagebox.showerror('Cuenta Corriente','Debes elegir un cliente')
             return
     
-        self.ventana_saldarcc = Toplevel(self.root)
-        self.mostrar_ventana_saldarcc = SaldarCuentaCorriente(self.ventana_saldarcc)
-        self.ventana_saldarcc.grab_set()
-        self.mostrar_ventana_saldarcc.entry_nuevopago.focus()
-        self.mostrar_ventana_saldarcc.boton_nuevopago.config(command=self.saldar_cuenta_corriente)
+        self.toplevel_saldocc = Toplevel(self.root)
+        self.ventana_saldocc = SaldarCuentaCorriente(self.toplevel_saldocc)
+        self.toplevel_saldocc.grab_set()
+        self.ventana_saldocc.entry_nuevopago.focus()
+        self.ventana_saldocc.boton_nuevopago.config(command=self.saldar_cuenta_corriente)
 
     
-    def ventana_actualizar_cc(self):
+    def abrir_ventana_actualizar_cc(self):
         # Si no se elige un cliente, entonces no permitirá abrir la ventana de actualizar cuenta corriente
         if self.cliente == None:
             messagebox.showerror('Cuenta Corriente','Debes elegir un cliente')
             return
         
-        self.ventana_actualizarcc = Toplevel(self.root)
-        self.mostrar_ventana_actualizarcc = ActualizarCuentaCorriente(self.ventana_actualizarcc)
-        self.ventana_actualizarcc.grab_set()
-        self.mostrar_ventana_actualizarcc.entry_actualizacion.focus()
-        self.mostrar_ventana_actualizarcc.boton_actualizacion.config(command=self.actualizar_cuenta_corriente)
+        self.toplevel_actualizarcc = Toplevel(self.root)
+        self.ventana_actualizarcc = ActualizarCuentaCorriente(self.toplevel_actualizarcc)
+        self.toplevel_actualizarcc.grab_set()
+        self.ventana_actualizarcc.entry_actualizacion.focus()
+        self.ventana_actualizarcc.boton_actualizacion.config(command=self.actualizar_cuenta_corriente)
 
     ###############################################################################################################################################
     ############################################################# EVENTOS #########################################################################
@@ -126,7 +126,7 @@ class ControladorCuentaCorriente:
     def saldar_cuenta_corriente(self):
         try:
             # Recuperación de monto_abonado 
-            monto_abonado = float(self.mostrar_ventana_saldarcc.entry_nuevopago.get())
+            monto_abonado = float(self.ventana_saldocc.entry_nuevopago.get())
 
             # Obtención del último número de operación
             resultado_ultimo_nro_operacion = self.modelo_ccorriente.ultimo_nro_operacion(self.cliente)
@@ -148,7 +148,7 @@ class ControladorCuentaCorriente:
             # Si la cuenta_corriente se salda por completo, entonces se elimina:
             if monto_pendiente <= 0:
                 self.modelo_ccorriente.eliminar_cuentacorriente(self.cliente)
-                self.ventana_saldarcc.destroy()
+                self.toplevel_saldocc.destroy()
                 messagebox.showinfo('Cuenta Corriente',f'{self.cliente} ha saldado completamente su deuda!')
                 # Se actualiza el estado de las ventas pendientes a 'Pagado'
                 ModeloVentas.actualizacion_estadoventa(self.cliente)
@@ -165,7 +165,7 @@ class ControladorCuentaCorriente:
                 self.modelo_ccorriente.ingresar_pago_cc(ultimo_nro_operacion + 1,self.cliente,'Paga',monto_abonado,monto_pendiente)
 
                 # Mensaje de confirmación de pago y actualización de Treeview
-                self.ventana_saldarcc.destroy()
+                self.toplevel_saldocc.destroy()
                 messagebox.showinfo('Cuenta Corriente','Pago agregado correctamente')
                 self.vista_ccorriente.limpiar_treeview()
                 self.filtrar_cuenta_corriente()
@@ -181,7 +181,7 @@ class ControladorCuentaCorriente:
     def actualizar_cuenta_corriente(self):
         try:
             # Recuperación del monto
-            monto_actualizacion = float(self.mostrar_ventana_actualizarcc.entry_actualizacion.get())
+            monto_actualizacion = float(self.ventana_actualizarcc.entry_actualizacion.get())
 
             # Recuperación último nro_operacion
             resultado_ultimo_nrooperacion = self.modelo_ccorriente.ultimo_nro_operacion(self.cliente)
@@ -204,7 +204,7 @@ class ControladorCuentaCorriente:
             self.modelo_ccorriente.ingresar_pago_cc(ultimo_nro_operacion + 1,self.cliente,'Actualizacion',monto_actualizacion,monto_pendiente)
             
             # Mensaje de confirmación y actualización de Treeview
-            self.ventana_actualizarcc.destroy()
+            self.toplevel_actualizarcc.destroy()
             messagebox.showinfo('Cuenta Corriente','Deuda actualizada!')
             self.vista_ccorriente.limpiar_treeview()
             self.filtrar_cuenta_corriente()

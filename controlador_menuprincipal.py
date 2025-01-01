@@ -55,27 +55,27 @@ class ControladorMenuPrincipal:
     
     def abrir_moduloproductos(self):
         self.minimizar_menu_principal()
-        self.nuevo_root = Toplevel(self.root)
-        self.vista_producto = ControladorProducto(self.nuevo_root)
+        self.toplevel = Toplevel(self.root)
+        self.vista_producto = ControladorProducto(self.toplevel)
         self.vista_producto.vista_inventario.label_usuario.config(text=f'Usuario: {self.usuario_actual}')
-        self.nuevo_root.grab_set()
-        self.nuevo_root.protocol("WM_DELETE_WINDOW",self.cerrar_modulo)
+        self.toplevel.grab_set()
+        self.toplevel.protocol("WM_DELETE_WINDOW",self.cerrar_modulo)
         
     def abrir_moduloventas(self):
         self.minimizar_menu_principal()
-        self.nuevo_root = Toplevel(self.root)
-        self.vista_moduloventas = ControladorVentas(self.nuevo_root)
+        self.toplevel = Toplevel(self.root)
+        self.vista_moduloventas = ControladorVentas(self.toplevel)
         self.vista_moduloventas.vista_ventas.label_usuario.config(text=f'Usuario: {self.usuario_actual}')
-        self.nuevo_root.grab_set()
-        self.nuevo_root.protocol("WM_DELETE_WINDOW",self.cerrar_modulo)
+        self.toplevel.grab_set()
+        self.toplevel.protocol("WM_DELETE_WINDOW",self.cerrar_modulo)
 
     def abrir_moduloccorriente(self):
         self.minimizar_menu_principal()
-        self.nuevo_root = Toplevel(self.root)
-        self.vista_moduloccorriente = ControladorCuentaCorriente(self.nuevo_root)
+        self.toplevel = Toplevel(self.root)
+        self.vista_moduloccorriente = ControladorCuentaCorriente(self.toplevel)
         self.vista_moduloccorriente.vista_ccorriente.label_usuario.config(text=f'Usuario: {self.usuario_actual}')
-        self.nuevo_root.grab_set()
-        self.nuevo_root.protocol("WM_DELETE_WINDOW",self.cerrar_modulo)
+        self.toplevel.grab_set()
+        self.toplevel.protocol("WM_DELETE_WINDOW",self.cerrar_modulo)
 
     def abrir_moduloadministrador(self):
         # Se verifica que el rol del usuario que ingreso al sistema sea Administrador, en caso de no serlo, no se
@@ -85,20 +85,20 @@ class ControladorMenuPrincipal:
             return
         
         self.minimizar_menu_principal()
-        self.nuevo_root = Toplevel(self.root)
-        self.vista_administrador = ControladorAdmin(self.nuevo_root)
-        self.nuevo_root.grab_set()
-        self.nuevo_root.protocol("WM_DELETE_WINDOW",self.cerrar_modulo)
+        self.toplevel = Toplevel(self.root)
+        self.vista_administrador = ControladorAdmin(self.toplevel)
+        self.toplevel.grab_set()
+        self.toplevel.protocol("WM_DELETE_WINDOW",self.cerrar_modulo)
 
     def abrir_moduloreportes(self):
         if not self.rol_usuariologueado[0][0] in ['Administrador','Dueño']:
             messagebox.showerror('Error','No tienes permisos para ingresar')
             return
         self.minimizar_menu_principal()
-        self.nuevo_root = Toplevel(self.root)
-        self.vista_reportes = ControladorReportes(self.nuevo_root)
-        self.nuevo_root.grab_set()
-        self.nuevo_root.protocol("WM_DELETE_WINDOW",self.cerrar_modulo)
+        self.toplevel = Toplevel(self.root)
+        self.vista_reportes = ControladorReportes(self.toplevel)
+        self.toplevel.grab_set()
+        self.toplevel.protocol("WM_DELETE_WINDOW",self.cerrar_modulo)
 
     # Función para minimizar menú principal mediante el método .iconify()
     def minimizar_menu_principal(self):
@@ -106,5 +106,5 @@ class ControladorMenuPrincipal:
     
     # Función que se ejecutará cuando se cierre un módulo, se destruirá la ventana y se abrirá nuevamente el menú principal
     def cerrar_modulo(self):
-        self.nuevo_root.destroy()
+        self.toplevel.destroy()
         self.root.deiconify()

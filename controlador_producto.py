@@ -18,7 +18,7 @@ class ControladorProducto:
         self.vista_inventario.entry_codigo.focus()
 
         #Configuración de botones para que se abran las ventanas
-        self.vista_inventario.boton_vencimientos.config(command=self.ventana_consulta_vencimientos)
+        self.vista_inventario.boton_vencimientos.config(command=self.abrir_ventana_consulta_vencimientos)
         self.vista_inventario.boton_nuevo.config(command=self.boton_nuevo)
         self.vista_inventario.boton_ingresar.config(command=self.boton_ingresar_stock)
         self.vista_inventario.boton_modificar.config(command=self.boton_modificar)
@@ -37,42 +37,42 @@ class ControladorProducto:
     ##############################################################################################################################################
     ################################################### INICIALIZACIÓN DE VENTANAS ###############################################################
     # Función que crea un TopLevel de InterfazInventario para abrir la ventana de vencimientos
-    def ventana_consulta_vencimientos(self):
-        self.ventana_vencimientos = Toplevel(self.root)
-        self.mostrar_modulo_vencimientos = Vencimientos(self.ventana_vencimientos)
-        self.ventana_vencimientos.grab_set()
-        self.mostrar_modulo_vencimientos.entry_codigo.focus()
+    def abrir_ventana_consulta_vencimientos(self):
+        self.toplevel_vencimientos = Toplevel(self.root)
+        self.ventana_vencimientos = Vencimientos(self.toplevel_vencimientos)
+        self.toplevel_vencimientos.grab_set()
+        self.ventana_vencimientos.entry_codigo.focus()
         # Llenado de Treeview
         self.llenar_treeview_vencimientos()
 
         # Configuración de botones
-        self.mostrar_modulo_vencimientos.boton_buscar.config(command=self.boton_filtrar_vencimientos)
-        self.mostrar_modulo_vencimientos.boton_vencido.config(command=self.boton_todos_vencimientos)
+        self.ventana_vencimientos.boton_buscar.config(command=self.boton_filtrar_vencimientos)
+        self.ventana_vencimientos.boton_vencido.config(command=self.boton_todos_vencimientos)
 
     # Función que crea un TopLevel de InterfazInventario para abrir la ventana de nuevoproducto o modificarproducto
-    def ventana_nuevoproducto(self):
-        self.ventana_nuevo_producto = Toplevel(self.root)
-        self.mostrar_ventana_nuevoproducto = NuevoProducto(self.ventana_nuevo_producto)
-        self.ventana_nuevo_producto.grab_set()
-        self.mostrar_ventana_nuevoproducto.entry_codigo.focus()
-        self.mostrar_ventana_nuevoproducto.boton_guardar.config(command=self.boton_guardar_nuevoproducto)
+    def abrir_ventana_nuevoproducto(self):
+        self.toplevel_nuevo_producto = Toplevel(self.root)
+        self.ventana_nuevo_producto = NuevoProducto(self.toplevel_nuevo_producto)
+        self.toplevel_nuevo_producto.grab_set()
+        self.ventana_nuevo_producto.entry_codigo.focus()
+        self.ventana_nuevo_producto.boton_guardar.config(command=self.boton_guardar_nuevoproducto)
 
         # Evento: cuando se escribe un codigo existente en entry_codigo, se autocompleta entry descripcion
-        self.mostrar_ventana_nuevoproducto.entry_codigo.bind("<KeyRelease>",self.actualizar_entrydescripcion)
+        self.ventana_nuevo_producto.entry_codigo.bind("<KeyRelease>",self.actualizar_entrydescripcion)
     
-    def ventana_modificar_producto(self):
-        self.ventana_modificarproducto = Toplevel(self.root)
-        self.mostrar_ventana_modificarproducto = ModificarProducto(self.ventana_modificarproducto)
-        self.ventana_modificarproducto.grab_set()
-        self.mostrar_ventana_modificarproducto.boton_guardar.config(command=self.guardar_modificacion_producto)
+    def abrir_ventana_modificar_producto(self):
+        self.toplevel_modificar_producto = Toplevel(self.root)
+        self.ventana_modificar_producto = ModificarProducto(self.toplevel_modificar_producto)
+        self.toplevel_modificar_producto.grab_set()
+        self.ventana_modificar_producto.boton_guardar.config(command=self.guardar_modificacion_producto)
 
     # Función que crea un TopLevel de InterfazInventario para abrir la ventana de ingreso de stock
-    def ventana_ingresostock(self):
-        self.ventana_ingreso_stock = Toplevel(self.root)
-        self.mostrar_ventana_ingresostock = IngresoStock(self.ventana_ingreso_stock)
-        self.ventana_ingreso_stock.grab_set()
-        self.mostrar_ventana_ingresostock.entry_ingresostock.focus()
-        self.mostrar_ventana_ingresostock.boton_ingresostock.config(command=self.boton_guardar_ingresostock)
+    def abrir_ventana_ingresostock(self):
+        self.toplevel_ingreso_stock = Toplevel(self.root)
+        self.ventana_ingreso_stock = IngresoStock(self.toplevel_ingreso_stock)
+        self.toplevel_ingreso_stock.grab_set()
+        self.ventana_ingreso_stock.entry_ingresostock.focus()
+        self.ventana_ingreso_stock.boton_ingresostock.config(command=self.boton_guardar_ingresostock)
     
     ################################################################################################################################################
     ####################################################### INICIALIZACIÓN TREEVIEW ################################################################
@@ -94,15 +94,15 @@ class ControladorProducto:
     def llenar_treeview_vencimientos(self):
         consulta_vencimientos = self.modelo_inventario.mostrar_vencimientos_todosproductos()
         for producto in consulta_vencimientos:
-            self.mostrar_modulo_vencimientos.tv_vencimientos.insert('','end',text=producto[0],values=(producto[1],producto[2],producto[3],producto[4]))
+            self.ventana_vencimientos.tv_vencimientos.insert('','end',text=producto[0],values=(producto[1],producto[2],producto[3],producto[4]))
 
         # Se define una configuración de tag para que cuando un producto esté vencido, se pinte esa fila de rojo. Para ello se recorren los elementos
         # del Treeview con un bucle for.
-        self.mostrar_modulo_vencimientos.tv_vencimientos.tag_configure('Rojo',foreground='red',font=('century gothic',10,'bold'))
-        for item in self.mostrar_modulo_vencimientos.tv_vencimientos.get_children():
-            valores = self.mostrar_modulo_vencimientos.tv_vencimientos.item(item,'values')
+        self.ventana_vencimientos.tv_vencimientos.tag_configure('Rojo',foreground='red',font=('century gothic',10,'bold'))
+        for item in self.ventana_vencimientos.tv_vencimientos.get_children():
+            valores = self.ventana_vencimientos.tv_vencimientos.item(item,'values')
             if int(valores[3]) <= 0:
-                self.mostrar_modulo_vencimientos.tv_vencimientos.item(item,tags=('Rojo',))
+                self.ventana_vencimientos.tv_vencimientos.item(item,tags=('Rojo',))
     
     ################################################################################################################################################
     ############################################################# EVENTOS ##########################################################################
@@ -110,23 +110,23 @@ class ControladorProducto:
     # respectiva descripcion
 
     def actualizar_entrydescripcion(self,event):
-        codigo_producto = self.mostrar_ventana_nuevoproducto.entry_codigo.get()
+        codigo_producto = self.ventana_nuevo_producto.entry_codigo.get()
         # Obtencion de la descripcion del producto de acuerdo al codigo ingresado
         descripcion = ModeloProducto.descripcion_producto(codigo_producto)
         # Si se encuentra una descripcion, entonces se inserta esa descripcion en el entry descripcion y se hace foco en precio
         if descripcion:
-            self.mostrar_ventana_nuevoproducto.entry_descripcion.delete(0,'end')
-            self.mostrar_ventana_nuevoproducto.entry_descripcion.insert(0,descripcion[0][0])
-            self.mostrar_ventana_nuevoproducto.entry_precio.focus()
+            self.ventana_nuevo_producto.entry_descripcion.delete(0,'end')
+            self.ventana_nuevo_producto.entry_descripcion.insert(0,descripcion[0][0])
+            self.ventana_nuevo_producto.entry_precio.focus()
         # Si no se encuentran coincidencias, el entry descripcion queda vacio
         else:
-            self.mostrar_ventana_nuevoproducto.entry_descripcion.insert(0,'')
+            self.ventana_nuevo_producto.entry_descripcion.insert(0,'')
 
     ###############################################################################################################################################
     ####################################################### ACCIONES DE BOTONES ###################################################################
     #Función para que el boton crear nuevo producto abra la ventana de ingreso de datos 
     def boton_nuevo(self):
-        self.ventana_nuevoproducto()
+        self.abrir_ventana_nuevoproducto()
     
     ###############################################################################################################################################
     #Función para abrir la ventana de modificación de productos solo si se ha seleccionado un elemento en el Treeview
@@ -139,13 +139,13 @@ class ControladorProducto:
             return
         # Si hay un elemento seleccionado, entonces se abre la ventana de modificacion de producto
         if self.elemento_seleccionado:
-            self.ventana_modificar_producto()
+            self.abrir_ventana_modificar_producto()
             #Obtención de la información correspondiente al elemento seleccionado
             valores = self.vista_inventario.tv_inventario.item(self.elemento_seleccionado,'values')
             #Seteo de los entry con los datos correspondientes al elemento elegido
-            self.mostrar_ventana_modificarproducto.entry_descripcion.insert(0,valores[0])
-            self.mostrar_ventana_modificarproducto.entry_precio.insert(0,valores[1])
-            self.mostrar_ventana_modificarproducto.entry_stock.insert(0,valores[2])
+            self.ventana_modificar_producto.entry_descripcion.insert(0,valores[0])
+            self.ventana_modificar_producto.entry_precio.insert(0,valores[1])
+            self.ventana_modificar_producto.entry_stock.insert(0,valores[2])
 
         else:
             messagebox.showerror('Error','Debes seleccionar un producto')
@@ -156,9 +156,9 @@ class ControladorProducto:
         
         try:
             #Recuperar valores de los entry
-            descripcion = self.mostrar_ventana_modificarproducto.entry_descripcion.get()
-            precio = float(self.mostrar_ventana_modificarproducto.entry_precio.get())
-            stock = int(self.mostrar_ventana_modificarproducto.entry_stock.get())
+            descripcion = self.ventana_modificar_producto.entry_descripcion.get()
+            precio = float(self.ventana_modificar_producto.entry_precio.get())
+            stock = int(self.ventana_modificar_producto.entry_stock.get())
 
             #Obtención del nro_producto correspondiente al seleccionado en el Treeview
             codigo_producto = self.vista_inventario.tv_inventario.item(self.elemento_seleccionado,'text')
@@ -168,7 +168,7 @@ class ControladorProducto:
 
             #Ejecución de la función actualizar producto
             self.modelo_inventario.actualizar_producto(nro_producto[0],descripcion,precio,stock)
-            self.ventana_modificarproducto.destroy()
+            self.toplevel_modificar_producto.destroy()
             self.vista_inventario.limpiar_treeview()
             self.llenar_treeview_productos()
             messagebox.showinfo('Producto Modificado',f'Producto {descripcion} modificado!')
@@ -182,13 +182,13 @@ class ControladorProducto:
     #Función para incluir en el botón guardar
     def boton_guardar_nuevoproducto(self):
 
-        codigo_producto = self.mostrar_ventana_nuevoproducto.entry_codigo.get()
-        descripcion = self.mostrar_ventana_nuevoproducto.entry_descripcion.get()
-        vencimiento = self.mostrar_ventana_nuevoproducto.entry_vencimiento.get()
+        codigo_producto = self.ventana_nuevo_producto.entry_codigo.get()
+        descripcion = self.ventana_nuevo_producto.entry_descripcion.get()
+        vencimiento = self.ventana_nuevo_producto.entry_vencimiento.get()
 
         try:
-            precio_unitario = float(self.mostrar_ventana_nuevoproducto.entry_precio.get())
-            stock = int(self.mostrar_ventana_nuevoproducto.entry_stock.get())
+            precio_unitario = float(self.ventana_nuevo_producto.entry_precio.get())
+            stock = int(self.ventana_nuevo_producto.entry_stock.get())
 
             #Se busca en la base de datos si existe un nro_producto que coincida con el código Y el vencimiento ingresados, si ya existe se muestra
             #messagebox diciendo que el producto ya existe en la base de datos con ese mismo código y vencimiento
@@ -199,9 +199,9 @@ class ControladorProducto:
                 ModeloProducto.nuevo_producto(codigo_producto,descripcion,precio_unitario,stock,vencimiento)
                 messagebox.showinfo('Producto Ingresado',f'Producto: {descripcion} creado correctamente!')
                 self.vista_inventario.limpiar_treeview()
-                self.mostrar_ventana_nuevoproducto.limpiar_cajas()
+                self.ventana_nuevo_producto.limpiar_cajas()
                 self.llenar_treeview_productos()
-                self.ventana_nuevo_producto.destroy()
+                self.toplevel_nuevo_producto.destroy()
         
         except ValueError: #Si se introducen valores erroneos, por ejemplo un texto en el entry de precio o stock, arrojará un messagebox.
             messagebox.showerror('Error','Error en ingreso de datos')
@@ -252,7 +252,7 @@ class ControladorProducto:
         
         # Si se eligio solo un elemento, se muestra ventana ingreso de stock
         if self.elemento_seleccionado:
-            self.ventana_ingresostock()
+            self.abrir_ventana_ingresostock()
         else:
             messagebox.showerror('Error','Debes seleccionar un producto')
     
@@ -260,7 +260,7 @@ class ControladorProducto:
     def boton_guardar_ingresostock(self):
         try:
             #Se recupera valor de stock ingresado por usuario
-            stock_ingresado = int(self.mostrar_ventana_ingresostock.entry_ingresostock.get())
+            stock_ingresado = int(self.ventana_ingreso_stock.entry_ingresostock.get())
 
             #Obtención nro_producto de acuerdo al elemento seleccionado en Treeview
             codigo_producto = self.vista_inventario.tv_inventario.item(self.elemento_seleccionado,'text')
@@ -270,7 +270,7 @@ class ControladorProducto:
             
             #Ejecución de la función ingreso_stock
             self.modelo_inventario.ingreso_stock(nro_producto[0],stock_ingresado)
-            self.ventana_ingreso_stock.destroy()
+            self.toplevel_ingreso_stock.destroy()
             self.vista_inventario.limpiar_treeview()
             self.llenar_treeview_productos()
             messagebox.showinfo('Stock Ingresado',f'Stock de {valores[0]} ingresado!')
@@ -351,9 +351,9 @@ class ControladorProducto:
     def boton_filtrar_vencimientos(self):
         try:
             #Obtención de las entradas de usuario
-            codigo_producto = self.mostrar_modulo_vencimientos.entry_codigo.get()
-            fecha_desde = self.mostrar_modulo_vencimientos.entry_desde.get()
-            fecha_hasta = self.mostrar_modulo_vencimientos.entry_hasta.get()
+            codigo_producto = self.ventana_vencimientos.entry_codigo.get()
+            fecha_desde = self.ventana_vencimientos.entry_desde.get()
+            fecha_hasta = self.ventana_vencimientos.entry_hasta.get()
 
             #Se asigna None a codigo_producto si no se ingresa ningún valor, para evitar error.
             codigo_producto = None if codigo_producto == '' else codigo_producto
@@ -362,23 +362,23 @@ class ControladorProducto:
             filtrado_vencimientos = self.modelo_inventario.consulta_vencimientos(fecha_desde,fecha_hasta,codigo_producto)
 
             if filtrado_vencimientos:
-                self.mostrar_modulo_vencimientos.limpiar_treeview()
+                self.ventana_vencimientos.limpiar_treeview()
 
                 for producto in filtrado_vencimientos:
-                    self.mostrar_modulo_vencimientos.tv_vencimientos.insert('','end',text=producto[0],values=(producto[1],producto[2],producto[3],producto[4]))
+                    self.ventana_vencimientos.tv_vencimientos.insert('','end',text=producto[0],values=(producto[1],producto[2],producto[3],producto[4]))
                 
                 # Se define una configuración de tag para que cuando un producto esté vencido, se pinte esa fila de rojo. Para ello se recorren los elementos
                 # del Treeview con un bucle for.
-                self.mostrar_modulo_vencimientos.tv_vencimientos.tag_configure('Rojo',foreground='red',font=('century gothic',10,'bold'))
-                for item in self.mostrar_modulo_vencimientos.tv_vencimientos.get_children():
-                    valores = self.mostrar_modulo_vencimientos.tv_vencimientos.item(item,'values')
+                self.ventana_vencimientos.tv_vencimientos.tag_configure('Rojo',foreground='red',font=('century gothic',10,'bold'))
+                for item in self.ventana_vencimientos.tv_vencimientos.get_children():
+                    valores = self.ventana_vencimientos.tv_vencimientos.item(item,'values')
                     if int(valores[3]) <= 0:
-                        self.mostrar_modulo_vencimientos.tv_vencimientos.item(item,tags=('Rojo',))
+                        self.ventana_vencimientos.tv_vencimientos.item(item,tags=('Rojo',))
 
             #Si filtrado_vencimientos es una lista vacia (no se encontraron productos dentro del filtrado ingresado)
             else:
                 messagebox.showinfo('Sin coincidencias','No se han encontrado productos')
-                self.mostrar_modulo_vencimientos.limpiar_treeview()
+                self.ventana_vencimientos.limpiar_treeview()
                 self.llenar_treeview_vencimientos()
 
         except Exception as error:
@@ -389,19 +389,19 @@ class ControladorProducto:
     def boton_todos_vencimientos(self):
         vencimientos = self.modelo_inventario.productos_vencidos()
         # Limpieza de treeview
-        self.mostrar_modulo_vencimientos.limpiar_treeview()
+        self.ventana_vencimientos.limpiar_treeview()
         # Inserción de vencimientos
         if vencimientos:
             for producto_vencido in vencimientos:
-                self.mostrar_modulo_vencimientos.tv_vencimientos.insert('','end',text=producto_vencido[0],values=(producto_vencido[1],producto_vencido[2],producto_vencido[3],producto_vencido[4]))
+                self.ventana_vencimientos.tv_vencimientos.insert('','end',text=producto_vencido[0],values=(producto_vencido[1],producto_vencido[2],producto_vencido[3],producto_vencido[4]))
 
             # Se define una configuración de tag para que cuando un producto esté vencido, se pinte esa fila de rojo. Para ello se recorren los elementos
             # del Treeview con un bucle for.
-            self.mostrar_modulo_vencimientos.tv_vencimientos.tag_configure('Rojo',foreground='red',font=('century gothic',10,'bold'))
-            for item in self.mostrar_modulo_vencimientos.tv_vencimientos.get_children():
-                valores = self.mostrar_modulo_vencimientos.tv_vencimientos.item(item,'values')
+            self.ventana_vencimientos.tv_vencimientos.tag_configure('Rojo',foreground='red',font=('century gothic',10,'bold'))
+            for item in self.ventana_vencimientos.tv_vencimientos.get_children():
+                valores = self.ventana_vencimientos.tv_vencimientos.item(item,'values')
                 if int(valores[3]) <= 0:
-                    self.mostrar_modulo_vencimientos.tv_vencimientos.item(item,tags=('Rojo',))
+                    self.ventana_vencimientos.tv_vencimientos.item(item,tags=('Rojo',))
         
         else:
             messagebox.showinfo('Sin resultados','No se encontraron productos vencidos!')

@@ -28,8 +28,8 @@ class ControladorVentas:
         self.vista_ventas.entry_cliente.focus()
 
         # Inicialización de funciones para apertura de ventanas
-        self.vista_ventas.boton_consultaventas.config(command=self.ventana_consultaventas)
-        self.vista_ventas.boton_finalizar_venta.config(command=self.abrir_ventana_finalizacionventa)
+        self.vista_ventas.boton_consultaventas.config(command=self.abrir_ventana_consultaventas)
+        self.vista_ventas.boton_finalizar_venta.config(command=self.abrir_abrir_ventana_finalizacionventa)
         self.vista_ventas.boton_buscar.config(command=self.boton_buscar_infoproducto)
         self.vista_ventas.boton_carrito.config(command=self.boton_agregar_carrito)
         self.vista_ventas.boton_eliminar_venta.config(command=self.eliminar_del_carrito)
@@ -57,42 +57,42 @@ class ControladorVentas:
     ################################################### INICIALIZACIÓN DE VENTANAS ###############################################################
     
     # Función que inicializa la ventana consulta de ventas   
-    def ventana_consultaventas(self):
+    def abrir_ventana_consultaventas(self):
         self.minimizar_root()
-        self.ventana_consulta_ventas = Toplevel(self.root)
-        self.mostrar_ventana_consultaventas = ConsultaVentas(self.ventana_consulta_ventas)
-        self.ventana_consulta_ventas.grab_set()
-        self.ventana_consulta_ventas.protocol("WM_DELETE_WINDOW",self.volver_ventana_ventas)
+        self.toplevel_consulta_ventas = Toplevel(self.root)
+        self.ventana_consulta_ventas = ConsultaVentas(self.toplevel_consulta_ventas)
+        self.toplevel_consulta_ventas.grab_set()
+        self.toplevel_consulta_ventas.protocol("WM_DELETE_WINDOW",self.volver_ventana_ventas)
 
         # bind para filtrar la lista de clientes en el ComboBox según las entradas del usuario
-        self.mostrar_ventana_consultaventas.entry_cliente.bind("<KeyRelease>",self.buscar_cliente_consultaventa)
+        self.ventana_consulta_ventas.entry_cliente.bind("<KeyRelease>",self.buscar_cliente_consultaventa)
 
         # Acciones de botones
-        self.mostrar_ventana_consultaventas.boton_buscar.config(command=self.boton_consultar_ventas)
-        self.mostrar_ventana_consultaventas.boton_eliminar.config(command=self.eliminar_venta)
-        self.mostrar_ventana_consultaventas.boton_detalle.configure(command=self.boton_abrir_detalleventas)
-        self.mostrar_ventana_consultaventas.boton_pendientes.config(command=self.boton_pagos_pendientes)
+        self.ventana_consulta_ventas.boton_buscar.config(command=self.boton_consultar_ventas)
+        self.ventana_consulta_ventas.boton_eliminar.config(command=self.eliminar_venta)
+        self.ventana_consulta_ventas.boton_detalle.configure(command=self.boton_abrir_detalleventas)
+        self.ventana_consulta_ventas.boton_pendientes.config(command=self.boton_pagos_pendientes)
 
         # Se guarda el valor de nro_venta que se selecciona en Treeview. Se inicializa como None
         self.nro_venta_consulta = None
 
     # Función que inicializa la ventana Detalle de ventas
-    def ventana_detalleventas(self):
-        self.ventana_detalle_ventas = Toplevel(self.ventana_consulta_ventas)
-        self.vista_detalle_ventas = DetalleVentas(self.ventana_detalle_ventas)
-        self.ventana_detalle_ventas.grab_set()
+    def abrir_ventana_detalleventas(self):
+        self.toplevel_detalle_ventas = Toplevel(self.toplevel_consulta_ventas)
+        self.ventana_detalle_ventas = DetalleVentas(self.toplevel_detalle_ventas)
+        self.toplevel_detalle_ventas.grab_set()
 
         # Inicialización de label nro_venta según elemento elegido en Treeview
-        self.vista_detalle_ventas.label_nroventa.config(text=f'Venta #{self.nro_venta_consulta}')
+        self.ventana_detalle_ventas.label_nroventa.config(text=f'Venta #{self.nro_venta_consulta}')
 
         # Configuración boton imprimir factura
-        self.vista_detalle_ventas.boton_pdf.config(command=self.detalleventas_imprimirpdf)
+        self.ventana_detalle_ventas.boton_pdf.config(command=self.detalleventas_imprimirpdf)
 
     # Función que inicializa la ventana Finalización de venta
-    def ventana_finalizacionventa(self):
-        self.ventana_finalizacion_venta = Toplevel(self.root)
-        self.mostrar_ventana_finalizacion_venta = ConfirmacionVenta(self.ventana_finalizacion_venta)
-        self.ventana_finalizacion_venta.grab_set()
+    def abrir_ventana_finalizacionventa(self):
+        self.toplevel_finalizacion_venta = Toplevel(self.root)
+        self.ventana_finalizacion_venta = ConfirmacionVenta(self.toplevel_finalizacion_venta)
+        self.toplevel_finalizacion_venta.grab_set()
 
         # Obtención del número de venta
         self.nro_venta = self.modelo_ventas.ultimo_nro_venta()
@@ -102,13 +102,13 @@ class ControladorVentas:
             self.nro_venta = self.modelo_ventas.ultimo_nro_venta()[0][0] + 1
             
         # Modificación del label nro_venta
-        self.mostrar_ventana_finalizacion_venta.label_numero_venta.config(text = f'Venta #{self.nro_venta}')
+        self.ventana_finalizacion_venta.label_numero_venta.config(text = f'Venta #{self.nro_venta}')
         
         # Inicialización con el monto_total_venta y nro_venta
-        self.mostrar_ventana_finalizacion_venta.label_total_venta.config(text=f'Total Venta: ${self.monto_total_venta}')
+        self.ventana_finalizacion_venta.label_total_venta.config(text=f'Total Venta: ${self.monto_total_venta}')
     
         #Configuración de la función del boton
-        self.mostrar_ventana_finalizacion_venta.boton_confirmar.config(command=self.boton_confirmar_venta)
+        self.ventana_finalizacion_venta.boton_confirmar.config(command=self.boton_confirmar_venta)
 
     # Función para minimizar el root
     def minimizar_root(self):
@@ -116,7 +116,7 @@ class ControladorVentas:
     
     # Función para cerrar consulta de venta y volver a abrir ventana de ventas
     def volver_ventana_ventas(self):
-        self.ventana_consulta_ventas.destroy()
+        self.toplevel_consulta_ventas.destroy()
         self.root.deiconify()
 
     ###############################################################################################################################################
@@ -148,17 +148,17 @@ class ControladorVentas:
     #Función para filtrar los clientes en el módulo consulta de clientes, para introducirlos en el ComboBox
     def buscar_cliente_consultaventa(self,event):
         clientes = ModeloVentas.clientes()
-        entrada_cliente = self.mostrar_ventana_consultaventas.entry_cliente.get().lower()
+        entrada_cliente = self.ventana_consulta_ventas.entry_cliente.get().lower()
 
         if clientes:
             lista_clientes = [cliente[0] for cliente in clientes if cliente[0].lower().startswith(entrada_cliente)]
 
             if lista_clientes:
-                self.mostrar_ventana_consultaventas.entry_cliente['values'] = lista_clientes
+                self.ventana_consulta_ventas.entry_cliente['values'] = lista_clientes
             else:
-                self.mostrar_ventana_consultaventas.entry_cliente['values'] = []
+                self.ventana_consulta_ventas.entry_cliente['values'] = []
         else:
-            self.mostrar_ventana_consultaventas.entry_cliente['values'] = []
+            self.ventana_consulta_ventas.entry_cliente['values'] = []
 
     # Función para introducir los vencimientos de productos en el ComboBox que existen para el código de producto introducido
     def vencimientos_codigoingresado(self,event):
@@ -185,7 +185,7 @@ class ControladorVentas:
     ####################################################### ACCIONES DE BOTONES ###################################################################
 
     # Función para abrir la ventana de finalización de venta, en caso de que la lista de carrito esté vacía, no se debe dejar abrir dicha ventana
-    def abrir_ventana_finalizacionventa(self):
+    def abrir_abrir_ventana_finalizacionventa(self):
         if self.cliente_venta == '':
             messagebox.showerror('Error','Introducir Cliente')
             return
@@ -193,7 +193,7 @@ class ControladorVentas:
         if not self.lista_carrito:
             messagebox.showerror('Error','No hay productos en el carrito')
         else:
-            self.ventana_finalizacionventa()
+            self.abrir_ventana_finalizacionventa()
 
     # Función para introducir en el boton "buscar", que hará aparecer la información del producto, precio y cantidad en los entry en función del
     # código y vencimientos ingresados por el usuario
@@ -337,9 +337,9 @@ class ControladorVentas:
     # se filtrará por fechas, caso contrario, se filtra unicamente por cliente.
     def boton_consultar_ventas(self):
         # Entradas de usuario
-        cliente = self.mostrar_ventana_consultaventas.entry_cliente.get()
-        fecha_desde = self.mostrar_ventana_consultaventas.entry_desde.get()
-        fecha_hasta = self.mostrar_ventana_consultaventas.entry_hasta.get()
+        cliente = self.ventana_consulta_ventas.entry_cliente.get()
+        fecha_desde = self.ventana_consulta_ventas.entry_desde.get()
+        fecha_hasta = self.ventana_consulta_ventas.entry_hasta.get()
 
         # Se asigna None en caso de no ingresarse ningún cliente
         cliente = None if cliente == '' else cliente
@@ -350,13 +350,13 @@ class ControladorVentas:
         # Si se encontraron coincidencias, se rellena Treeview con dichos registros
         if ventas_filtradas:
             # Se limpia Treeview antes de insertar datos
-            self.mostrar_ventana_consultaventas.limpiar_treeview()
+            self.ventana_consulta_ventas.limpiar_treeview()
             for venta in ventas_filtradas:
-                self.mostrar_ventana_consultaventas.tv_consultaventas.insert('','end',text=venta[0],values=(venta[1],venta[2],venta[3],venta[4],venta[5]))
+                self.ventana_consulta_ventas.tv_consultaventas.insert('','end',text=venta[0],values=(venta[1],venta[2],venta[3],venta[4],venta[5]))
         # Si no se encuentran registros, se muestra messagebox
         else:
             messagebox.showinfo('Sin coincidencias','No se encontraron ventas!')
-            self.mostrar_ventana_consultaventas.limpiar_treeview()
+            self.ventana_consulta_ventas.limpiar_treeview()
 
     # Función para confirmar la venta realizada, se realizarán los siguientes pasos importantes:
     # 1) Se verificará si el pago fue completo, es decir, si monto_abonado = monto_total_venta, si no se paga completo se ejecuta la función agregar a
@@ -369,8 +369,8 @@ class ControladorVentas:
     def boton_confirmar_venta(self):
         try:
             # Se obtienen entradas del usuario (monto entregado y la opción de los Radiobuttons para el modo de pago)
-            monto_abonado = float(self.mostrar_ventana_finalizacion_venta.entry_entrega.get())
-            modo_pago = self.mostrar_ventana_finalizacion_venta.seleccion_radiobutton()
+            monto_abonado = float(self.ventana_finalizacion_venta.entry_entrega.get())
+            modo_pago = self.ventana_finalizacion_venta.seleccion_radiobutton()
 
             # Si el monto abonado, es igual al monto total de la venta, entonces se registra la venta como Pagada y se registra en Detalle de Ventas pero no
             # en cuenta corriente. Por otro lado, también se descuentan los productos vendidos.
@@ -395,7 +395,7 @@ class ControladorVentas:
                 messagebox.showinfo('Ventas',f'Venta {self.nro_venta} agregada correctamente!')
                 
                 # Cierre de ventana finalización de venta
-                self.ventana_finalizacion_venta.destroy()
+                self.toplevel_finalizacion_venta.destroy()
 
                 # Limpieza de campos
                 self.vista_ventas.entry_cliente.delete(0,'end')
@@ -450,7 +450,7 @@ class ControladorVentas:
                     messagebox.showinfo('Ventas',f'La venta {self.nro_venta} se cargó a cuenta corriente')
 
                     # Cierre de ventana finalización de venta
-                    self.ventana_finalizacion_venta.destroy()
+                    self.toplevel_finalizacion_venta.destroy()
 
                     # Limpieza de campos
                     self.vista_ventas.entry_cliente.delete(0,'end')
@@ -485,7 +485,7 @@ class ControladorVentas:
     # DetalleVentas y finalmente eliminarlo desde la tabla Ventas
     def eliminar_venta(self):
         # Recuperar elemento seleccionado del Treeview
-        elemento_seleccionado = self.mostrar_ventana_consultaventas.tv_consultaventas.selection()
+        elemento_seleccionado = self.ventana_consulta_ventas.tv_consultaventas.selection()
         if elemento_seleccionado:
             # Verificar que solo se haya seleccionado un elemento
             if len(elemento_seleccionado)>1:
@@ -493,7 +493,7 @@ class ControladorVentas:
                 return
 
             # Recuperación del nro_venta
-            nro_venta = self.mostrar_ventana_consultaventas.tv_consultaventas.item(elemento_seleccionado,'text')
+            nro_venta = self.ventana_consulta_ventas.tv_consultaventas.item(elemento_seleccionado,'text')
 
             # Eliminación. Primero se elimina del detalle y luego de la venta
             confirmacion = messagebox.askyesno('Eliminar Venta',f'¿Eliminar venta #{nro_venta}?')
@@ -510,19 +510,19 @@ class ControladorVentas:
     # Función para abrir ventana de detalle de ventas. Se verifica que haya un elemento seleccionado en Treeview consulta de ventas
     def boton_abrir_detalleventas(self):
         # Recuperar elemento seleccionado en Treeview
-        elemento_seleccionado = self.mostrar_ventana_consultaventas.tv_consultaventas.selection()
+        elemento_seleccionado = self.ventana_consulta_ventas.tv_consultaventas.selection()
         # Apertura de la ventana de detalle ventas. Si se selecciona más de un elemento se muestra error
         if len(elemento_seleccionado) > 1:
             messagebox.showerror('Error','Se debe elegir solo una venta')
             return
         if elemento_seleccionado:
-            self.nro_venta_consulta = self.mostrar_ventana_consultaventas.tv_consultaventas.item(elemento_seleccionado,'text')
-            self.ventana_detalleventas()
+            self.nro_venta_consulta = self.ventana_consulta_ventas.tv_consultaventas.item(elemento_seleccionado,'text')
+            self.abrir_ventana_detalleventas()
 
             # Visualización del detalle de venta en Treeview
             valores_detalle_ventas = self.modelo_ventas.consultar_detalleventas(self.nro_venta_consulta)
             for detalle in valores_detalle_ventas:
-                self.vista_detalle_ventas.tv_detalleventas.insert('','end',text=detalle[0],values=(detalle[1],detalle[2],detalle[3]))
+                self.ventana_detalle_ventas.tv_detalleventas.insert('','end',text=detalle[0],values=(detalle[1],detalle[2],detalle[3]))
         else:
             messagebox.showerror('Error','Se debe seleccionar un elemento')
 
@@ -530,14 +530,14 @@ class ControladorVentas:
     # Función para incluir en el boton "Imprimir Factura" de la ventana Detalle de ventas
     def detalleventas_imprimirpdf(self):
         # Recuperar elemento seleccionado en Treeview
-        elemento_seleccionado = self.mostrar_ventana_consultaventas.tv_consultaventas.selection()
+        elemento_seleccionado = self.ventana_consulta_ventas.tv_consultaventas.selection()
         # Apertura de la ventana de detalle ventas. Si se selecciona más de un elemento se muestra error
         if len(elemento_seleccionado) > 1:
             messagebox.showerror('Error','Se debe elegir solo una venta')
             return
         if elemento_seleccionado:
             # Obtención numero factura
-            nro_factura = self.mostrar_ventana_consultaventas.tv_consultaventas.item(elemento_seleccionado,'text')
+            nro_factura = self.ventana_consulta_ventas.tv_consultaventas.item(elemento_seleccionado,'text')
             # Obtención información de venta
             info_venta = self.modelo_ventas.consultar_venta_nroventa(nro_factura)
             fecha = info_venta[0][0]
@@ -556,11 +556,11 @@ class ControladorVentas:
         # Obtención de pagos pendientes
         pagos_pendientes = self.modelo_ventas.pagos_pendientes()
         # Limpieza de Treeview antes de insertar datos
-        self.mostrar_ventana_consultaventas.limpiar_treeview()
+        self.ventana_consulta_ventas.limpiar_treeview()
         # Carga de datos a Treeview, si no hay, muestra mensaje
         if pagos_pendientes:
             for pago in pagos_pendientes:
-                self.mostrar_ventana_consultaventas.tv_consultaventas.insert('','end',text=pago[0],values=(pago[1],pago[2],pago[3],pago[4],pago[5]))
+                self.ventana_consulta_ventas.tv_consultaventas.insert('','end',text=pago[0],values=(pago[1],pago[2],pago[3],pago[4],pago[5]))
         else:
             messagebox.showinfo('Pagos Pendientes','No se encontraron pagos pendientes!')
 
