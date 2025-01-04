@@ -422,6 +422,7 @@ class ConsultaVentas:
 
 ################################################################################################################################################
 ################################################### VENTANA DETALLES DE VENTAS #################################################################
+
 class DetalleVentas:
 
     def __init__(self,root):
@@ -487,4 +488,56 @@ class DetalleVentas:
         
         self.tv_detalleventas.pack(side=LEFT,fill=Y)
 
+################################################################################################################################################
+################################################### VENTANA DETALLES DE VENTAS #################################################################
 
+# Clase para la creación de una ventana que se va a llamar cuando el medio de pago elegido sea debito/credito, se permitirá poner un monto de
+# dinero el cuál se sumará al monto total de la venta
+
+class InterfazInteres:
+
+    def __init__(self,root):
+        self.root = root
+        self.root.title('Interés por pago Débito/Crédito')
+        self.root.geometry('400x200+483+274')
+        self.root.resizable(False,False)
+        self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
+        self.widgets()
+    
+    def rutas(self, *paths):
+        if getattr(sys, 'frozen', False):  # Ejecutable generado con PyInstaller
+            ruta_base = sys._MEIPASS
+        else:  # Ejecución normal en el entorno de desarrollo
+            ruta_base = os.path.dirname(os.path.abspath(__file__))
+        return os.path.join(ruta_base, *paths)
+    
+    def widgets(self):
+        #Frames
+        self.frame_interes = Frame(self.root)
+        self.frame_interes.config(width=400,height=300,background='#EDE2E0')
+        self.frame_interes.place(x=0,y=0)
+
+        #Labels
+        self.label_titulo = Label(self.frame_interes)
+        self.label_titulo.config(text='Ingreso de Intereses',font=('century gothic',18,'bold'),background='#EDE2E0')
+        self.label_titulo.place(relx=0.5,rely=0.1,anchor='center')
+
+        self.label_interes = Label(self.frame_interes)
+        self.label_interes.config(text='Monto interés',font=('century gothic',14),background='#EDE2E0')
+        self.label_interes.place(relx=0.3,rely=0.3,anchor='center')
+
+        #Entries
+        self.entry_interes = Entry(self.frame_interes)
+        self.entry_interes.config(font=('century gothic',14),width=10,bd=1,relief='solid')
+        self.entry_interes.place(relx=0.7,rely=0.3,anchor='center')
+
+        #Buttons
+        ruta = self.rutas('imagenes','mas.png')
+        self.boton_interes = Button(self.frame_interes)
+        self.boton_interes.config(text='Ingresar',font=('century gothic',14,'bold'),width=140,background='#D3B9B4',bd=2,relief='groove')
+        imagen_interes_pil = Image.open(ruta)
+        imagen_interes_resize = imagen_interes_pil.resize((20,20))
+        imagen_interes_tk = ImageTk.PhotoImage(imagen_interes_resize)
+        self.boton_interes.config(image=imagen_interes_tk,compound='left',padx=15)
+        self.boton_interes.place(relx=0.5,rely=0.55,anchor='center')
+        self.boton_interes.image = imagen_interes_tk
