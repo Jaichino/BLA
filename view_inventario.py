@@ -199,7 +199,7 @@ class NuevoProducto:
     def __init__(self,root):
         self.root = root
         self.root.title('Nuevo Producto')
-        self.root.geometry('500x400+433+145')
+        self.root.geometry('500x400+433+110')
         self.root.resizable(False,False)
         self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
         self.widgets()
@@ -505,17 +505,17 @@ class Vencimientos:
         self.style.configure("Treeview.Heading", font=('century gothic',12,'bold'))
         self.style.configure("Treeview",font=('century gothic',10))
 
-        self.tv_vencimientos.column("#0",width=100,anchor='center')
+        self.tv_vencimientos.column("#0",width=150,anchor='center')
         self.tv_vencimientos.column("col1",width=550,anchor='center')
         self.tv_vencimientos.column("col2",width=80,anchor='center')
         self.tv_vencimientos.column("col3",width=150,anchor='center')
-        self.tv_vencimientos.column("col4",width=200,anchor='center')
+        self.tv_vencimientos.column("col4",width=150,anchor='center')
         
         self.tv_vencimientos.heading("#0",text="Código",anchor='center')
         self.tv_vencimientos.heading("col1",text='Descripción',anchor='center')
         self.tv_vencimientos.heading("col2",text='Stock',anchor='center')
         self.tv_vencimientos.heading("col3",text='Vencimiento',anchor='center')
-        self.tv_vencimientos.heading("col4",text='Días p/vencimiento',anchor='center')
+        self.tv_vencimientos.heading("col4",text='Vence en',anchor='center')
 
         self.tv_vencimientos.grid(row=0,column=0,sticky='nsew')
 

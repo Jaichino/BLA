@@ -385,7 +385,7 @@ class ConsultaVentas:
         self.style.configure("Treeview.Heading", font=('century gothic',11,'bold'))
         self.style.configure("Treeview", font=('century gothic',10))
 
-        self.tv_consultaventas.column("#0",width=90,anchor='center')
+        self.tv_consultaventas.column("#0",width=80,anchor='center')
         self.tv_consultaventas.column("col1",width=150,anchor='center')
         self.tv_consultaventas.column("col2",width=300,anchor='center')
         self.tv_consultaventas.column("col3",width=150,anchor='center')
@@ -404,7 +404,7 @@ class ConsultaVentas:
         # Scrollbar Treeview
         self.scrollbar = ttk.Scrollbar(self.frame_treeview,orient='vertical',command=self.tv_consultaventas.yview)
         self.tv_consultaventas.configure(yscrollcommand=self.scrollbar.set)
-        self.tv_consultaventas.grid(row=0,column=1,sticky='ns')
+        self.scrollbar.grid(row=0,column=1,sticky='ns')
 
         self.frame_treeview.grid_rowconfigure(0,weight=1)
         self.frame_treeview.grid_columnconfigure(0,weight=1)
@@ -422,12 +422,13 @@ class ConsultaVentas:
 
 ################################################################################################################################################
 ################################################### VENTANA DETALLES DE VENTAS #################################################################
+
 class DetalleVentas:
 
     def __init__(self,root):
         self.root = root
         self.root.title('Detalle de Venta')
-        self.root.geometry('700x400+333+174')
+        self.root.geometry('900x400+233+174')
         self.root.resizable(False,False)
         self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
         self.widgets()
@@ -442,15 +443,15 @@ class DetalleVentas:
     def widgets(self):
         #Frames
         self.frame_infoventa = Frame(self.root)
-        self.frame_infoventa.config(width=700,height=50,background="#EDE2E0")
+        self.frame_infoventa.config(width=900,height=50,background="#EDE2E0")
         self.frame_infoventa.place(x=0,y=0)
 
         self.frame_tvdetalle = Frame(self.root)
-        self.frame_tvdetalle.config(width=700,height=300,background="#EDE2E0")
+        self.frame_tvdetalle.config(width=900,height=300,background="#EDE2E0")
         self.frame_tvdetalle.place(x=0,y=50)
 
         self.frame_imprimir = Frame(self.root)
-        self.frame_imprimir.config(width=700,height=50,background="#EDE2E0")
+        self.frame_imprimir.config(width=900,height=50,background="#EDE2E0")
         self.frame_imprimir.place(x=0,y=350)
 
         #Labels
@@ -475,8 +476,8 @@ class DetalleVentas:
         self.style = ttk.Style(self.frame_tvdetalle)
         self.style.configure("Treeview.Heading", font=('century gothic',10,'bold'))
 
-        self.tv_detalleventas.column("#0",width=100,anchor='center')
-        self.tv_detalleventas.column("col1",width=400,anchor='center')
+        self.tv_detalleventas.column("#0",width=200,anchor='center')
+        self.tv_detalleventas.column("col1",width=500,anchor='center')
         self.tv_detalleventas.column("col2",width=100,anchor='center')
         self.tv_detalleventas.column("col3",width=100,anchor='center')
 
@@ -487,4 +488,56 @@ class DetalleVentas:
         
         self.tv_detalleventas.pack(side=LEFT,fill=Y)
 
+################################################################################################################################################
+################################################### VENTANA DETALLES DE VENTAS #################################################################
 
+# Clase para la creación de una ventana que se va a llamar cuando el medio de pago elegido sea debito/credito, se permitirá poner un monto de
+# dinero el cuál se sumará al monto total de la venta
+
+class InterfazInteres:
+
+    def __init__(self,root):
+        self.root = root
+        self.root.title('Interés por pago Débito/Crédito')
+        self.root.geometry('400x200+483+274')
+        self.root.resizable(False,False)
+        self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
+        self.widgets()
+    
+    def rutas(self, *paths):
+        if getattr(sys, 'frozen', False):  # Ejecutable generado con PyInstaller
+            ruta_base = sys._MEIPASS
+        else:  # Ejecución normal en el entorno de desarrollo
+            ruta_base = os.path.dirname(os.path.abspath(__file__))
+        return os.path.join(ruta_base, *paths)
+    
+    def widgets(self):
+        #Frames
+        self.frame_interes = Frame(self.root)
+        self.frame_interes.config(width=400,height=300,background='#EDE2E0')
+        self.frame_interes.place(x=0,y=0)
+
+        #Labels
+        self.label_titulo = Label(self.frame_interes)
+        self.label_titulo.config(text='Ingreso de Intereses',font=('century gothic',18,'bold'),background='#EDE2E0')
+        self.label_titulo.place(relx=0.5,rely=0.1,anchor='center')
+
+        self.label_interes = Label(self.frame_interes)
+        self.label_interes.config(text='Monto interés',font=('century gothic',14),background='#EDE2E0')
+        self.label_interes.place(relx=0.3,rely=0.3,anchor='center')
+
+        #Entries
+        self.entry_interes = Entry(self.frame_interes)
+        self.entry_interes.config(font=('century gothic',14),width=10,bd=1,relief='solid')
+        self.entry_interes.place(relx=0.7,rely=0.3,anchor='center')
+
+        #Buttons
+        ruta = self.rutas('imagenes','mas.png')
+        self.boton_interes = Button(self.frame_interes)
+        self.boton_interes.config(text='Ingresar',font=('century gothic',14,'bold'),width=140,background='#D3B9B4',bd=2,relief='groove')
+        imagen_interes_pil = Image.open(ruta)
+        imagen_interes_resize = imagen_interes_pil.resize((20,20))
+        imagen_interes_tk = ImageTk.PhotoImage(imagen_interes_resize)
+        self.boton_interes.config(image=imagen_interes_tk,compound='left',padx=15)
+        self.boton_interes.place(relx=0.5,rely=0.55,anchor='center')
+        self.boton_interes.image = imagen_interes_tk
