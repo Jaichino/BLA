@@ -34,9 +34,9 @@ class ModeloProducto:
 
         #Si se quiere filtrar por descripcion:
         if descripcion is not None:
-            query += ' AND descripcion LIKE %s'
-          
-            params.append(f'{descripcion}%')
+            query += ' AND descripcion ILIKE %s'
+        
+            params.append(f'%{descripcion}%')
         
         #Se finaliza con un ORDER BY para mostrar los productos en orden alfabético:
         query += ' ORDER BY descripcion'
