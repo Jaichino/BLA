@@ -2,7 +2,7 @@ from view_ventas import VentanaVentas,ConsultaVentas,DetalleVentas,ConfirmacionV
 from modelo_ventas import ModeloVentas
 from modelo_producto import ModeloProducto
 from modelo_ccorriente import ModeloCuentaCorriente
-from tkinter import messagebox, Toplevel, Tk
+from tkinter import messagebox, Toplevel
 from datetime import datetime
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas

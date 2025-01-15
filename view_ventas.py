@@ -1,5 +1,5 @@
 #Fichero para la creación de la interfaz gráfica del modulo de ventas
-from tkinter import *
+from tkinter import Frame,Entry,Button,Label,LabelFrame,IntVar
 from tkinter import ttk
 from tkcalendar import Calendar,DateEntry
 from PIL import Image,ImageTk
@@ -168,7 +168,7 @@ class VentanaVentas:
         self.tv_ventas.heading("col3",text='Precio Unitario',anchor='center')
         self.tv_ventas.heading("col4",text='Cantidad',anchor='center')
 
-        self.tv_ventas.pack(side=LEFT,fill=Y)
+        self.tv_ventas.pack(side='left',fill='y')
 
     # Función para limpiar los entry
     def limpiar_cajas(self):
@@ -486,7 +486,7 @@ class DetalleVentas:
         self.tv_detalleventas.heading("col2",text='Precio',anchor='center')
         self.tv_detalleventas.heading("col3",text='Cantidad',anchor='center')
         
-        self.tv_detalleventas.pack(side=LEFT,fill=Y)
+        self.tv_detalleventas.pack(side='left',fill='y')
 
 ################################################################################################################################################
 ################################################### VENTANA DETALLES DE VENTAS #################################################################

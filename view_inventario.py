@@ -1,6 +1,6 @@
-from tkinter import *
+from tkinter import Entry, Label, Frame, Button
 from tkinter import ttk
-from tkcalendar import Calendar,DateEntry
+from tkcalendar import DateEntry
 from PIL import Image,ImageTk
 import sys
 import os

@@ -2,7 +2,7 @@ from view_login import LoginApp
 from modelo_login import ModeloLogin
 from view_menu_principal import MenuPrincipal
 from controlador_menuprincipal import ControladorMenuPrincipal
-from tkinter import Tk,Toplevel,messagebox
+from tkinter import Tk,messagebox
 import bcrypt
 from controlador_producto import ControladorProducto
 ################################################################################################################################################

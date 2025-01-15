@@ -1,7 +1,7 @@
 from view_ccorriente import CuentaCorriente,SaldarCuentaCorriente,ActualizarCuentaCorriente
 from modelo_ccorriente import ModeloCuentaCorriente
 from modelo_ventas import ModeloVentas
-from tkinter import messagebox, Toplevel, Tk
+from tkinter import messagebox, Toplevel
 
 ################################################################################################################################################
 ################################################### CONTROLADOR DE CUENTA CORRIENTE ############################################################

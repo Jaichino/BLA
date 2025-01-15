@@ -1,7 +1,7 @@
 from view_admin import InterfazAdmin,InterfazEliminar,InterfazNuevoUsuario
 from modelo_login import ModeloLogin
 from modelo_admin import ModeloAdmin
-from tkinter import Tk,messagebox,Toplevel
+from tkinter import messagebox,Toplevel
 
 ################################################################################################################################################
 #################################################### CONTROLADOR ADMINISTRADOR #################################################################

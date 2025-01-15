@@ -5,7 +5,7 @@ from controlador_admin import ControladorAdmin
 from controlador_reportes import ControladorReportes
 from modelo_login import ModeloLogin
 from view_menu_principal import MenuPrincipal
-from tkinter import messagebox,Toplevel,Tk
+from tkinter import messagebox,Toplevel
 from datetime import datetime
 ################################################################################################################################################
 ################################################### CONTROLADOR MENÚ PRINCIPAL #################################################################

@@ -1,6 +1,6 @@
 from view_reportes import InterfazReportes,GananciasTotales,GananciasMensuales,MontoInventario,DeudasTotales
 from modelo_reportes import ModeloReportes
-from tkinter import Tk,Toplevel,messagebox
+from tkinter import Toplevel,messagebox
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator,StrMethodFormatter
 

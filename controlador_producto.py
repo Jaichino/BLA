@@ -1,6 +1,6 @@
 from view_inventario import InterfazInventario,Vencimientos,NuevoProducto,IngresoStock,ModificarProducto
 from modelo_producto import ModeloProducto
-from tkinter import messagebox, Toplevel, Tk
+from tkinter import messagebox, Toplevel
 
 ################################################################################################################################################
 ################################################### CONTROLADOR DE PRODUCTOS ###################################################################

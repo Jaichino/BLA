@@ -1,4 +1,4 @@
-from tkinter import *
+from tkinter import Entry,Label,Button,Frame
 from tkinter import ttk
 from PIL import Image, ImageTk
 import sys
