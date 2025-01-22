@@ -1,5 +1,5 @@
 #Fichero para la creación de la interfaz gráfica del modulo de ventas
-from tkinter import Frame,Entry,Button,Label,LabelFrame,IntVar
+from tkinter import Frame,Entry,Button,Label,LabelFrame,IntVar,Tk
 from tkinter import ttk
 from tkcalendar import Calendar,DateEntry
 from PIL import Image,ImageTk
@@ -222,12 +222,12 @@ class ConfirmacionVenta:
 
         self.label_entrega = Label(self.frame_confirmacion)
         self.label_entrega.config(text='Entrega: $',font=('century gothic',16,'bold'),background='#EDE2E0')
-        self.label_entrega.place(relx=0.06,rely=0.68)
+        self.label_entrega.place(relx=0.06,rely=0.75)
 
         #Entries
         self.entry_entrega = Entry(self.frame_confirmacion)
         self.entry_entrega.config(width=18,font=('century gothic',16),bd=1,relief='solid')
-        self.entry_entrega.place(relx=0.35,rely=0.68)
+        self.entry_entrega.place(relx=0.35,rely=0.75)
 
         #Radiobuttons y labelframe
         #Se crea primero el LabelFrame que contendrá a los radiobuttons
@@ -260,8 +260,18 @@ class ConfirmacionVenta:
         imagen_confirmar_resize = imagen_confirmar_pil.resize((30,30))
         imagen_confirmar_tk = ImageTk.PhotoImage(imagen_confirmar_resize)
         self.boton_confirmar.config(image=imagen_confirmar_tk,compound='left',anchor='center')
-        self.boton_confirmar.place(relx=0.5,rely=0.9,anchor='center')
+        self.boton_confirmar.place(relx=0.5,rely=0.92,anchor='center')
         self.boton_confirmar.image = imagen_confirmar_tk
+
+        ruta = self.rutas('imagenes','tarjeta.png')
+        self.boton_interes = Button(self.frame_confirmacion)
+        self.boton_interes.config(text='Recargo',font=('century gothic',14,'bold'),width=150,padx=15,background='#D3B9B4',bd=2,relief='groove')
+        imagen_interes_pil = Image.open(ruta)
+        imagen_interes_resize = imagen_interes_pil.resize((30,30))
+        imagen_interes_tk = ImageTk.PhotoImage(imagen_interes_resize)
+        self.boton_interes.config(image=imagen_interes_tk,compound='left',anchor='center')
+        self.boton_interes.place(relx=0.5,rely=0.65,anchor='center')
+        self.boton_interes.image = imagen_interes_tk
 
     #Función que retornará la selección de los radiobuttons(1,2,3)
     def seleccion_radiobutton(self):

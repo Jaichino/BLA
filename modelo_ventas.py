@@ -10,11 +10,11 @@ class ModeloVentas:
     ####################################################################################################################################################
     #Método para realizar una nueva venta
     @staticmethod
-    def nueva_venta(nro_venta,cliente,monto_total,modo_pago,estado_venta):
+    def nueva_venta(nro_venta,cliente,monto_total,modo_pago,estado_venta,interes):
 
-        query = 'INSERT INTO Ventas (nro_venta,cliente,monto_total,id_modo_pago,estado_venta) VALUES (%s,%s,%s,%s,%s)'
+        query = 'INSERT INTO Ventas (nro_venta,cliente,monto_total,id_modo_pago,estado_venta,interes) VALUES (%s,%s,%s,%s,%s,%s)'
 
-        BaseDatos.realizar_consulta(query,(nro_venta,cliente,monto_total,modo_pago,estado_venta),'INSERT')
+        BaseDatos.realizar_consulta(query,(nro_venta,cliente,monto_total,modo_pago,estado_venta,interes),'INSERT')
 
     ####################################################################################################################################################
     #Método para realizar una nueva venta
@@ -132,7 +132,8 @@ class ModeloVentas:
         query = ''' SELECT
                         TO_CHAR(fecha_venta,'DD-MM-YYYY'),
                         cliente,
-                        monto_total
+                        monto_total,
+                        interes
                     FROM Ventas
                     WHERE nro_venta = %s
                 '''
@@ -142,7 +143,6 @@ class ModeloVentas:
     #Método para consultar ventas con pagos pendientes
     @staticmethod
     def pagos_pendientes():
-
         query = ''' SELECT
                         v.nro_venta,
                         TO_CHAR(v.fecha_venta,'DD-MM-YYYY'),
@@ -156,4 +156,3 @@ class ModeloVentas:
                     ORDER BY v.nro_venta
                 '''
         return BaseDatos.realizar_consulta(query,None,'SELECT')
-    

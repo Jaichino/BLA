@@ -1,4 +1,4 @@
-from view_ventas import VentanaVentas,ConsultaVentas,DetalleVentas,ConfirmacionVenta
+from view_ventas import VentanaVentas,ConsultaVentas,DetalleVentas,ConfirmacionVenta,InterfazInteres
 from modelo_ventas import ModeloVentas
 from modelo_producto import ModeloProducto
 from modelo_ccorriente import ModeloCuentaCorriente
@@ -88,8 +88,23 @@ class ControladorVentas:
         # Configuración boton imprimir factura
         self.ventana_detalle_ventas.boton_pdf.config(command=self.detalleventas_imprimirpdf)
 
+    # Función para abrir ventana interés de venta
+    def abrir_ventana_interesventa(self):
+        # Si se selecciona un medio de pago que no sea débito/crédito, se muestra mensaje de error
+        modo_pago = self.ventana_finalizacion_venta.seleccion_radiobutton()
+        if modo_pago != 3:
+            messagebox.showerror('Error','Solo se puede agregar interés si el modo de pago es Débito/Crédito')	
+            return
+        
+        self.toplevel_interes_venta = Toplevel(self.root)
+        self.ventana_interes_venta = InterfazInteres(self.toplevel_interes_venta)
+        self.toplevel_interes_venta.grab_set()
+
+        self.ventana_interes_venta.boton_interes.config(command=self.boton_agregar_interes)
+
     # Función que inicializa la ventana Finalización de venta
     def abrir_ventana_finalizacionventa(self):
+
         self.toplevel_finalizacion_venta = Toplevel(self.root)
         self.ventana_finalizacion_venta = ConfirmacionVenta(self.toplevel_finalizacion_venta)
         self.toplevel_finalizacion_venta.grab_set()
@@ -100,15 +115,18 @@ class ControladorVentas:
             self.nro_venta = 1
         else:
             self.nro_venta = self.modelo_ventas.ultimo_nro_venta()[0][0] + 1
-            
+
+        self.interes = 0
+
         # Modificación del label nro_venta
         self.ventana_finalizacion_venta.label_numero_venta.config(text = f'Venta #{self.nro_venta}')
         
         # Inicialización con el monto_total_venta y nro_venta
         self.ventana_finalizacion_venta.label_total_venta.config(text=f'Total Venta: ${self.monto_total_venta}')
-    
+        
         #Configuración de la función del boton
         self.ventana_finalizacion_venta.boton_confirmar.config(command=self.boton_confirmar_venta)
+        self.ventana_finalizacion_venta.boton_interes.config(command=self.abrir_ventana_interesventa)
 
     # Función para minimizar el root
     def minimizar_root(self):
@@ -381,7 +399,7 @@ class ControladorVentas:
             if monto_abonado == self.monto_total_venta:
 
                 # Registro de venta en Ventas
-                self.modelo_ventas.nueva_venta(self.nro_venta,self.cliente_venta,self.monto_total_venta,modo_pago,'Pagado')
+                self.modelo_ventas.nueva_venta(self.nro_venta,self.cliente_venta,self.monto_total_venta,modo_pago,'Pagado',self.interes)
 
                 # Registro en Detalle Ventas
                 for producto in self.lista_carrito:
@@ -412,7 +430,7 @@ class ControladorVentas:
                 pregunta = messagebox.askyesno('Cuenta Corriente','La venta se agregará a cuentas corrientes, ¿Desea seguir?')
                 if pregunta:
                     # Registro de Venta con estado_venta = Pendiente
-                    self.modelo_ventas.nueva_venta(self.nro_venta,self.cliente_venta,self.monto_total_venta,modo_pago,'Pendiente')
+                    self.modelo_ventas.nueva_venta(self.nro_venta,self.cliente_venta,self.monto_total_venta,modo_pago,'Pendiente',self.interes)
 
                     # Registro Detalle Ventas
                     for producto in self.lista_carrito:
@@ -473,7 +491,7 @@ class ControladorVentas:
                 monto_total = self.modelo_ventas.monto_total_venta(self.nro_venta)[0][0]
 
                 # Generación de la factura
-                self.generar_factura_pdf(self.cliente_venta,lista_detalle_venta,monto_total,self.nro_venta,fecha_venta)   
+                self.generar_factura_pdf(self.cliente_venta,lista_detalle_venta,monto_total,self.nro_venta,fecha_venta,self.interes)   
 
         # Manejo de errores
         except ValueError:
@@ -526,7 +544,6 @@ class ControladorVentas:
         else:
             messagebox.showerror('Error','Se debe seleccionar un elemento')
 
-
     # Función para incluir en el boton "Imprimir Factura" de la ventana Detalle de ventas
     def detalleventas_imprimirpdf(self):
         # Recuperar elemento seleccionado en Treeview
@@ -543,13 +560,14 @@ class ControladorVentas:
             fecha = info_venta[0][0]
             cliente = info_venta[0][1]
             monto_total = info_venta[0][2]
+            interes = info_venta[0][3]
             # Obtención lista de productos de la venta
             productos = self.modelo_ventas.consultar_detalleventas(nro_factura)
 
             # Imprimir factura
             consulta_imprimir_pdf = messagebox.askyesno('Imprimir Factura',f'Desea imprimir la factura')
             if consulta_imprimir_pdf:
-                self.generar_factura_pdf(cliente,productos,monto_total,nro_factura,fecha) 
+                self.generar_factura_pdf(cliente,productos,monto_total,nro_factura,fecha,interes) 
     
     # Función para introducir pagos 'Pendiente' en el Treeview de Consulta de Ventas. En caso de que no haya pagos pendientes, se muestra mensaje
     def boton_pagos_pendientes(self):
@@ -564,6 +582,25 @@ class ControladorVentas:
         else:
             messagebox.showinfo('Pagos Pendientes','No se encontraron pagos pendientes!')
 
+    # Función para agregar interes de venta
+    def boton_agregar_interes(self):
+        try:
+
+            interes = float(self.ventana_interes_venta.entry_interes.get())
+            if interes > 0:
+                # Actualización del interés y del monto total de venta
+                self.interes = interes
+                self.monto_total_venta += interes
+                # Actualización del label total_venta
+                self.ventana_finalizacion_venta.label_total_venta.config(text=f'Total Venta: ${self.monto_total_venta}')
+
+            # Cierre de ventana
+            self.toplevel_interes_venta.destroy()
+        
+        except ValueError:
+            messagebox.showerror('Error','Error en el ingreso de datos')
+        except Exception as error:
+            messagebox.showerror('Error',f'Error inesperado - {error}')
     ###############################################################################################################################################
     ###################################################### GENERACIÓN DE FACTURAS #################################################################
     # Función para que no haya problemas con la ruta a imagenes
@@ -575,7 +612,7 @@ class ControladorVentas:
         return os.path.join(ruta_base, *paths)
     
     # Función para generar facturas en PDF
-    def generar_factura_pdf(self,cliente,productos,total,nro_factura,fecha):
+    def generar_factura_pdf(self,cliente,productos,total,nro_factura,fecha,interes):
         base_dir = os.path.dirname(os.path.abspath(__file__))
         ruta_facturas = os.path.join(base_dir,"Facturas")
         if not os.path.exists(ruta_facturas):
@@ -632,7 +669,7 @@ class ControladorVentas:
         c.setFont("Helvetica-Bold",15)
         c.drawString(50,height-380,'Detalle de la venta')
 
-        data = [['Código','Producto','Precio','Cantidad']] + productos
+        data = [['Código','Producto','Precio Unit.','Cantidad']] + productos
             # Crear la tabla con estilo
         table = Table(data, colWidths=[100, 260, 100, 60])
         table.setStyle(TableStyle([
@@ -649,10 +686,18 @@ class ControladorVentas:
         y_position = height - 400 - table_height
         table.wrapOn(c, width, height)
         table.drawOn(c, 50, y_position)
+        
+        # Si hay interés, ya sea para cuando se imprime la factura en el momento de la venta o luego de realizada la venta, se muestra
+        # dicho interes usando el valor guardado (self.interes) o consultando la base de datos para obtener el interés que se guardó en
+        # el momento de realizar la venta (interes_registro).
 
-        # Total de la venta
+        if interes > 0:
+            c.setFont("Helvetica",14)
+            c.drawString(50,height-570,f'Interés por pago en Débito/Crédito: ${interes:.1f}')
+        
+        # Total a pagar
         c.setFont("Helvetica-Bold",16)
-        c.drawString(50,height-600,f'Total de la venta: ${total}')
+        c.drawString(50,height-600,f'Total a pagar: ${total:.1f}')
 
         # Línea separadora
         c.line(50,height-630,width-50,height-630)
