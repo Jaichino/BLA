@@ -190,3 +190,9 @@ class ModeloProducto:
                 '''
         return BaseDatos.realizar_consulta(query,None,'SELECT')
     
+    ####################################################################################################################################################
+    #Función para devolver al stock los productos de una venta que se eliminó, según el nro_producto
+    @staticmethod
+    def devolver_producto_a_stock(nro_producto,cantidad_devuelta):
+        query = 'UPDATE Productos SET stock = stock + %s WHERE nro_producto = %s'
+        BaseDatos.realizar_consulta(query,(cantidad_devuelta,nro_producto),'UPDATE')

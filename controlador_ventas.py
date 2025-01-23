@@ -500,7 +500,8 @@ class ControladorVentas:
             messagebox.showerror('Error',f'Error inesperado - {error}')
 
     # Función para eliminar una venta. Primero, para evitar excepciones en la base de datos se debe eliminar el nro_venta de la tabla
-    # DetalleVentas y finalmente eliminarlo desde la tabla Ventas
+    # DetalleVentas y finalmente eliminarlo desde la tabla Ventas.
+    # También se mostrará messagebox para consultar si se quieren devolver al stock los productos que se vendieron en esa venta
     def eliminar_venta(self):
         # Recuperar elemento seleccionado del Treeview
         elemento_seleccionado = self.ventana_consulta_ventas.tv_consultaventas.selection()
@@ -513,11 +514,22 @@ class ControladorVentas:
             # Recuperación del nro_venta
             nro_venta = self.ventana_consulta_ventas.tv_consultaventas.item(elemento_seleccionado,'text')
 
+            # Obtención de productos y cantidades vendidos en la venta
+            productos_cantidades = self.modelo_ventas.productos_vendidos(nro_venta)
+            
             # Eliminación. Primero se elimina del detalle y luego de la venta
             confirmacion = messagebox.askyesno('Eliminar Venta',f'¿Eliminar venta #{nro_venta}?')
             if confirmacion:
                 self.modelo_ventas.eliminar_detalleventas(nro_venta)
                 self.modelo_ventas.eliminar_venta(nro_venta)
+
+                # Consulta para devolver al stock los productos vendidos en la venta
+                consulta_devolver_stock = messagebox.askyesno('Devolver Stock','¿Desea devolver al stock los productos vendidos en la venta?')
+                if consulta_devolver_stock:
+                    for producto_cantidad in productos_cantidades:
+                        ModeloProducto.devolver_producto_a_stock(producto_cantidad[0],producto_cantidad[1])
+                    
+                    messagebox.showinfo('Stock Devuelto','Stock devuelto correctamente!')
 
                 # Mensaje de confirmación
                 messagebox.showinfo('Venta eliminada',f'La venta {nro_venta} ha sido eliminada!')

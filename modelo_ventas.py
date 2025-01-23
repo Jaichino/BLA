@@ -156,3 +156,16 @@ class ModeloVentas:
                     ORDER BY v.nro_venta
                 '''
         return BaseDatos.realizar_consulta(query,None,'SELECT')
+    
+    ####################################################################################################################################################
+    #Método para obtener los números de producto y cantidades vendidas en una determinada venta
+    @staticmethod
+    def productos_vendidos(nro_venta):
+        query = ''' SELECT
+                        dv.nro_producto,
+                        dv.cantidad
+                    FROM DetalleVentas dv
+                    WHERE dv.nro_venta = %s
+                '''
+        return BaseDatos.realizar_consulta(query,(nro_venta,),'SELECT')
+    
