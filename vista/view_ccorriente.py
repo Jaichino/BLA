@@ -16,7 +16,7 @@ class CuentaCorriente:
         self.root.title('BLA Estética - Cuentas Corrientes')
         self.root.geometry('1000x590+183+79')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
         self.widgets()
     
     def rutas(self, *paths):
@@ -75,7 +75,7 @@ class CuentaCorriente:
         self.entry_cliente.place(relx=0.2,rely=0.5,anchor='center')
 
         #Buttons
-        ruta = self.rutas('imagenes','consulta_ventas.png')
+        ruta = self.rutas('../imagenes','consulta_ventas.png')
         self.boton_buscar = Button(self.frame_busqueda)
         self.boton_buscar.config(text='Buscar',font=('century gothic',14,'bold'),width=120,background='#D3B9B4',bd=2,relief='groove')
         imagen_buscar_pil = Image.open(ruta)
@@ -85,7 +85,7 @@ class CuentaCorriente:
         self.boton_buscar.place(relx=0.4,rely=0.5,anchor='center')
         self.boton_buscar.image = imagen_buscar_tk
 
-        ruta = self.rutas('imagenes','ventas.png')
+        ruta = self.rutas('../imagenes','ventas.png')
         self.boton_agregarpago = Button(self.frame_resumencc)
         self.boton_agregarpago.config(text='Agregar pago',font=('century gothic',14,'bold'),width=180,background='#D3B9B4',bd=2,relief='groove')
         imagen_agregarpago_pil = Image.open(ruta)
@@ -95,7 +95,7 @@ class CuentaCorriente:
         self.boton_agregarpago.place(relx=0.2,rely=0.7,anchor='center')
         self.boton_agregarpago.image = imagen_agregarpago_tk
 
-        ruta = self.rutas('imagenes','modificar.png')
+        ruta = self.rutas('../imagenes','modificar.png')
         self.boton_actualizarpago = Button(self.frame_resumencc)
         self.boton_actualizarpago.config(text='Actualizar Deuda',font=('century gothic',14,'bold'),width=180,background='#D3B9B4',bd=2,relief='groove')
         imagen_actualizarpago_pil = Image.open(ruta)
@@ -105,7 +105,7 @@ class CuentaCorriente:
         self.boton_actualizarpago.place(relx=0.5,rely=0.7,anchor='center')
         self.boton_actualizarpago.image = imagen_actualizarpago_tk
 
-        ruta = self.rutas('imagenes','eliminar.png')
+        ruta = self.rutas('../imagenes','eliminar.png')
         self.boton_borraroperacion = Button(self.frame_resumencc)
         self.boton_borraroperacion.config(text='Borrar Operación',font=('century gothic',14,'bold'),width=180,background='#D3B9B4',bd=2,relief='groove')
         imagen_borraroperacion_pil = Image.open(ruta)
@@ -167,7 +167,7 @@ class SaldarCuentaCorriente:
         self.root.title('Agregar pago a cuenta corriente')
         self.root.geometry('400x100+483+324')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
         self.widgets()
 
     def rutas(self, *paths):
@@ -194,7 +194,7 @@ class SaldarCuentaCorriente:
         self.entry_nuevopago.place(relx=0.6,rely=0.28,anchor='center')
 
         #Buttons
-        ruta = self.rutas('imagenes','mas.png')
+        ruta = self.rutas('../imagenes','mas.png')
         self.boton_nuevopago = Button(self.frame_saldocc)
         self.boton_nuevopago.config(text='Agregar',font=('century gothic',12,'bold'),width=140,background='#D3B9B4',bd=2,relief='groove')
         imagen_nuevopago_pil = Image.open(ruta)
@@ -217,7 +217,7 @@ class ActualizarCuentaCorriente:
         self.root.title('Actualizar cuenta corriente')
         self.root.geometry('400x100+483+324')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
         self.widgets()
 
     def rutas(self, *paths):
@@ -244,7 +244,7 @@ class ActualizarCuentaCorriente:
         self.entry_actualizacion.place(relx=0.6,rely=0.28,anchor='center')
 
         #Buttons
-        ruta = self.rutas('imagenes','mas.png')
+        ruta = self.rutas('../imagenes','mas.png')
         self.boton_actualizacion = Button(self.frame_actualizacioncc)
         self.boton_actualizacion.config(text='Agregar',font=('century gothic',12,'bold'),width=140,background='#D3B9B4',bd=2,relief='groove')
         imagen_actualizacion_pil = Image.open(ruta)

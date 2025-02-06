@@ -1,10 +1,10 @@
-from controlador_producto import ControladorProducto
-from controlador_ventas import ControladorVentas
-from controlador_ccorriente import ControladorCuentaCorriente
-from controlador_admin import ControladorAdmin
-from controlador_reportes import ControladorReportes
-from modelo_login import ModeloLogin
-from view_menu_principal import MenuPrincipal
+from controlador.controlador_producto import ControladorProducto
+from controlador.controlador_ventas import ControladorVentas
+from controlador.controlador_ccorriente import ControladorCuentaCorriente
+from controlador.controlador_admin import ControladorAdmin
+from controlador.controlador_reportes import ControladorReportes
+from modelo.modelo_login import ModeloLogin
+from vista.view_menu_principal import MenuPrincipal
 from tkinter import messagebox,Toplevel
 from datetime import datetime
 ################################################################################################################################################

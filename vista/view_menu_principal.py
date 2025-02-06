@@ -15,7 +15,7 @@ class MenuPrincipal:
         self.root.title('Sistema de Gestión - BLA Estética')
         self.root.geometry('800x510+283+119')
         self.root.resizable(0,0)
-        self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
         self.widgets()
     
     def rutas(self, *paths):
@@ -40,7 +40,7 @@ class MenuPrincipal:
         self.frame_informacion.place(x=0,y=480)
 
         #Imagen
-        ruta = self.rutas('imagenes','logo_sin_fondo.png')
+        ruta = self.rutas('../imagenes','logo_sin_fondo.png')
         imagen = Image.open(ruta)
         imagen_modificada = imagen.resize((150,150))
         imagen_tk = ImageTk.PhotoImage(imagen_modificada)
@@ -60,7 +60,7 @@ class MenuPrincipal:
 
         #Botones del menú
         #Se usa la librería PIL para abrir la imagen, realizarle un cambio de tamaño y luego mediante ImageTk darle el formato adecuado para cargarlo
-        ruta = self.rutas('imagenes','ventas.png')
+        ruta = self.rutas('../imagenes','ventas.png')
         self.boton_ventas = Button(self.frame_menu)
         self.boton_ventas.config(text="Ventas",width=300,height=120,font=('century gothic',18,'bold'),background='#D3B9B4')
         imagen_venta_pil = Image.open(ruta)
@@ -70,7 +70,7 @@ class MenuPrincipal:
         self.boton_ventas.place(relx=0.08,rely=0.048)
         self.boton_ventas.image = imagen_venta_tk
 
-        ruta = self.rutas('imagenes','cuenta_corriente.png')
+        ruta = self.rutas('../imagenes','cuenta_corriente.png')
         self.boton_cuentacorriente = Button(self.frame_menu)
         self.boton_cuentacorriente.config(text="Cuentas\n Corrientes",width=300,height=120,font=('century gothic',18,'bold'),background='#D3B9B4')
         imagen_cuentacorriente_pil = Image.open(ruta)
@@ -80,7 +80,7 @@ class MenuPrincipal:
         self.boton_cuentacorriente.place(relx=0.5,rely=0.048)
         self.boton_cuentacorriente.image = imagen_cuentacorriente_tk
 
-        ruta = self.rutas('imagenes','inventario.png')
+        ruta = self.rutas('../imagenes','inventario.png')
         self.boton_inventario = Button(self.frame_menu)
         self.boton_inventario.config(text="Productos",width=300,height=120,font=('century gothic',18,'bold'),background='#D3B9B4')
         imagen_inventario_pil = Image.open(ruta)
@@ -90,7 +90,7 @@ class MenuPrincipal:
         self.boton_inventario.place(relx=0.08,rely=0.52)
         self.boton_inventario.image = imagen_inventario_tk
 
-        ruta = self.rutas('imagenes','reportes.png')
+        ruta = self.rutas('../imagenes','reportes.png')
         self.boton_reportes = Button(self.frame_menu)
         self.boton_reportes.config(text="Reportes",width=300,height=120,font=('century gothic',18,'bold'),background='#D3B9B4')
         imagen_reportes_pil = Image.open(ruta)
@@ -100,7 +100,7 @@ class MenuPrincipal:
         self.boton_reportes.place(relx=0.5,rely=0.52)
         self.boton_reportes.image = imagen_reportes_tk
         
-        ruta = self.rutas('imagenes','administrador.png')
+        ruta = self.rutas('../imagenes','administrador.png')
         self.boton_administrador = Button(self.frame_menu)
         self.boton_administrador.config(width=50,height=50,borderwidth=0)
         imagen_administrador_pil = Image.open(ruta)

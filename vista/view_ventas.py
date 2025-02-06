@@ -15,7 +15,7 @@ class VentanaVentas:
         self.root.title('BLA Estética - Módulo de ventas')
         self.root.resizable(False,False)
         self.root.geometry("1250x590+58+79")
-        self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
         self.widgets()
     
     def rutas(self, *paths):
@@ -103,7 +103,7 @@ class VentanaVentas:
         self.entry_vencimiento.place(relx=0.18,rely=0.8,anchor='center')
 
         #Botones
-        ruta = self.rutas('imagenes','consulta_ventas.png')
+        ruta = self.rutas('../imagenes','consulta_ventas.png')
         self.boton_buscar = Button(self.frame_entradas,font=('century gothic',14,'bold'),width=50,height=35,background='#D3B9B4',bd=2,relief='groove')
         imagen_buscar_pil = Image.open(ruta)
         imagen_buscar_pil_resize = imagen_buscar_pil.resize((30,30))
@@ -112,7 +112,7 @@ class VentanaVentas:
         self.boton_buscar.place(relx=0.3,rely=0.65,anchor='center')
         self.boton_buscar.image = imagen_buscar_tk
 
-        ruta = self.rutas('imagenes','agregar_carrito.png')
+        ruta = self.rutas('../imagenes','agregar_carrito.png')
         self.boton_carrito = Button(self.frame_entradas,text='Agregar al carrito',font=('century gothic',14,'bold'),width=200,height=35,background='#D3B9B4',bd=2,relief='groove')
         imagen_carrito_pil = Image.open(ruta)
         imagen_carrito_pil_resize = imagen_carrito_pil.resize((30,30))
@@ -121,7 +121,7 @@ class VentanaVentas:
         self.boton_carrito.place(relx=0.89,rely=0.25,anchor='center')
         self.boton_carrito.image = imagen_carrito_tk
 
-        ruta = self.rutas('imagenes','eliminar.png')
+        ruta = self.rutas('../imagenes','eliminar.png')
         self.boton_eliminar_venta = Button(self.frame_entradas,text='Eliminar',font=('century gothic',14,'bold'),width=200,height=35,background='#D3B9B4',bd=2,relief='groove')
         imagen_eliminar_pil = Image.open(ruta)
         imagen_eliminar_pil_resize = imagen_eliminar_pil.resize((30,30))
@@ -130,7 +130,7 @@ class VentanaVentas:
         self.boton_eliminar_venta.place(relx=0.89,rely=0.75,anchor='center')
         self.boton_eliminar_venta.image = imagen_eliminar_tk
 
-        ruta = self.rutas('imagenes','listo.png')
+        ruta = self.rutas('../imagenes','listo.png')
         self.boton_finalizar_venta = Button(self.frame_resumen_venta,text='Finalizar Venta',font=('century gothic',14,'bold'),width=250,height=35,background='#D3B9B4',bd=2,relief='groove')
         imagen_finalizar_pil = Image.open(ruta)
         imagen_finalizar_pil_resize = imagen_finalizar_pil.resize((30,30))
@@ -139,7 +139,7 @@ class VentanaVentas:
         self.boton_finalizar_venta.place(relx=0.45,rely=0.55,anchor='center')
         self.boton_finalizar_venta.image = imagen_finalizar_tk
 
-        ruta = self.rutas('imagenes','consulta_ventas.png')
+        ruta = self.rutas('../imagenes','consulta_ventas.png')
         self.boton_consultaventas = Button(self.frame_finalizar_venta)
         self.boton_consultaventas.config(text="Consultar\n Ventas",width=200,font=('century gothic',14,'bold'),background='#D3B9B4',bd=2,relief='groove')
         imagen_consultaventa_pil = Image.open(ruta)
@@ -195,7 +195,7 @@ class ConfirmacionVenta:
         self.root.title('Confirmación de venta')
         self.root.geometry('400x450+483+149')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
         self.widgets()
     
     def rutas(self, *paths):
@@ -253,7 +253,7 @@ class ConfirmacionVenta:
         self.modo_pago_3.pack(anchor='w',fill='both')
 
         #Buttons
-        ruta = self.rutas('imagenes','ventas.png')
+        ruta = self.rutas('../imagenes','ventas.png')
         self.boton_confirmar = Button(self.frame_confirmacion)
         self.boton_confirmar.config(text='Confirmar',font=('century gothic',14,'bold'),width=150,padx=15,background='#D3B9B4',bd=2,relief='groove')
         imagen_confirmar_pil = Image.open(ruta)
@@ -263,7 +263,7 @@ class ConfirmacionVenta:
         self.boton_confirmar.place(relx=0.5,rely=0.92,anchor='center')
         self.boton_confirmar.image = imagen_confirmar_tk
 
-        ruta = self.rutas('imagenes','tarjeta.png')
+        ruta = self.rutas('../imagenes','tarjeta.png')
         self.boton_interes = Button(self.frame_confirmacion)
         self.boton_interes.config(text='Recargo',font=('century gothic',14,'bold'),width=150,padx=15,background='#D3B9B4',bd=2,relief='groove')
         imagen_interes_pil = Image.open(ruta)
@@ -290,7 +290,7 @@ class ConsultaVentas:
         self.root.title('BLA Estética - Consulta de Ventas')
         self.root.geometry('1000x590+183+79')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
         self.widgets()
     
     def rutas(self, *paths):
@@ -347,7 +347,7 @@ class ConsultaVentas:
         self.entry_cliente.place(relx=0.5,rely=0.22,anchor='center')
 
         #Buttons
-        ruta = self.rutas('imagenes','consulta_ventas.png')
+        ruta = self.rutas('../imagenes','consulta_ventas.png')
         self.boton_buscar = Button(self.frame_busqueda)
         self.boton_buscar.config(text='Buscar',font=('century gothic',14,'bold'),width=140,background='#D3B9B4',bd=2,relief='groove')
         imagen_buscar_pil = Image.open(ruta)
@@ -357,7 +357,7 @@ class ConsultaVentas:
         self.boton_buscar.place(relx=0.74,rely=0.25,anchor='center')
         self.boton_buscar.image = imagen_buscar_tk
 
-        ruta = self.rutas('imagenes','pago_pendiente.png')
+        ruta = self.rutas('../imagenes','pago_pendiente.png')
         self.boton_pendientes = Button(self.frame_busqueda)
         self.boton_pendientes.config(text='Pendientes',font=('century gothic',14,'bold'),width=140,background='#D3B9B4',bd=2,relief='groove')
         imagen_pendientes_pil = Image.open(ruta)
@@ -367,7 +367,7 @@ class ConsultaVentas:
         self.boton_pendientes.place(relx=0.74,rely=0.73,anchor='center')
         self.boton_pendientes.image = imagen_pendientes_tk
         
-        ruta = self.rutas('imagenes','detalle.png')
+        ruta = self.rutas('../imagenes','detalle.png')
         self.boton_detalle = Button(self.frame_busqueda)
         self.boton_detalle.config(text='Detalle',font=('century gothic',14,'bold'),width=140,background='#D3B9B4',bd=2,relief='groove')
         imagen_detalle_pil = Image.open(ruta)
@@ -377,7 +377,7 @@ class ConsultaVentas:
         self.boton_detalle.place(relx=0.9,rely=0.25,anchor='center')
         self.boton_detalle.image = imagen_detalle_tk
 
-        ruta = self.rutas('imagenes','eliminar.png')
+        ruta = self.rutas('../imagenes','eliminar.png')
         self.boton_eliminar = Button(self.frame_busqueda)
         self.boton_eliminar.config(text='Eliminar',font=('century gothic',14,'bold'),width=140,background='#D3B9B4',bd=2,relief='groove')
         imagen_eliminar_pil = Image.open(ruta)
@@ -440,7 +440,7 @@ class DetalleVentas:
         self.root.title('Detalle de Venta')
         self.root.geometry('900x400+233+174')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
         self.widgets()
     
     def rutas(self, *paths):
@@ -470,7 +470,7 @@ class DetalleVentas:
         self.label_nroventa.place(relx=0.5,rely=0.5,anchor='center')
 
         #Buttons
-        ruta = self.rutas('imagenes','pdf.png')
+        ruta = self.rutas('../imagenes','pdf.png')
         self.boton_pdf = Button(self.frame_imprimir)
         self.boton_pdf.config(text='Imprimir',font=('century gothic',12,'bold'),background='#D3B9B4',bd=2,relief='groove')
         imagen_pdf_pil = Image.open(ruta)
@@ -511,7 +511,7 @@ class InterfazInteres:
         self.root.title('Interés por pago Débito/Crédito')
         self.root.geometry('400x200+483+274')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
         self.widgets()
     
     def rutas(self, *paths):
@@ -542,7 +542,7 @@ class InterfazInteres:
         self.entry_interes.place(relx=0.7,rely=0.3,anchor='center')
 
         #Buttons
-        ruta = self.rutas('imagenes','mas.png')
+        ruta = self.rutas('../imagenes','mas.png')
         self.boton_interes = Button(self.frame_interes)
         self.boton_interes.config(text='Ingresar',font=('century gothic',14,'bold'),width=140,background='#D3B9B4',bd=2,relief='groove')
         imagen_interes_pil = Image.open(ruta)

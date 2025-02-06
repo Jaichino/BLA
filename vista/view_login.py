@@ -15,7 +15,7 @@ class LoginApp:
         self.root.title('BLA Estética - Login')
         self.root.geometry('600x350+383+199')
         self.root.resizable(0,0)
-        self.root.iconbitmap(self.rutas('imagenes','logosec_fondo.ico')) 
+        self.root.iconbitmap(self.rutas('../imagenes','logosec_fondo.ico')) 
         self.create_widgets()
 
     def rutas(self, *paths):
@@ -67,7 +67,7 @@ class LoginApp:
         self.login_button.place(relx=0.5,rely=0.85,anchor='center')
 
         #Imagen
-        ruta = self.rutas('imagenes','logo_sin_fondo.png')
+        ruta = self.rutas('../imagenes','logo_sin_fondo.png')
         imagen = Image.open(ruta)
         imagen_modificada = imagen.resize((250,250))
         imagen_tk = ImageTk.PhotoImage(imagen_modificada)

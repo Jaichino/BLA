@@ -16,7 +16,7 @@ class InterfazReportes:
         self.root.title('BLA - Reportes')
         self.root.geometry('350x350+508+199')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
         self.widgets()
     
     def rutas(self, *paths):
@@ -33,7 +33,7 @@ class InterfazReportes:
         self.frame_reportes.place(relx=0,rely=0)
 
         # Botones
-        ruta = self.rutas('imagenes','ventas.png')
+        ruta = self.rutas('../imagenes','ventas.png')
         self.boton_gananciastotales = Button(self.frame_reportes)
         self.boton_gananciastotales.config(text='Ganancias Totales',font=('century gothic',12,'bold'),width=260,padx=10,background='#D3B9B4',bd=2,relief='groove')
         imagen_gananciastotales_pil = Image.open(ruta)
@@ -43,7 +43,7 @@ class InterfazReportes:
         self.boton_gananciastotales.place(relx=0.5,rely=0.1,anchor='center')
         self.boton_gananciastotales.image = imagen_gananciastotales_tk
 
-        ruta = self.rutas('imagenes','deuda.png')
+        ruta = self.rutas('../imagenes','deuda.png')
         self.boton_montocc = Button(self.frame_reportes)
         self.boton_montocc.config(text='Monto Adeudado',font=('century gothic',12,'bold'),width=260,padx=10,background='#D3B9B4',bd=2,relief='groove')
         imagen_montocc_pil = Image.open(ruta)
@@ -53,7 +53,7 @@ class InterfazReportes:
         self.boton_montocc.place(relx=0.5,rely=0.3,anchor='center')
         self.boton_montocc.image = imagen_montocc_tk
 
-        ruta = self.rutas('imagenes','dinero_inventario.png')
+        ruta = self.rutas('../imagenes','dinero_inventario.png')
         self.boton_monto_inventario = Button(self.frame_reportes)
         self.boton_monto_inventario.config(text='Monto en Inventario',font=('century gothic',12,'bold'),width=260,padx=10,background='#D3B9B4',bd=2,relief='groove')
         imagen_monto_inventario_pil = Image.open(ruta)
@@ -63,7 +63,7 @@ class InterfazReportes:
         self.boton_monto_inventario.place(relx=0.5,rely=0.5,anchor='center')
         self.boton_monto_inventario.image = imagen_monto_inventario_tk
 
-        ruta = self.rutas('imagenes','estadistica.png')
+        ruta = self.rutas('../imagenes','estadistica.png')
         self.boton_masvendidos = Button(self.frame_reportes)
         self.boton_masvendidos.config(text='Productos más vendidos',font=('century gothic',12,'bold'),width=260,padx=10,background='#D3B9B4',bd=2,relief='groove')
         imagen_masvendidos_pil = Image.open(ruta)
@@ -73,7 +73,7 @@ class InterfazReportes:
         self.boton_masvendidos.place(relx=0.5,rely=0.7,anchor='center')
         self.boton_masvendidos.image = imagen_masvendidos_tk
 
-        ruta = self.rutas('imagenes','reportes.png')
+        ruta = self.rutas('../imagenes','reportes.png')
         self.boton_var_ganancias = Button(self.frame_reportes)
         self.boton_var_ganancias.config(text='Ganancias Mensuales',font=('century gothic',12,'bold'),width=260,padx=10,background='#D3B9B4',bd=2,relief='groove')
         imagen_var_ganancias_pil = Image.open(ruta)
@@ -89,7 +89,7 @@ class GananciasTotales:
         self.root.title('Ganancias Totales')
         self.root.geometry('350x220+508+264')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
         self.widgets()
     
     def rutas(self, *paths):
@@ -137,7 +137,7 @@ class DeudasTotales:
         self.root.title('Deudas Totales')
         self.root.geometry('350x100+508+324')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
         self.widgets()
     
     def rutas(self, *paths):
@@ -162,7 +162,7 @@ class MontoInventario:
         self.root.title('Valor total de Inventario')
         self.root.geometry('350x100+508+324')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
         self.widgets()
     
     def rutas(self, *paths):
@@ -187,7 +187,7 @@ class GananciasMensuales:
         self.root.title('Ganancias Mensuales')
         self.root.geometry('350x100+508+324')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
         self.widgets()
     
     def rutas(self, *paths):

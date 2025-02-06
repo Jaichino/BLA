@@ -1,7 +1,7 @@
-from view_ventas import VentanaVentas,ConsultaVentas,DetalleVentas,ConfirmacionVenta,InterfazInteres
-from modelo_ventas import ModeloVentas
-from modelo_producto import ModeloProducto
-from modelo_ccorriente import ModeloCuentaCorriente
+from vista.view_ventas import VentanaVentas,ConsultaVentas,DetalleVentas,ConfirmacionVenta,InterfazInteres
+from modelo.modelo_ventas import ModeloVentas
+from modelo.modelo_producto import ModeloProducto
+from modelo.modelo_ccorriente import ModeloCuentaCorriente
 from tkinter import messagebox, Toplevel
 from datetime import datetime
 from reportlab.lib.pagesizes import letter
@@ -645,7 +645,7 @@ class ControladorVentas:
         estilo_normal = styles['Normal']
 
         # Introducción del logo de la empresa en esquina superior
-        ruta = self.rutas('imagenes','logo_sin_fondo.png')
+        ruta = self.rutas('../imagenes','logo_sin_fondo.png')
         ruta_logo = ruta
         ancho_logo = 200
         alto_logo = 200

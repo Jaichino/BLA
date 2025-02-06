@@ -18,7 +18,7 @@ class InterfazInventario:
         self.root.title('BLA Estética - Inventario')
         self.root.geometry('1100x590+133+79')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
         self.widgets()
     
     def rutas(self, *paths):
@@ -80,7 +80,7 @@ class InterfazInventario:
         self.entry_descripcion.place(relx=0.25,rely=0.7,anchor='center')
 
         #Buttons
-        ruta = self.rutas('imagenes','filtrar.png')
+        ruta = self.rutas('../imagenes','filtrar.png')
         self.boton_filtar = Button(self.frame_busqueda)
         self.boton_filtar.config(text='Filtrar',font=('century gothic',14,'bold'),width=150,background='#D3B9B4',bd=2,relief='groove')
         imagen_botonfiltrar_pil = Image.open(ruta)
@@ -90,7 +90,7 @@ class InterfazInventario:
         self.boton_filtar.place(relx=0.45,rely=0.45,anchor='center')
         self.boton_filtar.image = imagen_botonfiltrar_tk
 
-        ruta = self.rutas('imagenes','sin_stock.png')
+        ruta = self.rutas('../imagenes','sin_stock.png')
         self.boton_cerostock = Button(self.frame_busqueda)
         self.boton_cerostock.config(text='Sin Stock',font=('century gothic',14,'bold'),width=150,background='#D3B9B4',bd=2,relief='groove')
         imagen_botoncerostock_pil = Image.open(ruta)
@@ -100,7 +100,7 @@ class InterfazInventario:
         self.boton_cerostock.place(relx=0.64,rely=0.45,anchor='center')
         self.boton_cerostock.image = imagen_botoncerostock_tk
 
-        ruta = self.rutas('imagenes','mas.png')
+        ruta = self.rutas('../imagenes','mas.png')
         self.boton_nuevo = Button(self.frame_botones)
         self.boton_nuevo.config(text='Nuevo',font=('century gothic',14,'bold'),width=120,background='#D3B9B4',bd=2,relief='groove')
         imagen_botonnuevo_pil = Image.open(ruta)
@@ -110,7 +110,7 @@ class InterfazInventario:
         self.boton_nuevo.place(relx=0.2,rely=0.5,anchor='center')
         self.boton_nuevo.image = imagen_botonnuevo_tk
 
-        ruta = self.rutas('imagenes','modificar.png')
+        ruta = self.rutas('../imagenes','modificar.png')
         self.boton_modificar = Button(self.frame_botones)
         self.boton_modificar.config(text='Modificar',font=('century gothic',14,'bold'),width=120,background='#D3B9B4',bd=2,relief='groove')
         imagen_botonmodificar_pil = Image.open(ruta)
@@ -120,7 +120,7 @@ class InterfazInventario:
         self.boton_modificar.place(relx=0.6,rely=0.5,anchor='center')
         self.boton_modificar.image = imagen_botonmodificar_tk
 
-        ruta = self.rutas('imagenes','eliminar.png')
+        ruta = self.rutas('../imagenes','eliminar.png')
         self.boton_eliminar = Button(self.frame_botones)
         self.boton_eliminar.config(text='Eliminar',font=('century gothic',14,'bold'),width=120,background='#D3B9B4',bd=2,relief='groove')
         imagen_botoneliminar_pil = Image.open(ruta)
@@ -130,7 +130,7 @@ class InterfazInventario:
         self.boton_eliminar.place(relx=0.8,rely=0.5,anchor='center')
         self.boton_eliminar.image = imagen_botoneliminar_tk
 
-        ruta = self.rutas('imagenes','ingresar_stock.png')
+        ruta = self.rutas('../imagenes','ingresar_stock.png')
         self.boton_ingresar = Button(self.frame_botones)
         self.boton_ingresar.config(text='Ingresar',font=('century gothic',14,'bold'),width=120,background='#D3B9B4',bd=2,relief='groove')
         imagen_botoningresar_pil = Image.open(ruta)
@@ -140,7 +140,7 @@ class InterfazInventario:
         self.boton_ingresar.place(relx=0.4,rely=0.5,anchor='center')
         self.boton_ingresar.image = imagen_botoningresar_tk
 
-        ruta = self.rutas('imagenes','vencimientos.png')
+        ruta = self.rutas('../imagenes','vencimientos.png')
         self.boton_vencimientos = Button(self.frame_busqueda)
         self.boton_vencimientos.config(text="Consultar\nVencimientos",width=180,font=('century gothic',14,'bold'),background='#D3B9B4',bd=2,relief='groove')
         imagen_vencimientos_pil = Image.open(ruta)
@@ -201,7 +201,7 @@ class NuevoProducto:
         self.root.title('Nuevo Producto')
         self.root.geometry('500x400+433+110')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
         self.widgets()
     
     def rutas(self, *paths):
@@ -259,7 +259,7 @@ class NuevoProducto:
         self.entry_vencimiento.place(relx=0.3,rely=0.7)
     
         #Buttons
-        ruta = self.rutas('imagenes','guardar.png')
+        ruta = self.rutas('../imagenes','guardar.png')
         self.boton_guardar = Button(self.frame_ventanainformacion)
         self.boton_guardar.config(text='Guardar',font=('century gothic',14,'bold'),width=140,background='#D3B9B4',bd=2,relief='groove')
         imagen_guardar_pil = Image.open(ruta)
@@ -288,7 +288,7 @@ class ModificarProducto:
         self.root.title('Modificación de Producto')
         self.root.geometry('500x300+433+224')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
         self.widgets()
     
     def rutas(self, *paths):
@@ -331,7 +331,7 @@ class ModificarProducto:
         self.entry_stock.place(relx=0.3,rely=0.52)
 
         #Buttons
-        ruta = self.rutas('imagenes','guardar.png')
+        ruta = self.rutas('../imagenes','guardar.png')
         self.boton_guardar = Button(self.frame_ventanainformacion)
         self.boton_guardar.config(text='Guardar',font=('century gothic',14,'bold'),width=140,background='#D3B9B4',bd=2,relief='groove')
         imagen_guardar_pil = Image.open(ruta)
@@ -359,7 +359,7 @@ class IngresoStock:
         self.root.title('Ingreso de stock')
         self.root.geometry('400x200+483+274')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
         self.widgets()
     
     def rutas(self, *paths):
@@ -390,7 +390,7 @@ class IngresoStock:
         self.entry_ingresostock.place(relx=0.7,rely=0.3,anchor='center')
 
         #Buttons
-        ruta = self.rutas('imagenes','ingresar_stock.png')
+        ruta = self.rutas('../imagenes','ingresar_stock.png')
         self.boton_ingresostock = Button(self.frame_ingresostock)
         self.boton_ingresostock.config(text='Ingresar',font=('century gothic',14,'bold'),width=140,background='#D3B9B4',bd=2,relief='groove')
         imagen_ingresostock_pil = Image.open(ruta)
@@ -416,7 +416,7 @@ class Vencimientos:
         self.root.title('BLA Estética - Vencimiento de productos')
         self.root.geometry('1100x590+133+79')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
         self.widgets()
     
     def rutas(self, *paths):
@@ -478,7 +478,7 @@ class Vencimientos:
         self.entry_hasta.place(relx=0.45,rely=0.75,anchor='center')
 
         #Buttons
-        ruta = self.rutas('imagenes','consulta_ventas.png')
+        ruta = self.rutas('../imagenes','consulta_ventas.png')
         self.boton_buscar = Button(self.frame_busqueda)
         self.boton_buscar.config(text='Buscar',font=('century gothic',14,'bold'),width=140,background='#D3B9B4',bd=2,relief='groove')
         imagen_buscar_pil = Image.open(ruta)
@@ -488,7 +488,7 @@ class Vencimientos:
         self.boton_buscar.place(relx=0.7,rely=0.45,anchor='center')
         self.boton_buscar.image = imagen_buscar_tk
 
-        ruta = self.rutas('imagenes','vencimientos.png')
+        ruta = self.rutas('../imagenes','vencimientos.png')
         self.boton_vencido = Button(self.frame_busqueda)
         self.boton_vencido.config(text='Vencidos',font=('century gothic',14,'bold'),width=140,background='#D3B9B4',bd=2,relief='groove')
         imagen_vencido_pil = Image.open(ruta)

@@ -16,7 +16,7 @@ class InterfazAdmin:
         self.root.title('Administrador')
         self.root.geometry('300x300+533+224')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas('imagenes','logosec_fondo.ico'))
+        self.root.iconbitmap(self.rutas('../imagenes','logosec_fondo.ico'))
         self.widgets()
     
     def rutas(self, *paths):
@@ -38,7 +38,7 @@ class InterfazAdmin:
         self.frame_divisor.place(relx=0,rely=0.4)
 
         # Botones
-        ruta = self.rutas('imagenes','crear_usuario.png')
+        ruta = self.rutas('../imagenes','crear_usuario.png')
         self.boton_crearusuario = Button(self.frame_admin)
         self.boton_crearusuario.config(text='Crear Usuario',font=('century gothic',14,'bold'),width=230,padx=15,background='#D3B9B4',bd=2,relief='groove')
         imagen_crearusuario_pil = Image.open(ruta)
@@ -48,7 +48,7 @@ class InterfazAdmin:
         self.boton_crearusuario.place(relx=0.5,rely=0.1,anchor='center')
         self.boton_crearusuario.image = imagen_crearusuario_tk
 
-        ruta = self.rutas('imagenes','eliminar.png')
+        ruta = self.rutas('../imagenes','eliminar.png')
         self.boton_eliminarusuario = Button(self.frame_admin)
         self.boton_eliminarusuario.config(text='Eliminar Cuenta',font=('century gothic',14,'bold'),width=230,padx=15,background='#D3B9B4',bd=2,relief='groove')
         imagen_eliminarusuario_pil = Image.open(ruta)
@@ -58,7 +58,7 @@ class InterfazAdmin:
         self.boton_eliminarusuario.place(relx=0.5,rely=0.2,anchor='center')
         self.boton_eliminarusuario.image = imagen_eliminarusuario_tk
 
-        ruta = self.rutas('imagenes','eliminar.png')
+        ruta = self.rutas('../imagenes','eliminar.png')
         self.boton_eliminarbd = Button(self.frame_admin)
         self.boton_eliminarbd.config(text='Limpiar Base de Datos',font=('century gothic',14,'bold'),width=230,padx=15,background='#D3B9B4',bd=2,relief='groove')
         imagen_eliminarbd_pil = Image.open(ruta)
@@ -76,7 +76,7 @@ class InterfazNuevoUsuario:
         self.root.title('Admin - Nueva Cuenta')
         self.root.geometry('400x220+483+264')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas('imagenes','logosec_fondo.ico'))
+        self.root.iconbitmap(self.rutas('../imagenes','logosec_fondo.ico'))
         self.widgets()
 
     def rutas(self, *paths):
@@ -126,7 +126,7 @@ class InterfazEliminar:
         self.root.title('Admin - Eliminar Cuenta')
         self.root.geometry('350x120+508+314')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
         self.widgets()
     
     def rutas(self, *paths):

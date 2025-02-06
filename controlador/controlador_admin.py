@@ -1,6 +1,6 @@
-from view_admin import InterfazAdmin,InterfazEliminar,InterfazNuevoUsuario
-from modelo_login import ModeloLogin
-from modelo_admin import ModeloAdmin
+from vista.view_admin import InterfazAdmin,InterfazEliminar,InterfazNuevoUsuario
+from modelo.modelo_login import ModeloLogin
+from modelo.modelo_admin import ModeloAdmin
 from tkinter import messagebox,Toplevel
 
 ################################################################################################################################################

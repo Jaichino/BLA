@@ -1,4 +1,4 @@
-from controlador_login import ControladorLogin
+from controlador.controlador_login import ControladorLogin
 from tkinter import Tk
 
 def app():
