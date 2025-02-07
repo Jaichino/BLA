@@ -1,14 +1,13 @@
 from modelo.database import BaseDatos
 
-################################################################################################################################################
-###################################################### MODELO DE CUENTA CORRIENTE ##############################################################
-
-#En este fichero se realizará la lógica de negocio para el modulo de cuentas corrientes, que luego mediante el controlador, se vinculará con la vista.
-
+####################### MODELO DE CUENTA CORRIENTE ##########################
+'''
+En este fichero se realizara la logica de negocio para el modulo de cuentas 
+corrientes, que luego mediante el controlador, se vinculara con la vista.
+'''
 class ModeloCuentaCorriente:
 
-    ####################################################################################################################################################
-    #Método para mostrar los clientes que tienen cuentas corrientes, para vincular en el combobox
+    # Metodo para mostrar los clientes que tienen cuentas corrientes
     @staticmethod
     def clientes_cuentacorriente():
         query = ''' SELECT
@@ -18,8 +17,8 @@ class ModeloCuentaCorriente:
                 '''
         return BaseDatos.realizar_consulta(query,None,'SELECT')
         
-    ####################################################################################################################################################
-    #Método para mostrar información de cuentas corrientes para visualizar en treeview
+
+    # Metodo para mostrar informacion de cuentas corrientes
     @staticmethod
     def ver_cuentascorrientes(cliente):
         query = ''' SELECT 
@@ -30,33 +29,62 @@ class ModeloCuentaCorriente:
                         monto_operacion,
                         monto_pendiente
                     FROM CuentaCorriente WHERE cliente = %s'''
+        
         return BaseDatos.realizar_consulta(query,(cliente,),'SELECT')
     
-    ####################################################################################################################################################
-    #Método para ingregar un pago dentro de una cuenta corriente determinada
-    @staticmethod
-    def ingresar_pago_cc(nro_operacion,cliente,tipo_operacion,monto_operacion,monto_pendiente):
-        query = 'INSERT INTO CuentaCorriente (nro_operacion,cliente,tipo_operacion,monto_operacion,monto_pendiente) VALUES (%s,%s,%s,%s,%s)'
-        BaseDatos.realizar_consulta(query,(nro_operacion,cliente,tipo_operacion,monto_operacion,monto_pendiente),'INSERT')
 
-    ####################################################################################################################################################
-    #Método para eliminar una cuenta corriente, se llamará a este método una vez que el monto pendiente llegue a 0.
+    # Metodo para ingregar un pago dentro de una cuenta corriente determinada
+    @staticmethod
+    def ingresar_pago_cc(
+                            nro_operacion, 
+                            cliente,
+                            tipo_operacion,
+                            monto_operacion,
+                            monto_pendiente
+                        ):
+
+        query = ''' INSERT INTO CuentaCorriente 
+                    (nro_operacion,
+                    cliente,
+                    tipo_operacion,
+                    monto_operacion,
+                    monto_pendiente)
+                    VALUES (%s,%s,%s,%s,%s)
+                '''
+        
+        BaseDatos.realizar_consulta(query,
+                                    (nro_operacion,
+                                    cliente,
+                                    tipo_operacion,
+                                    monto_operacion,
+                                    monto_pendiente),
+                                    None)
+
+
+    # Metodo para eliminar una cuenta corriente
     @staticmethod
     def eliminar_cuentacorriente(cliente):
+        
         query = 'DELETE FROM CuentaCorriente WHERE cliente = %s'
-        BaseDatos.realizar_consulta(query,(cliente,),'DELETE')
+        
+        BaseDatos.realizar_consulta(query,(cliente,),None)
 
-    ####################################################################################################################################################
-    # Obtención del último nro_operación de acuerdo con el cliente elegido
+
+    # Metodo para obtener ultimo nro_operación de acuerdo a cliente
     @staticmethod
     def ultimo_nro_operacion(cliente):
-        query = 'SELECT MAX(nro_operacion) FROM CuentaCorriente WHERE cliente = %s'
+        
+        query = ''' SELECT MAX(nro_operacion) 
+                    FROM CuentaCorriente WHERE cliente = %s
+                '''
+        
         return BaseDatos.realizar_consulta(query,(cliente,),'SELECT')
     
-    ####################################################################################################################################################
-    # Obtención del último monto_pendiente de un determinado cliente
+
+    # Metodo para obtener ultimo monto_pendiente de un cliente determinado
     @staticmethod
     def ultimo_monto_pendiente(cliente):
+
         query = ''' SELECT
                         monto_pendiente
                     FROM CuentaCorriente
@@ -67,9 +95,12 @@ class ModeloCuentaCorriente:
         return BaseDatos.realizar_consulta(query,(cliente,),'SELECT')
     
 
-    ####################################################################################################################################################
-    # Función para eliminar la última operación que se hizo en la cuenta corriente de un determinado cliente
+    # Metodo para eliminar ultima operacion que se hizo en cuenta corriente
     @staticmethod
     def eliminar_ultima_operacion(nro_operacion,cliente):
-        query = 'DELETE FROM CuentaCorriente WHERE nro_operacion = %s AND cliente = %s'
-        BaseDatos.realizar_consulta(query,(nro_operacion,cliente),'DELETE')
+        
+        query = ''' DELETE FROM CuentaCorriente 
+                    WHERE nro_operacion = %s AND cliente = %s
+                '''
+        
+        BaseDatos.realizar_consulta(query,(nro_operacion,cliente),None)
