@@ -1,12 +1,16 @@
-from vista.view_inventario import InterfazInventario,Vencimientos,NuevoProducto,IngresoStock,ModificarProducto
-from modelo.modelo_producto import ModeloProducto
 from tkinter import messagebox, Toplevel
+from vista.view_inventario import InterfazInventario
+from vista.view_inventario import Vencimientos
+from vista.view_inventario import NuevoProducto
+from vista.view_inventario import IngresoStock
+from vista.view_inventario import ModificarProducto
+from modelo.modelo_producto import ModeloProducto
 
-################################################################################################################################################
-################################################### CONTROLADOR DE PRODUCTOS ###################################################################
+####################### CONTROLADOR DE PRODUCTOS ############################
 
-# En este fichero se lleva a cabo la vinculación entre la vista y el modelo del modulo Productos
-
+''' En este fichero se lleva a cabo la vinculación entre la vista y el modelo 
+    del modulo Productos
+'''
 class ControladorProducto:
 
     def __init__(self,root):
@@ -34,7 +38,6 @@ class ControladorProducto:
         #Atributo de clase para almacenar elemento seleccionado en treeview
         self.elemento_seleccionado = None
     
-    ##############################################################################################################################################
     ################################################### INICIALIZACIÓN DE VENTANAS ###############################################################
     # Función que crea un TopLevel de InterfazInventario para abrir la ventana de vencimientos
     def abrir_ventana_consulta_vencimientos(self):
@@ -74,7 +77,6 @@ class ControladorProducto:
         self.ventana_ingreso_stock.entry_ingresostock.focus()
         self.ventana_ingreso_stock.boton_ingresostock.config(command=self.boton_guardar_ingresostock)
     
-    ################################################################################################################################################
     ####################################################### INICIALIZACIÓN TREEVIEW ################################################################
     #Función para rellenar el treeview con los productos existentes en la base de datos
     def llenar_treeview_productos(self):
@@ -104,7 +106,6 @@ class ControladorProducto:
             if int(valores[3]) <= 0:
                 self.ventana_vencimientos.tv_vencimientos.item(item,tags=('Rojo',))
     
-    ################################################################################################################################################
     ############################################################# EVENTOS ##########################################################################
     # Función para rellenar el campo "descripcion" a la hora de crear un nuevo producto, si ya existe el codigo en la base de datos, se mostrara la
     # respectiva descripcion
@@ -122,13 +123,13 @@ class ControladorProducto:
         else:
             self.ventana_nuevo_producto.entry_descripcion.insert(0,'')
 
-    ###############################################################################################################################################
+
     ####################################################### ACCIONES DE BOTONES ###################################################################
     #Función para que el boton crear nuevo producto abra la ventana de ingreso de datos 
     def boton_nuevo(self):
         self.abrir_ventana_nuevoproducto()
     
-    ###############################################################################################################################################
+
     #Función para abrir la ventana de modificación de productos solo si se ha seleccionado un elemento en el Treeview
     def boton_modificar(self):
         # Verificación de que se seleccionó un elemento del Treeview
@@ -150,7 +151,7 @@ class ControladorProducto:
         else:
             messagebox.showerror('Error','Debes seleccionar un producto')
     
-    ###############################################################################################################################################
+
     #Función para guardar la modificación de un producto seleccionado en el Treeview
     def guardar_modificacion_producto(self):
         
@@ -178,7 +179,7 @@ class ControladorProducto:
         except Exception as error:
             messagebox.showerror('Error',f'Error inesperado - {error}')
 
-    ###############################################################################################################################################
+
     #Función para incluir en el botón guardar
     def boton_guardar_nuevoproducto(self):
 
@@ -208,7 +209,7 @@ class ControladorProducto:
         except Exception as error:
             messagebox.showerror('Error',f'Se ha producido un error inesperado - {error}')
 
-    ###############################################################################################################################################
+
     #Función para eliminar producto, según la selección del treeview
     def boton_eliminar_producto(self):
         # Seleccion del elemento
@@ -240,7 +241,7 @@ class ControladorProducto:
         else:
             messagebox.showerror('Eliminar Producto','Debes seleccionar un producto')
 
-    ###############################################################################################################################################
+
     #Función para abrir la ventana de ingreso de stock. Se verifica que haya un elemento seleccionado en el Treeview
     def boton_ingresar_stock(self):
         self.elemento_seleccionado = self.vista_inventario.tv_inventario.selection()
@@ -280,7 +281,7 @@ class ControladorProducto:
         except Exception as error:
             messagebox.showerror('Error',f'Error inesperado - {error}')
 
-    ###############################################################################################################################################
+
     #Función para filtrar los productos según el código o la descripción parcial del mismo
     def boton_filtrar_productos(self):
         #Borrar elementos del treeview
@@ -321,7 +322,7 @@ class ControladorProducto:
         except Exception as error:
             messagebox.showerror('Error',f'Error Inesperado - {error}')
 
-    ###############################################################################################################################################
+
     #Función para filtrar los productos sin stock
     def boton_sin_stock(self):
         #Borrar elementos del treeview
@@ -346,7 +347,7 @@ class ControladorProducto:
             if stock == 0:
                 self.vista_inventario.tv_inventario.item(item,tags=('Rojo',))
                 
-    ###############################################################################################################################################
+
     #Función para filtrar los vencimientos de los productos en función de si se quiere filtrar por código o por fechas
     def boton_filtrar_vencimientos(self):
         try:
@@ -384,7 +385,7 @@ class ControladorProducto:
         except Exception as error:
             messagebox.showerror('Error',f'Error inesperado - {error}')
 
-    ###############################################################################################################################################
+
     #Función para filtrar todos los productos vencidos, sin importar lo que esté escrito en codigo o fechas
     def boton_todos_vencimientos(self):
         vencimientos = self.modelo_inventario.productos_vencidos()
