@@ -1,7 +1,5 @@
-from vista.view_ventas import VentanaVentas,ConsultaVentas,DetalleVentas,ConfirmacionVenta,InterfazInteres
-from modelo.modelo_ventas import ModeloVentas
-from modelo.modelo_producto import ModeloProducto
-from modelo.modelo_ccorriente import ModeloCuentaCorriente
+import sys
+import os
 from tkinter import messagebox, Toplevel
 from datetime import datetime
 from reportlab.lib.pagesizes import letter
@@ -9,13 +7,20 @@ from reportlab.pdfgen import canvas
 from reportlab.platypus import Table, TableStyle
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
-import sys
-import os
+from vista.view_ventas import VentanaVentas
+from vista.view_ventas import ConsultaVentas
+from vista.view_ventas import DetalleVentas
+from vista.view_ventas import ConfirmacionVenta
+from vista.view_ventas import InterfazInteres
+from modelo.modelo_ventas import ModeloVentas
+from modelo.modelo_producto import ModeloProducto
+from modelo.modelo_ccorriente import ModeloCuentaCorriente
 
-################################################################################################################################################
-################################################### CONTROLADOR DE VENTAS ######################################################################
+######################## CONTROLADOR DE VENTAS ###############################
 
-# En este fichero se lleva a cabo la vinculación entre la vista y el modelo del modulo Ventas
+''' En este fichero se lleva a cabo la vinculacion entre la vista y el modelo
+    del modulo Ventas
+'''
 
 class ControladorVentas:
 
@@ -24,186 +29,285 @@ class ControladorVentas:
         self.vista_ventas = VentanaVentas(self.root)
         self.modelo_ventas = ModeloVentas()
 
-        # Inicialización del foco en entry codigo
+        # Foco en entry codigo
         self.vista_ventas.entry_cliente.focus()
 
-        # Inicialización de funciones para apertura de ventanas
-        self.vista_ventas.boton_consultaventas.config(command=self.abrir_ventana_consultaventas)
-        self.vista_ventas.boton_finalizar_venta.config(command=self.abrir_abrir_ventana_finalizacionventa)
-        self.vista_ventas.boton_buscar.config(command=self.boton_buscar_infoproducto)
-        self.vista_ventas.boton_carrito.config(command=self.boton_agregar_carrito)
-        self.vista_ventas.boton_eliminar_venta.config(command=self.eliminar_del_carrito)
-
-        # Atributo que guarda la descripción del producto que se busca al realizar una venta, ya que el mismo se lo visualiza como un label
+        # Configuracion apertura de ventanas
+        self.vista_ventas.boton_consultaventas.config(
+            command = self.abrir_ventana_consultaventas
+        )
+        self.vista_ventas.boton_finalizar_venta.config(
+            command = self.abrir_abrir_ventana_finalizacionventa
+        )
+        self.vista_ventas.boton_buscar.config(
+            command = self.boton_buscar_infoproducto
+        )
+        self.vista_ventas.boton_carrito.config(
+            command = self.boton_agregar_carrito
+        )
+        self.vista_ventas.boton_eliminar_venta.config(
+            command = self.eliminar_del_carrito
+        )
+        
+        # Guardado descripcion de producto
         self.descripcion_producto = None
 
-        # Atributo para guardar el elemento seleccionado en los treeview
+        # Guardado elemento seleccionado en treeview
         self.elemento_seleccionado = []
 
-        # lista vacía para guardar "carrito" e inicializar monto_total_venta = 0
+        # Guardado de "carrito" y seteo monto_total_venta = 0
         self.lista_carrito = []
         self.monto_total_venta = 0
         self.contador_carrito = 0
         
-        # Se guarda cliente que está realizando la compra para luego utilizarlo en la función agregar_venta
+        # Guardado de cliente
         self.cliente_venta = None
 
-        # bind para que cuando se escriba en entry codigo, se ejecute automáticamente la funcion vencimientos_codigoingresado
-        self.vista_ventas.entry_codigo_producto.bind('<KeyRelease>',self.vencimientos_codigoingresado)
-        # bind para filtrar la lista de clientes en el ComboBox según las entradas del usuario
-        self.vista_ventas.entry_cliente.bind('<KeyRelease>',self.buscar_cliente_nuevaventa)
+        # Asignacion de eventos
+        self.vista_ventas.entry_codigo_producto.bind(
+            '<KeyRelease>',
+            self.vencimientos_codigoingresado
+        )
+        self.vista_ventas.entry_cliente.bind(
+            '<KeyRelease>',
+            self.buscar_cliente_nuevaventa
+        )
 
-    ##############################################################################################################################################
-    ################################################### INICIALIZACIÓN DE VENTANAS ###############################################################
-    
-    # Función que inicializa la ventana consulta de ventas   
+    ######################## INICIALIZACION DE VENTANAS ######################
     def abrir_ventana_consultaventas(self):
+        # Creacion de ventana
         self.minimizar_root()
         self.toplevel_consulta_ventas = Toplevel(self.root)
-        self.ventana_consulta_ventas = ConsultaVentas(self.toplevel_consulta_ventas)
+        self.ventana_consulta_ventas = (
+            ConsultaVentas(self.toplevel_consulta_ventas)
+        )
         self.toplevel_consulta_ventas.grab_set()
-        self.toplevel_consulta_ventas.protocol("WM_DELETE_WINDOW",self.volver_ventana_ventas)
 
-        # bind para filtrar la lista de clientes en el ComboBox según las entradas del usuario
-        self.ventana_consulta_ventas.entry_cliente.bind("<KeyRelease>",self.buscar_cliente_consultaventa)
+        # Protocolo para cerrado de ventana
+        self.toplevel_consulta_ventas.protocol(
+            "WM_DELETE_WINDOW",
+            self.volver_ventana_ventas
+        )
 
-        # Acciones de botones
-        self.ventana_consulta_ventas.boton_buscar.config(command=self.boton_consultar_ventas)
-        self.ventana_consulta_ventas.boton_eliminar.config(command=self.eliminar_venta)
-        self.ventana_consulta_ventas.boton_detalle.configure(command=self.boton_abrir_detalleventas)
-        self.ventana_consulta_ventas.boton_pendientes.config(command=self.boton_pagos_pendientes)
+        # Evento filtrado de clientes
+        self.ventana_consulta_ventas.entry_cliente.bind(
+            "<KeyRelease>",
+            self.buscar_cliente_consultaventa
+        )
 
-        # Se guarda el valor de nro_venta que se selecciona en Treeview. Se inicializa como None
+        # Configuracion de botones
+        self.ventana_consulta_ventas.boton_buscar.config(
+            command = self.boton_consultar_ventas
+        )
+        self.ventana_consulta_ventas.boton_eliminar.config(
+            command = self.eliminar_venta
+        )
+        self.ventana_consulta_ventas.boton_detalle.configure(
+            command = self.boton_abrir_detalleventas
+        )
+        self.ventana_consulta_ventas.boton_pendientes.config(
+            command = self.boton_pagos_pendientes
+        )
+        
+        # Guardado numero de venta
         self.nro_venta_consulta = None
 
-    # Función que inicializa la ventana Detalle de ventas
+    
     def abrir_ventana_detalleventas(self):
+        # Creacion de ventana
         self.toplevel_detalle_ventas = Toplevel(self.toplevel_consulta_ventas)
-        self.ventana_detalle_ventas = DetalleVentas(self.toplevel_detalle_ventas)
+        self.ventana_detalle_ventas = (
+            DetalleVentas(self.toplevel_detalle_ventas)
+        )
         self.toplevel_detalle_ventas.grab_set()
 
-        # Inicialización de label nro_venta según elemento elegido en Treeview
-        self.ventana_detalle_ventas.label_nroventa.config(text=f'Venta #{self.nro_venta_consulta}')
+        # Configuracion label nro_venta
+        self.ventana_detalle_ventas.label_nroventa.config(
+            text=f'Venta #{self.nro_venta_consulta}'
+        )
 
-        # Configuración boton imprimir factura
-        self.ventana_detalle_ventas.boton_pdf.config(command=self.detalleventas_imprimirpdf)
+        # Configuracion de botones
+        self.ventana_detalle_ventas.boton_pdf.config(
+            command = self.detalleventas_imprimirpdf
+        )
 
-    # Función para abrir ventana interés de venta
+    
     def abrir_ventana_interesventa(self):
-        # Si se selecciona un medio de pago que no sea débito/crédito, se muestra mensaje de error
+        # Verificacion que se elige medio de pago Debito/Credito
         modo_pago = self.ventana_finalizacion_venta.seleccion_radiobutton()
         if modo_pago != 3:
-            messagebox.showerror('Error','Solo se puede agregar interés si el modo de pago es Débito/Crédito')	
+            messagebox.showerror(
+                'Error',
+                'Modo permitido solo para pagos en Débito/Crédito')	
             return
-        
+
+        # Creacion de ventana
         self.toplevel_interes_venta = Toplevel(self.root)
-        self.ventana_interes_venta = InterfazInteres(self.toplevel_interes_venta)
+        self.ventana_interes_venta = (
+            InterfazInteres(self.toplevel_interes_venta)
+        )
         self.toplevel_interes_venta.grab_set()
 
-        self.ventana_interes_venta.boton_interes.config(command=self.boton_agregar_interes)
+        # Configuracion de botones
+        self.ventana_interes_venta.boton_interes.config(
+            command = self.boton_agregar_interes
+        )
 
-    # Función que inicializa la ventana Finalización de venta
+    
     def abrir_ventana_finalizacionventa(self):
-
+        # Creacion de ventana
         self.toplevel_finalizacion_venta = Toplevel(self.root)
-        self.ventana_finalizacion_venta = ConfirmacionVenta(self.toplevel_finalizacion_venta)
+        self.ventana_finalizacion_venta = (
+            ConfirmacionVenta(self.toplevel_finalizacion_venta)
+        )
         self.toplevel_finalizacion_venta.grab_set()
 
-        # Obtención del número de venta
+        # Obtencion del número de venta
         self.nro_venta = self.modelo_ventas.ultimo_nro_venta()
         if self.nro_venta[0][0] is None:
             self.nro_venta = 1
         else:
             self.nro_venta = self.modelo_ventas.ultimo_nro_venta()[0][0] + 1
 
+        # Seteo interes en 0
         self.interes = 0
 
-        # Modificación del label nro_venta
-        self.ventana_finalizacion_venta.label_numero_venta.config(text = f'Venta #{self.nro_venta}')
+        # Modificacion del label nro_venta
+        self.ventana_finalizacion_venta.label_numero_venta.config(
+            text = f'Venta #{self.nro_venta}'
+        )
         
-        # Inicialización con el monto_total_venta y nro_venta
-        self.ventana_finalizacion_venta.label_total_venta.config(text=f'Total Venta: ${self.monto_total_venta}')
+        # Inicializacion con el monto_total_venta y nro_venta
+        self.ventana_finalizacion_venta.label_total_venta.config(
+            text=f'Total Venta: ${self.monto_total_venta}'
+        )
         
-        #Configuración de la función del boton
-        self.ventana_finalizacion_venta.boton_confirmar.config(command=self.boton_confirmar_venta)
-        self.ventana_finalizacion_venta.boton_interes.config(command=self.abrir_ventana_interesventa)
-
-    # Función para minimizar el root
+        # Configuracion de botones
+        self.ventana_finalizacion_venta.boton_confirmar.config(
+            command = self.boton_confirmar_venta
+        )
+        self.ventana_finalizacion_venta.boton_interes.config(
+            command = self.abrir_ventana_interesventa
+        )
+        
+    
     def minimizar_root(self):
+        # Metodo para minimizar el root
         self.root.iconify()
     
-    # Función para cerrar consulta de venta y volver a abrir ventana de ventas
+
     def volver_ventana_ventas(self):
+        
+        ''' Metodo para cerrar consulta de ventas y volver a abrir
+            ventana principal de ventas
+        '''
+        
         self.toplevel_consulta_ventas.destroy()
         self.root.deiconify()
 
-    ###############################################################################################################################################
-    ############################################################# EVENTOS #########################################################################
-
-    # Función para filtrar los clientes que han realizado compras, para incluir en el ComboBox de cliente y se rellene automáticamente cuando va 
-    # encontrando coincidencias. Para ello se lo vinculará a un event <KeyRelease>
+    ################################## EVENTOS ###############################
     def buscar_cliente_nuevaventa(self,event):
-        # Obtención de los clientes que realizaron compras anteriormente
+        
+        ''' Metodo asociado a evento para rellenar el ComboBox de clientes a
+            la hora de realizar una nueva venta. Apareceran los clientes de
+            acuerdo a lo que vaya escribiendo el usuario dentro del ComboBox
+        '''
+        
+        # Obtencion de clientes que realizaron compras
         clientes = self.modelo_ventas.clientes()
-        # Obtención de la entrada de cliente
+        
+        # Obtencion valor de campo cliente
         entrada_cliente = self.vista_ventas.entry_cliente.get().lower()
-    
+
+        # Verificacion de que existen clientes que coincidan
         if clientes:
-            # Se filtra la lista de clientes original según la entrada del usuario, con el método startswith() se filtran solo los que coincidan
-            # con la entrada del cliente
-            lista_clientes = [cliente[0] for cliente in clientes if cliente[0].lower().startswith(entrada_cliente)]
+            lista_clientes = [
+                cliente[0] for cliente in clientes
+                if cliente[0].lower().startswith(entrada_cliente)
+            ]
 
             if lista_clientes:
-                # Si se encuentran coincidencias (la lista no está vacía) se asigna esos valores al ComboBox
+                # Asignacion de coincidencias a ComboBox
                 self.vista_ventas.entry_cliente['values'] = lista_clientes
-
+                
             else:
-                # Caso contrario, se introduce una lista vacía al ComboBox
+                # Caso contrario, se introduce una lista vacia al ComboBox
                 self.vista_ventas.entry_cliente['values'] = []
         else:
             self.vista_ventas.entry_cliente['values'] = []
 
-    #Función para filtrar los clientes en el módulo consulta de clientes, para introducirlos en el ComboBox
-    def buscar_cliente_consultaventa(self,event):
-        clientes = ModeloVentas.clientes()
-        entrada_cliente = self.ventana_consulta_ventas.entry_cliente.get().lower()
+    
+    def buscar_cliente_consultaventa(self, event):
 
+        ''' Metodo asociado a evento para filtrar los clientes e introducirlos
+            en ComboBox en ventana consulta de ventas
+        '''
+        clientes = ModeloVentas.clientes()
+        entrada_cliente = (
+            self.ventana_consulta_ventas.entry_cliente.get().lower()
+        )
+
+        # Verificacion de coincidencias
         if clientes:
-            lista_clientes = [cliente[0] for cliente in clientes if cliente[0].lower().startswith(entrada_cliente)]
+            lista_clientes = [
+                cliente[0] for cliente in clientes if
+                cliente[0].lower().startswith(entrada_cliente)
+            ]
 
             if lista_clientes:
-                self.ventana_consulta_ventas.entry_cliente['values'] = lista_clientes
+                # Llenado de ComboBox con coincidencias
+                self.ventana_consulta_ventas.entry_cliente['values'] = (
+                    lista_clientes
+                )
+            
             else:
+                # Se introduce lista vacia en ComboBox
                 self.ventana_consulta_ventas.entry_cliente['values'] = []
         else:
             self.ventana_consulta_ventas.entry_cliente['values'] = []
 
-    # Función para introducir los vencimientos de productos en el ComboBox que existen para el código de producto introducido
-    def vencimientos_codigoingresado(self,event):
-        # Obtención del código ingresado
+    
+    def vencimientos_codigoingresado(self, event):
+
+        ''' Metodo asociado a evento para introducir automaticamente los
+            vencimientos correspondientes al codigo ingresado en Entry
+            de codigo.
+            Primero se obtiene la entrada de usuario en campo de codigo,
+            luego se obtienen todos los vencimientos correspondientes a
+            ese codigo, y si existen, se introducen en ComboBox de
+            vencimientos
+        '''
+        
+        # Obtencion del codigo ingresado
         codigo = self.vista_ventas.entry_codigo_producto.get()
 
-        # Obtención de los vencimientos según el código ingresado
+        # Obtencion de los vencimientos según el codigo ingresado
         vencimientos = ModeloProducto.vencimiento_producto_a_vender(codigo)
         
         if vencimientos:
-            # Generación de lista con vencimientos en formato string adecuado para cargar al ComboBox
-            vencimientos_str = [v[0].strftime('%d-%m-%Y') for v in vencimientos]
-            # Introducción de elementos al ComboBox, con .current(0) se selecciona por defecto el primer elemento del ComboBox
+            # Generacion de lista para introducir a ComboBox
+            vencimientos_str = [
+                v[0].strftime('%d-%m-%Y') for v in vencimientos
+            ]
+            
+            # Introduccion de elementos al ComboBox
             self.vista_ventas.entry_vencimiento['values'] = vencimientos_str
             self.vista_ventas.entry_vencimiento.current(0)
         
         else:
-            # Si no se encuentran vencimientos, se introduce una lista vacía al ComboBox, y .set() sirve para borrar el contenido hasta que se 
-            # encuentra coincidencia
+            # Si no se encuentran vencimientos se introduce lista vacia
             self.vista_ventas.entry_vencimiento['values'] = []
             self.vista_ventas.entry_vencimiento.set('')    
 
-    ###############################################################################################################################################
-    ####################################################### ACCIONES DE BOTONES ###################################################################
-
-    # Función para abrir la ventana de finalización de venta, en caso de que la lista de carrito esté vacía, no se debe dejar abrir dicha ventana
+    ######################### ACCIONES DE BOTONES ############################
     def abrir_abrir_ventana_finalizacionventa(self):
+        
+        ''' Metodo para la apertura de la ventana de finalizacion de venta, la
+            cual solo se abrira si existen productos dentro del carrito, caso
+            contrario se mostrara messagebox
+        '''
+        
+        # Verificacion de cliente
         if self.cliente_venta == '':
             messagebox.showerror('Error','Introducir Cliente')
             return
@@ -211,18 +315,27 @@ class ControladorVentas:
         if not self.lista_carrito:
             messagebox.showerror('Error','No hay productos en el carrito')
         else:
+            # Apertura de ventana
             self.abrir_ventana_finalizacionventa()
 
-    # Función para introducir en el boton "buscar", que hará aparecer la información del producto, precio y cantidad en los entry en función del
-    # código y vencimientos ingresados por el usuario
+    
     def boton_buscar_infoproducto(self):
+
+        ''' Metodo para actualizar la informacion del producto en los label
+            luego de la eleccion de un codigo y vencimiento a la hora de
+            realizar una nueva venta.
+            Primero se limpian los campos, luego se obtiene la informacion
+            del producto dependiendo del codigo y vencimiento ingresados.
+            Finalmente, se inserta esa informacion en los Labels.
+        '''
+        
         # Limpieza de campos
         self.vista_ventas.entry_precio.delete(0,'end')
         self.vista_ventas.label_en_stock.config(text='En Stock: ')
         self.vista_ventas.label_descripcion_producto.config(text='Producto: ')
         
         try:
-            # Obtención del código y vencimiento elegido por el usuario
+            # Obtencion del codigo y vencimiento
             codigo = self.vista_ventas.entry_codigo_producto.get()
             vencimiento = self.vista_ventas.entry_vencimiento.get()
             
@@ -230,27 +343,48 @@ class ControladorVentas:
                 messagebox.showerror('Error','Debes ingresar un código')
                 return
             
-            # Obtención de la información del producto según código y vencimiento
-            info_producto = ModeloProducto.informacion_producto(codigo,vencimiento)
+            # Obtencion de la informacion del producto
+            info_producto = ModeloProducto.informacion_producto(
+                codigo,
+                vencimiento
+            )
 
             if info_producto:
-                #Carga de información (producto,precio,stock)
+                # Carga de informacion en labels
                 self.descripcion_producto = info_producto[0][2]
                 self.vista_ventas.entry_precio.insert(0,info_producto[0][3])
-                self.vista_ventas.label_en_stock.config(text=f'En Stock: {info_producto[0][4]}')
-                self.vista_ventas.label_descripcion_producto.config(text=f'Producto: {self.descripcion_producto}')
+                self.vista_ventas.label_en_stock.config(
+                    text = f'En Stock: {info_producto[0][4]}'
+                )
+                self.vista_ventas.label_descripcion_producto.config(
+                    text = f'Producto: {self.descripcion_producto}'
+                )
 
             else:
-                messagebox.showinfo('Producto no encontrado','No se ha encontrado este producto!')
+                messagebox.showinfo(
+                    'Producto no encontrado',
+                    'No se ha encontrado este producto!'
+                )
 
         except Exception as error:
-            messagebox.showerror('Error',f'Ha sucedido un error inesperado - {error}')
+            messagebox.showerror(
+                'Error',
+                f'Ha sucedido un error inesperado - {error}'
+            )
 
-    # Función para el botón "Agregar al carrito", recuperará valores de los entry y los insertará en Treeview y en una lista "carrito", la cuál se
-    # utilizará luego para ejecutar la carga a base de datos.
+    
     def boton_agregar_carrito(self):
+
+        ''' Metodo para recuperar valores de entrada de usuarios y agregarlos
+            al Treeview (Carrito) y a una lista que luego se utilizara para
+            cargar la informacion en la base de datos.
+            Primero se recuperan las entradas de usuario, se realizan las
+            verificaciones correspondientes y se cargan los productos tanto
+            en Treeview como en la lista.
+        '''
+        
         try:
-            # Obtención de entradas de usuario
+            # Obtencion de entradas de usuario
             codigo = self.vista_ventas.entry_codigo_producto.get()
             descripcion = self.descripcion_producto
             precio = float(self.vista_ventas.entry_precio.get())
@@ -258,45 +392,64 @@ class ControladorVentas:
             vencimiento = self.vista_ventas.entry_vencimiento.get()
             cliente = self.vista_ventas.entry_cliente.get()
 
-            # Verificación de que se han llenado los campos
+            # Verificacion de campos completados
             if codigo == '' or precio == '' or cantidad == '':
-                messagebox.showerror('Error','Se deben completar todos los campos')
+                messagebox.showerror(
+                    'Error',
+                    'Se deben completar todos los campos'
+                )
                 return
             
-            # Verificación cantidad ingresada es menor que el stock disponible del producto, para ello se busca dentro de la información
-            # del producto, con codigo y vencimiento
-
-            info_producto = ModeloProducto.informacion_producto(codigo,vencimiento)
+            # Verificacion cantidad ingresada <= stock disponible
+            info_producto = ModeloProducto.informacion_producto(
+                codigo,
+                vencimiento
+            )
             stock_disponible = info_producto[0][4]
             if cantidad > stock_disponible:
-                messagebox.showerror('Error','La cantidad ingresada es mayor al stock disponible')
+                messagebox.showerror(
+                    'Error',
+                    'La cantidad ingresada es mayor al stock disponible'
+                )
                 return
             
-            # Se suma 1 al contador del carrito
+            # Seteo contador de carrito
             self.contador_carrito += 1
             
             # Se incrementa el monto_total_venta en (cantidad * precio)
             self.monto_total_venta += precio * cantidad
 
-            # Introducción de valores en Treeview
-            self.vista_ventas.tv_ventas.insert('','end',text=self.contador_carrito,values=(codigo,descripcion,precio,cantidad))
+            # Introduccion de valores en Treeview
+            self.vista_ventas.tv_ventas.insert(
+                '',
+                'end',
+                text = self.contador_carrito,
+                values = (codigo,descripcion,precio,cantidad)
+            )
 
-            # Actualización del monto_total_venta
-            self.vista_ventas.label_total_venta.config(text=f'Total de la venta: ${self.monto_total_venta}')
+            # Actualizacion del monto_total_venta
+            self.vista_ventas.label_total_venta.config(
+                text = f'Total de la venta: ${self.monto_total_venta}'
+            )
 
-            # Se hace append en lista_carrito de la información del producto agregado al carrito, primero se obtiene nro_prod
-            nro_producto = ModeloProducto.obtener_nroproducto(codigo,vencimiento)
+            # Insercion de elementos en lista
+            nro_producto = ModeloProducto.obtener_nroproducto(
+                codigo,
+                vencimiento
+            )
             self.lista_carrito.append((nro_producto[0][0],precio,cantidad))
 
             # Limpieza de entries
             self.vista_ventas.limpiar_cajas()
-            self.vista_ventas.label_descripcion_producto.config(text='Producto: ')
+            self.vista_ventas.label_descripcion_producto.config(
+                text = 'Producto: '
+            )
             self.vista_ventas.label_en_stock.config(text='En Stock: ')
 
             # Seteo de cliente para que quede guardado en la instancia
             self.cliente_venta = cliente
 
-            # Se hace foco en entry codigo_producto una vez que se limpian los entries
+            # Se hace foco en entry codigo_producto
             self.vista_ventas.entry_codigo_producto.focus()
 
         except ValueError:
@@ -304,115 +457,180 @@ class ControladorVentas:
         except Exception as error:
             messagebox.showerror('Error',f'Error inesperado - {error}')
 
-    # Función para eliminar un producto del carrito, se eliminará la fila en el Treeview, el elemento correspondiente en la lista_carrito y se restará
-    # el monto de ese producto del monto_total_venta
+    
     def eliminar_del_carrito(self):
+
+        ''' Metodo para eliminar producto del carrito tanto del Treeview
+            como de la lista, actualizando tambien el label de monto
+            total de venta.
+        '''
+        
         # Obtener elemento seleccionado del treeview
         self.elemento_seleccionado = self.vista_ventas.tv_ventas.selection()
 
+        # Verificacion de seleccion de elementos
         if not self.elemento_seleccionado:
             messagebox.showerror('Error','Debes seleccionar un producto')
             return
-        
         if len(self.elemento_seleccionado) > 1:
             messagebox.showerror('Error','Seleccionar de a un elemento')
             return
         
-        # Obtener precio y cantidad del elemento seleccionado para actualizar el monto_venta_total
-        valores_elemento_seleccionado = self.vista_ventas.tv_ventas.item(self.elemento_seleccionado,'values')
+        # Obtener precio y cantidad para actualizar Label
+        valores_elemento_seleccionado = self.vista_ventas.tv_ventas.item(
+            self.elemento_seleccionado,
+            'values'
+        )
         precio = float(valores_elemento_seleccionado[2])
         cantidad = int(valores_elemento_seleccionado[3])
-        numero_carrito = self.vista_ventas.tv_ventas.item(self.elemento_seleccionado,'text')
+        numero_carrito = self.vista_ventas.tv_ventas.item(
+            self.elemento_seleccionado,
+            'text'
+        )
 
-        # Actualización monto_venta_total
+        # Actualizacion monto_venta_total
         self.monto_total_venta -= precio * cantidad
-        self.vista_ventas.label_total_venta.config(text=f'Total de la venta: ${self.monto_total_venta}')
+        self.vista_ventas.label_total_venta.config(
+            text = f'Total de la venta: ${self.monto_total_venta}'
+        )
 
-        # Eliminación de la fila correspondiente en el Treeview
+        # Eliminacion de la fila correspondiente en el Treeview
         self.vista_ventas.tv_ventas.delete(self.elemento_seleccionado)
 
-        # Eliminación del elemento de la lista "carrito"
+        # Eliminacion del elemento de la lista "carrito"
         del self.lista_carrito[numero_carrito - 1]
 
-        # Actualización números de carrito (#)
+        # Actualizacion numeros de carrito
         for contador in self.vista_ventas.tv_ventas.get_children():
             nro_carrito = self.vista_ventas.tv_ventas.item(contador,'text')
             if nro_carrito > numero_carrito:
-                self.vista_ventas.tv_ventas.item(contador,text=nro_carrito-1)
+                # Se resta 1 a los que estan por delante, otros se mantienen
+                self.vista_ventas.tv_ventas.item(contador, text=nro_carrito-1)
         
-        # Actualizacion del contador para que siempre arranque desde el ultimo ingresado
+        # Seteo contador para que siempre arranque desde el ultimo ingresado
         children_carritos = self.vista_ventas.tv_ventas.get_children()
-        lista_nros_carritos = [self.vista_ventas.tv_ventas.item(child,'text') for child in children_carritos]
+        lista_nros_carritos = [
+            self.vista_ventas.tv_ventas.item(child,'text') 
+            for child in children_carritos
+        ]
+        
         if not lista_nros_carritos:
             self.contador_carrito = 0
         else:
-            self.contador_carrito = lista_nros_carritos[-1] #Se setea contador de carrito como el ultimo elemento de la lista
+            self.contador_carrito = lista_nros_carritos[-1]
 
-        # Mensaje de eliminación de producto
-        messagebox.showinfo('Eliminado',f'{valores_elemento_seleccionado[1]} eliminado del carrito!')
+        # Mensaje de eliminacion de producto
+        messagebox.showinfo(
+            'Eliminado',
+            f'{valores_elemento_seleccionado[1]} eliminado del carrito!'
+        )
 
-    # Función para consulta de ventas, se toman entradas de usuario y luego mediante el botón buscar se filtran las ventas. Si no se ingresa cliente,
-    # se filtrará por fechas, caso contrario, se filtra unicamente por cliente.
+    
     def boton_consultar_ventas(self):
-        # Entradas de usuario
+
+        ''' Metodo para filtrar las ventas en ventana de consulta de ventas,
+            el cual se puede filtrar entre dos fechas o por un determinado
+            cliente.
+            Primero se recuperan las entradas de usuario y se llama al
+            metodo para filtrar las ventas. Si no se encuentran
+            ventas para los filtros aplicados, entonces no se muestra
+            nada en el Treeview
+        '''
+        
+        # Recuperacion entradas de usuario
         cliente = self.ventana_consulta_ventas.entry_cliente.get()
         fecha_desde = self.ventana_consulta_ventas.entry_desde.get()
         fecha_hasta = self.ventana_consulta_ventas.entry_hasta.get()
-
-        # Se asigna None en caso de no ingresarse ningún cliente
+        
         cliente = None if cliente == '' else cliente
 
-        # Lista filtrada de ventas
-        ventas_filtradas = ModeloVentas.consultar_ventas(fecha_desde,fecha_hasta,cliente)
+        # Obtencion de ventas filtradas
+        ventas_filtradas = ModeloVentas.consultar_ventas(
+            fecha_desde,
+            fecha_hasta,
+            cliente
+        )
 
-        # Si se encontraron coincidencias, se rellena Treeview con dichos registros
+        # Llenado de treeview con ventas filtradas
         if ventas_filtradas:
             # Se limpia Treeview antes de insertar datos
             self.ventana_consulta_ventas.limpiar_treeview()
             for venta in ventas_filtradas:
-                self.ventana_consulta_ventas.tv_consultaventas.insert('','end',text=venta[0],values=(venta[1],venta[2],venta[3],venta[4],venta[5]))
+                self.ventana_consulta_ventas.tv_consultaventas.insert(
+                    '',
+                    'end',
+                    text = venta[0],
+                    values = (venta[1],venta[2],venta[3],venta[4],venta[5])
+                )
+                
         # Si no se encuentran registros, se muestra messagebox
         else:
-            messagebox.showinfo('Sin coincidencias','No se encontraron ventas!')
+            messagebox.showinfo(
+                'Sin coincidencias',
+                'No se encontraron ventas!'
+            )
             self.ventana_consulta_ventas.limpiar_treeview()
 
-    # Función para confirmar la venta realizada, se realizarán los siguientes pasos importantes:
-    # 1) Se verificará si el pago fue completo, es decir, si monto_abonado = monto_total_venta, si no se paga completo se ejecuta la función agregar a
-    #    cuenta corriente
-    # 2) Se agrega la venta en tabla Ventas (se extrae nro_venta, cliente, monto_total, id_modo_pago de los radiobuttons) - Si la venta se pago completa
-    #    entonces estado_venta = Pagado. Caso contrario estado_venta = Pendiente
-    # 3) Se agregan los productos del carrito a la tabla DetalleVentas, con un bucle for que recorra la lista_carrito
-    # 4) Se descuentan las cantidades de los respectivos productos vendidos para actualizar su stock en la tabla Productos
-    # 5) Se pregunta si se desea generar un pdf de la factura correspondiente
+    
     def boton_confirmar_venta(self):
-        try:
-            # Se obtienen entradas del usuario (monto entregado y la opción de los Radiobuttons para el modo de pago)
-            monto_abonado = float(self.ventana_finalizacion_venta.entry_entrega.get())
-            modo_pago = self.ventana_finalizacion_venta.seleccion_radiobutton()
 
-            # Si el monto abonado, es igual al monto total de la venta, entonces se registra la venta como Pagada y se registra en Detalle de Ventas pero no
-            # en cuenta corriente. Por otro lado, también se descuentan los productos vendidos.
+        ''' Metodo para finalizar una determinada venta. Primero se obtienen
+            las entradas de usuario de monto abonado y modo de pago, luego
+            se verifica si el monto abonado es igual al monto de la venta.
+            En caso que el monto abonado sea mayor no se dejara finalizar
+            la venta, si el monto es igual se cargara la venta unicamente
+            en tabla Ventas y Detalle de ventas, por ultimo, si el monto es
+            menor, se cargara tambien en la tabla de Cuenta Corriente.
+            Ademas, se consultara en ambos casos si se desea imprimir la
+            factura de la venta.
+            En ambos casos de venta, se descontaran del stock aquellos
+            productos que fueron vendidos.
+        '''
+        try:
+            # Recuperacion entradas de usuario
+            monto_abonado = (
+                float(self.ventana_finalizacion_venta.entry_entrega.get())
+            )
+            modo_pago = (
+                self.ventana_finalizacion_venta.seleccion_radiobutton()
+            )
+
+            # Verificacion de monto abonado
             if monto_abonado > self.monto_total_venta:
                 messagebox.showerror('Error','El monto de venta es menor')
                 return
             
             if monto_abonado == self.monto_total_venta:
-
+                
                 # Registro de venta en Ventas
-                self.modelo_ventas.nueva_venta(self.nro_venta,self.cliente_venta,self.monto_total_venta,modo_pago,'Pagado',self.interes)
-
+                self.modelo_ventas.nueva_venta(
+                    self.nro_venta,
+                    self.cliente_venta,
+                    self.monto_total_venta,
+                    modo_pago,
+                    'Pagado',
+                    self.interes
+                )
                 # Registro en Detalle Ventas
                 for producto in self.lista_carrito:
-                    self.modelo_ventas.ingresar_detalle_ventas(self.nro_venta,producto[0],producto[1],producto[2])
+                    self.modelo_ventas.ingresar_detalle_ventas(
+                        self.nro_venta,
+                        producto[0],
+                        producto[1],
+                        producto[2]
+                    )
                 
                 # Descuento de productos del stock
                 for producto in self.lista_carrito:
                     ModeloProducto.descontar_producto(producto[0],producto[2])
                 
-                # Confirmación de venta
-                messagebox.showinfo('Ventas',f'Venta {self.nro_venta} agregada correctamente!')
+                # Confirmacion de venta
+                messagebox.showinfo(
+                    'Ventas',
+                    f'Venta {self.nro_venta} agregada correctamente!'
+                )
                 
-                # Cierre de ventana finalización de venta
+                # Cierre de ventana finalizacion de venta
                 self.toplevel_finalizacion_venta.destroy()
 
                 # Limpieza de campos
@@ -421,53 +639,104 @@ class ControladorVentas:
                 
                 # Seteo de atributos
                 self.monto_total_venta = 0
-                self.vista_ventas.label_total_venta.config(text=f'Total Venta: ${self.monto_total_venta}')
+                self.vista_ventas.label_total_venta.config(
+                    text=f'Total Venta: ${self.monto_total_venta}'
+                )
                 self.lista_carrito = []
                 self.contador_carrito = 0
 
-            # En caso de que se ingrese menos del monto total, se agregará la venta como Pendiente y a su vez se agregará a Cuentas Corrientes
+            # Caso monto abonado < monto de venta
             else:
-                pregunta = messagebox.askyesno('Cuenta Corriente','La venta se agregará a cuentas corrientes, ¿Desea seguir?')
+                pregunta = messagebox.askyesno(
+                    'Cuenta Corriente',
+                    '¿Agregar venta a cuentas corrientes?'
+                    )
                 if pregunta:
                     # Registro de Venta con estado_venta = Pendiente
-                    self.modelo_ventas.nueva_venta(self.nro_venta,self.cliente_venta,self.monto_total_venta,modo_pago,'Pendiente',self.interes)
+                    self.modelo_ventas.nueva_venta(
+                        self.nro_venta,
+                        self.cliente_venta,
+                        self.monto_total_venta,
+                        modo_pago,
+                        'Pendiente',
+                        self.interes
+                    )
 
                     # Registro Detalle Ventas
                     for producto in self.lista_carrito:
-                        self.modelo_ventas.ingresar_detalle_ventas(self.nro_venta,producto[0],producto[1],producto[2])
+                        self.modelo_ventas.ingresar_detalle_ventas(
+                            self.nro_venta,
+                            producto[0],
+                            producto[1],
+                            producto[2]
+                        )
 
                     # Descuento de stock de productos
                     for producto in self.lista_carrito:
-                        ModeloProducto.descontar_producto(producto[0],producto[2])
+                        ModeloProducto.descontar_producto(
+                            producto[0],
+                            producto[2]
+                        )
 
                     # Registro de la deuda en Cuenta Corriente
-                    # Se debe obtener el último nro_operación de la tabla de CuentaCorriente para el cliente al cual se le realizó la venta
-                    # Si no se encuentran resultados, el ultimo numero de operacion será 1
-                    resultado_ultimo_nro_operacion = ModeloCuentaCorriente.ultimo_nro_operacion(self.cliente_venta)
-                    if resultado_ultimo_nro_operacion and resultado_ultimo_nro_operacion[0][0] is not None:
-                        ultimo_nro_operacion = int(resultado_ultimo_nro_operacion[0][0])
+                    resultado_ultimo_nro_operacion = (
+                        ModeloCuentaCorriente.ultimo_nro_operacion(
+                            self.cliente_venta
+                        )
+                    )
+                    
+                    if (
+                        resultado_ultimo_nro_operacion and
+                        resultado_ultimo_nro_operacion[0][0] is not None
+                    ):
+                        ultimo_nro_operacion = (
+                            int(resultado_ultimo_nro_operacion[0][0])
+                        )
+                        
                     else:
                         ultimo_nro_operacion = 0
 
-                    # Obtención del monto pendiente de esa determinada venta
-                    monto_pendiente_venta = self.monto_total_venta - monto_abonado
-                    # Se obtiene el último monto_pendiente de la tabla CuentaCorriente para dicho cliente. Si no se encuentran resultados entonces
-                    # el ultimo monto_pendiente es 0
-                    resultado_ultimo_monto_pendiente = ModeloCuentaCorriente.ultimo_monto_pendiente(self.cliente_venta)
-                    if resultado_ultimo_monto_pendiente and resultado_ultimo_monto_pendiente[0][0] is not None:
-                        ultimo_monto_pendiente = float(resultado_ultimo_monto_pendiente[0][0])
+                    # Obtencion del monto pendiente de esa determinada venta
+                    monto_pendiente_venta = (
+                        self.monto_total_venta - monto_abonado
+                    )
+                    
+                    # Se obtiene el ultimo monto_pendiente de cliente
+                    resultado_ultimo_monto_pendiente = (
+                        ModeloCuentaCorriente.ultimo_monto_pendiente(
+                            self.cliente_venta
+                        )
+                    )
+                    
+                    if (
+                        resultado_ultimo_monto_pendiente and
+                        resultado_ultimo_monto_pendiente[0][0] is not None
+                    ):
+                        ultimo_monto_pendiente = (
+                            float(resultado_ultimo_monto_pendiente[0][0])
+                        )
+                        
                     else:
                         ultimo_monto_pendiente = 0
 
-                    # El monto_pendiente que se cargará sera ultimo_monto_pendiente + monto_pendiente_venta
+                    # Actualizacion de monto pendiente
                     monto_pendiente = ultimo_monto_pendiente + monto_pendiente_venta
 
-                    ModeloCuentaCorriente.ingresar_pago_cc(ultimo_nro_operacion + 1,self.cliente_venta,'Adeuda',monto_abonado,monto_pendiente)
+                    # Insercion de pago en cuenta corriente
+                    ModeloCuentaCorriente.ingresar_pago_cc(
+                        ultimo_nro_operacion + 1,
+                        self.cliente_venta,
+                        'Adeuda',
+                        monto_abonado,
+                        monto_pendiente
+                    )
 
-                    # Mensaje de confirmación
-                    messagebox.showinfo('Ventas',f'La venta {self.nro_venta} se cargó a cuenta corriente')
+                    # Mensaje de confirmacion
+                    messagebox.showinfo(
+                        'Ventas',
+                        f'Venta {self.nro_venta} cargada a cuenta corriente')
 
-                    # Cierre de ventana finalización de venta
+                    # Cierre de ventana finalizacion de venta
                     self.toplevel_finalizacion_venta.destroy()
 
                     # Limpieza de campos
@@ -476,135 +745,276 @@ class ControladorVentas:
 
                     # Seteo de atributos
                     self.monto_total_venta = 0
-                    self.vista_ventas.label_total_venta.config(text=f'Total Venta: ${self.monto_total_venta}')
+                    self.vista_ventas.label_total_venta.config(
+                        text=f'Total Venta: ${self.monto_total_venta}'
+                    )
                     self.lista_carrito = []
                     self.contador_carrito = 0
 
-            # Consulta de generación de factura PDF
-            consulta_generar_factura = messagebox.askyesno('Generar Factura','¿Desea generar la factura de la venta?') 
+            # Consulta de generacion de factura PDF
+            consulta_generar_factura = messagebox.askyesno(
+                'Generar Factura',
+                '¿Desea generar la factura de la venta?'
+            )
+            
             if consulta_generar_factura:
+                lista_detalle_venta = (
+                    self.modelo_ventas.consultar_detalleventas(
+                        self.nro_venta
+                    )
+                )
+                
+                # Obtencion de fecha venta
+                fecha_venta = (
+                    self.modelo_ventas.consultar_venta_nroventa(
+                        self.nro_venta
+                    )
+                )
+                
+                # Obtencion monto total venta
+                monto_total = (
+                    self.modelo_ventas.monto_total_venta(
+                        self.nro_venta
+                    )
+                )
 
-                lista_detalle_venta = self.modelo_ventas.consultar_detalleventas(self.nro_venta)
-                # Obtención de fecha venta
-                fecha_venta = self.modelo_ventas.consultar_venta_nroventa(self.nro_venta)[0][0]
-                # Obtención monto total venta
-                monto_total = self.modelo_ventas.monto_total_venta(self.nro_venta)[0][0]
+                # Generacion de la factura
+                self.generar_factura_pdf(
+                    self.cliente_venta,
+                    lista_detalle_venta,
+                    monto_total[0][0],
+                    self.nro_venta,
+                    fecha_venta[0][0],
+                    self.interes
+                )   
 
-                # Generación de la factura
-                self.generar_factura_pdf(self.cliente_venta,lista_detalle_venta,monto_total,self.nro_venta,fecha_venta,self.interes)   
-
-        # Manejo de errores
+        # Manejo de excepciones
         except ValueError:
             messagebox.showerror('Error','Error en el ingreso de datos')
         except Exception as error:
             messagebox.showerror('Error',f'Error inesperado - {error}')
 
-    # Función para eliminar una venta. Primero, para evitar excepciones en la base de datos se debe eliminar el nro_venta de la tabla
-    # DetalleVentas y finalmente eliminarlo desde la tabla Ventas.
-    # También se mostrará messagebox para consultar si se quieren devolver al stock los productos que se vendieron en esa venta
+    
     def eliminar_venta(self):
+
+        ''' Metodo para eliminar una venta existente en la base de datos.
+            Para evitar excepciones primero se elimina el detalle de la
+            venta y luego se elimina la venta.
+            Tambien se consulta si se desea devolver a stock aquellos
+            productos que se vendieron en dicha venta.
+        '''
+        
         # Recuperar elemento seleccionado del Treeview
-        elemento_seleccionado = self.ventana_consulta_ventas.tv_consultaventas.selection()
+        elemento_seleccionado = (
+            self.ventana_consulta_ventas.tv_consultaventas.selection()
+        )
+        
         if elemento_seleccionado:
             # Verificar que solo se haya seleccionado un elemento
-            if len(elemento_seleccionado)>1:
-                messagebox.showerror('Error','Seleccionar de a un elemento')
+            if len(elemento_seleccionado) > 1:
+                messagebox.showerror(
+                    'Error',
+                    'Seleccionar de a un elemento'
+                )
                 return
 
-            # Recuperación del nro_venta
-            nro_venta = self.ventana_consulta_ventas.tv_consultaventas.item(elemento_seleccionado,'text')
+            # Recuperacion del nro_venta
+            nro_venta = self.ventana_consulta_ventas.tv_consultaventas.item(
+                elemento_seleccionado,
+                'text'
+            )
 
-            # Obtención de productos y cantidades vendidos en la venta
-            productos_cantidades = self.modelo_ventas.productos_vendidos(nro_venta)
+            # Obtencion de productos y cantidades vendidos
+            productos_cantidades = (
+                self.modelo_ventas.productos_vendidos(nro_venta)
+            )
             
-            # Eliminación. Primero se elimina del detalle y luego de la venta
-            confirmacion = messagebox.askyesno('Eliminar Venta',f'¿Eliminar venta #{nro_venta}?')
+            # Eliminacion de venta
+            confirmacion = messagebox.askyesno(
+                'Eliminar Venta',
+                f'¿Eliminar venta #{nro_venta}?'
+            )
             if confirmacion:
                 self.modelo_ventas.eliminar_detalleventas(nro_venta)
                 self.modelo_ventas.eliminar_venta(nro_venta)
 
-                # Consulta para devolver al stock los productos vendidos en la venta
-                consulta_devolver_stock = messagebox.askyesno('Devolver Stock','¿Desea devolver al stock los productos vendidos en la venta?')
+                # Consulta para devolver al stock los productos vendidos
+                consulta_devolver_stock = messagebox.askyesno(
+                    'Devolver Stock',
+                    '¿Desea devolver al stock los productos vendidos?'
+                )
                 if consulta_devolver_stock:
                     for producto_cantidad in productos_cantidades:
-                        ModeloProducto.devolver_producto_a_stock(producto_cantidad[0],producto_cantidad[1])
+                        ModeloProducto.devolver_producto_a_stock(
+                            producto_cantidad[0],
+                            producto_cantidad[1]
+                        )
                     
-                    messagebox.showinfo('Stock Devuelto','Stock devuelto correctamente!')
+                    messagebox.showinfo(
+                        'Stock Devuelto',
+                        'Stock devuelto correctamente!'
+                    )
 
-                # Mensaje de confirmación
-                messagebox.showinfo('Venta eliminada',f'La venta {nro_venta} ha sido eliminada!')
+                # Mensaje de confirmacion
+                messagebox.showinfo(
+                    'Venta eliminada',
+                    f'La venta {nro_venta} ha sido eliminada!'
+                )
                 self.boton_consultar_ventas()
+        
         else:
             messagebox.showerror('Error','Seleccionar una venta')
 
-    # Función para abrir ventana de detalle de ventas. Se verifica que haya un elemento seleccionado en Treeview consulta de ventas
+    
     def boton_abrir_detalleventas(self):
+
+        ''' Metodo para abrir ventana de detalle de ventas, verificando
+            que se haya seleccionado un elemento en el treeview
+        '''
+        
         # Recuperar elemento seleccionado en Treeview
-        elemento_seleccionado = self.ventana_consulta_ventas.tv_consultaventas.selection()
-        # Apertura de la ventana de detalle ventas. Si se selecciona más de un elemento se muestra error
+        elemento_seleccionado = (
+            self.ventana_consulta_ventas.tv_consultaventas.selection()
+        )
+        
+        # Verificacion seleccion de un elemento
         if len(elemento_seleccionado) > 1:
             messagebox.showerror('Error','Se debe elegir solo una venta')
             return
         if elemento_seleccionado:
-            self.nro_venta_consulta = self.ventana_consulta_ventas.tv_consultaventas.item(elemento_seleccionado,'text')
+            self.nro_venta_consulta = (
+                self.ventana_consulta_ventas.tv_consultaventas.item(
+                    elemento_seleccionado,
+                    'text'
+                )
+            )
+            
+            # Apertura de ventana
             self.abrir_ventana_detalleventas()
 
-            # Visualización del detalle de venta en Treeview
-            valores_detalle_ventas = self.modelo_ventas.consultar_detalleventas(self.nro_venta_consulta)
+            # Visualizacion del detalle de venta en Treeview
+            valores_detalle_ventas = (
+                self.modelo_ventas.consultar_detalleventas(
+                    self.nro_venta_consulta
+                )
+            )
+
+            # Llenado de treeview con detalle de venta seleccionada
             for detalle in valores_detalle_ventas:
-                self.ventana_detalle_ventas.tv_detalleventas.insert('','end',text=detalle[0],values=(detalle[1],detalle[2],detalle[3]))
+                self.ventana_detalle_ventas.tv_detalleventas.insert(
+                    '',
+                    'end',
+                    text = detalle[0],
+                    values = (detalle[1],detalle[2],detalle[3])
+                )
+        
         else:
             messagebox.showerror('Error','Se debe seleccionar un elemento')
 
-    # Función para incluir en el boton "Imprimir Factura" de la ventana Detalle de ventas
+    
     def detalleventas_imprimirpdf(self):
+
+        ''' Metodo para imprimir factura desde la ventana de detalle de
+            ventas. Se recupera el elemento seleccionado en treeview,
+            el cual se utiliza para obtener la informacion sobre esa
+            determinada venta y utilizar esos parametros para la
+            generacion de la factura pdf
+        '''
         # Recuperar elemento seleccionado en Treeview
-        elemento_seleccionado = self.ventana_consulta_ventas.tv_consultaventas.selection()
-        # Apertura de la ventana de detalle ventas. Si se selecciona más de un elemento se muestra error
+        elemento_seleccionado = (
+            self.ventana_consulta_ventas.tv_consultaventas.selection()
+        )
+        
         if len(elemento_seleccionado) > 1:
             messagebox.showerror('Error','Se debe elegir solo una venta')
             return
+            
         if elemento_seleccionado:
             # Obtención numero factura
-            nro_factura = self.ventana_consulta_ventas.tv_consultaventas.item(elemento_seleccionado,'text')
-            # Obtención información de venta
-            info_venta = self.modelo_ventas.consultar_venta_nroventa(nro_factura)
+            nro_factura = (
+                self.ventana_consulta_ventas.tv_consultaventas.item(
+                    elemento_seleccionado,
+                    'text'
+                )
+            )
+            
+            # Obtencion informacion de venta
+            info_venta = (
+                self.modelo_ventas.consultar_venta_nroventa(nro_factura))
             fecha = info_venta[0][0]
             cliente = info_venta[0][1]
             monto_total = info_venta[0][2]
             interes = info_venta[0][3]
-            # Obtención lista de productos de la venta
-            productos = self.modelo_ventas.consultar_detalleventas(nro_factura)
+            
+            # Obtencion lista de productos de la venta
+            productos = (
+                self.modelo_ventas.consultar_detalleventas(nro_factura))
 
             # Imprimir factura
-            consulta_imprimir_pdf = messagebox.askyesno('Imprimir Factura',f'Desea imprimir la factura')
+            consulta_imprimir_pdf = messagebox.askyesno(
+                'Imprimir Factura',
+                f'Desea imprimir la factura?'
+            )
             if consulta_imprimir_pdf:
-                self.generar_factura_pdf(cliente,productos,monto_total,nro_factura,fecha,interes) 
+                self.generar_factura_pdf(
+                    cliente,
+                    productos,
+                    monto_total,
+                    nro_factura,
+                    fecha,interes
+                ) 
     
-    # Función para introducir pagos 'Pendiente' en el Treeview de Consulta de Ventas. En caso de que no haya pagos pendientes, se muestra mensaje
+    
     def boton_pagos_pendientes(self):
-        # Obtención de pagos pendientes
+
+        ''' Metodo para introducir aquellas ventas con pago pendiente
+            en el Treeview de la ventana consulta de ventas. En caso
+            que no haya pagos pendientes, no se muestra nada.
+        '''
+        
+        # Obtencion de pagos pendientes
         pagos_pendientes = self.modelo_ventas.pagos_pendientes()
+        
         # Limpieza de Treeview antes de insertar datos
         self.ventana_consulta_ventas.limpiar_treeview()
-        # Carga de datos a Treeview, si no hay, muestra mensaje
+        
+        # Carga de datos a Treeview
         if pagos_pendientes:
             for pago in pagos_pendientes:
-                self.ventana_consulta_ventas.tv_consultaventas.insert('','end',text=pago[0],values=(pago[1],pago[2],pago[3],pago[4],pago[5]))
+                self.ventana_consulta_ventas.tv_consultaventas.insert(
+                    '',
+                    'end',
+                    text = pago[0],
+                    values = (pago[1],pago[2],pago[3],pago[4],pago[5])
+                )
         else:
-            messagebox.showinfo('Pagos Pendientes','No se encontraron pagos pendientes!')
+            messagebox.showinfo(
+                'Pagos Pendientes',
+                'No se encontraron pagos pendientes!'
+            )
 
-    # Función para agregar interes de venta
+    
     def boton_agregar_interes(self):
-        try:
 
+        ''' Metodo para introducir un interes en una determinada
+            venta, cuando el metodo de pago elegido fue de Debito
+            o Credito. Primero se recupera el valor del campo
+            interes y luego se modifica el valor del atributo
+            self.interes y tambien se ajusta el valor del
+            monto total de venta
+        '''
+        
+        try:
             interes = float(self.ventana_interes_venta.entry_interes.get())
             if interes > 0:
-                # Actualización del interés y del monto total de venta
+                # Actualizacion del interes y del monto total de venta
                 self.interes = interes
                 self.monto_total_venta += interes
-                # Actualización del label total_venta
-                self.ventana_finalizacion_venta.label_total_venta.config(text=f'Total Venta: ${self.monto_total_venta}')
+                
+                # Actualizacion del label total_venta
+                self.ventana_finalizacion_venta.label_total_venta.config(
+                    text = f'Total Venta: ${self.monto_total_venta}'
+                )
 
             # Cierre de ventana
             self.toplevel_interes_venta.destroy()
@@ -613,30 +1023,44 @@ class ControladorVentas:
             messagebox.showerror('Error','Error en el ingreso de datos')
         except Exception as error:
             messagebox.showerror('Error',f'Error inesperado - {error}')
-    ###############################################################################################################################################
-    ###################################################### GENERACIÓN DE FACTURAS #################################################################
-    # Función para que no haya problemas con la ruta a imagenes
+    
+    
+    ########################### GENERACION DE FACTURAS ######################
     def rutas(self, *paths):
-        if getattr(sys, 'frozen', False):  # Ejecutable generado con PyInstaller
+        
+        ''' Metodo para asignacion de rutas correctamente a la hora de
+            realizar el ejecutable con PyInstaller
+        '''
+        
+        if getattr(sys, 'frozen', False):
             ruta_base = sys._MEIPASS
-        else:  # Ejecución normal en el entorno de desarrollo
+        else:
             ruta_base = os.path.dirname(os.path.abspath(__file__))
         return os.path.join(ruta_base, *paths)
     
-    # Función para generar facturas en PDF
-    def generar_factura_pdf(self,cliente,productos,total,nro_factura,fecha,interes):
+    
+    def generar_factura_pdf(
+        self,
+        cliente,
+        productos,
+        total,
+        nro_factura,
+        fecha,interes
+    ):
+        
         base_dir = os.path.dirname(os.path.abspath(__file__))
         ruta_facturas = os.path.join(base_dir,"Facturas")
         if not os.path.exists(ruta_facturas):
             os.makedirs(ruta_facturas)
             
-        # Se crea una variable que contendrá la ruta y nombre del archivo
+        # Se crea una variable que contendra la ruta y nombre del archivo
         nombre_archivo = f'factura_{nro_factura}_{cliente}.pdf'
         archivo_pdf = os.path.join(ruta_facturas,nombre_archivo)
 
-        # Creación del canvas
+        # Creacion del canvas
         c = canvas.Canvas(archivo_pdf,pagesize=letter)
-        # Asignación de ancho y alto de la pagina como tamaño letter
+        
+        # Asignacion de ancho y alto de la pagina como tamaño letter
         width,height = letter
 
         # Estilos
@@ -644,14 +1068,20 @@ class ControladorVentas:
         estilo_titulo = styles['Title']
         estilo_normal = styles['Normal']
 
-        # Introducción del logo de la empresa en esquina superior
+        # Introduccion del logo de la empresa en esquina superior
         ruta = self.rutas('../imagenes','logo_sin_fondo.png')
         ruta_logo = ruta
         ancho_logo = 200
         alto_logo = 200
-        c.drawImage(ruta_logo,width/2-ancho_logo/2,height-alto_logo,width=ancho_logo,height=alto_logo)
+        c.drawImage(
+            ruta_logo,
+            width/2-ancho_logo/2,
+            height-alto_logo,
+            width=ancho_logo,
+            height=alto_logo
+        )
 
-        # Información del emprendimiento
+        # Informacion del emprendimiento
         c.setFont("Helvetica-Bold",20)
         c.drawString(50,height-200,'BLA Estética')
 
@@ -667,7 +1097,7 @@ class ControladorVentas:
         # Línea separadora
         c.line(50,height-280,width-50,height-280)
 
-        # Información de la venta
+        # Informacion de la venta
         c.setFont("Helvetica-Bold",16)
         c.drawString(50,height-300,f'Venta número #{nro_factura}')
 
@@ -693,25 +1123,25 @@ class ControladorVentas:
             ('GRID', (0, 0), (-1, -1), 1, colors.black),
         ]))
 
-        # Calcular la posición inicial de la tabla dinámicamente
+        # Calcular la posicion inicial de la tabla dinamicamente
         table_height = len(data) * 20  # Aproximadamente 20 puntos por fila
         y_position = height - 400 - table_height
         table.wrapOn(c, width, height)
         table.drawOn(c, 50, y_position)
-        
-        # Si hay interés, ya sea para cuando se imprime la factura en el momento de la venta o luego de realizada la venta, se muestra
-        # dicho interes usando el valor guardado (self.interes) o consultando la base de datos para obtener el interés que se guardó en
-        # el momento de realizar la venta (interes_registro).
 
         if interes > 0:
             c.setFont("Helvetica",14)
-            c.drawString(50,height-570,f'Interés por pago en Débito/Crédito: ${interes:.1f}')
+            c.drawString(
+                50,
+                height-570,
+                f'Interés por pago en Débito/Crédito: ${interes:.1f}'
+            )
         
         # Total a pagar
         c.setFont("Helvetica-Bold",16)
         c.drawString(50,height-600,f'Total a pagar: ${total:.1f}')
 
-        # Línea separadora
+        # Linea separadora
         c.line(50,height-630,width-50,height-630)
 
         # Mensaje
@@ -720,10 +1150,18 @@ class ControladorVentas:
 
         # Guardado de factura
         c.save()
-        messagebox.showinfo('Factura generada',f'Factura #{nro_factura} creada correctamente')
+        messagebox.showinfo(
+            'Factura generada',
+            f'Factura #{nro_factura} creada correctamente'
+        )
 
         # Una vez guardada la factura, abrir automaticamente con os
         try:
             os.startfile(os.path.abspath(archivo_pdf))
         except Exception as error:
-            messagebox.showerror('Error',f'No se pudo abrir el archivo PDF: {error}')
+            messagebox.showerror(
+                'Error',
+                f'No se pudo abrir el archivo PDF: {error}'
+            )
+            
+
