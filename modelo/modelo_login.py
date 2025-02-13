@@ -43,10 +43,10 @@ class ModeloLogin:
         
         # Se pasa la contraseña ingresada a bites
         contraseña_bites = contraseña.encode()
-        # Se genera una "salt" (fuerza) de la encryptación de la contraseña-+
+        # Se genera una "salt" (fuerza) de la encryptación de la contraseña
         salt = bcrypt.gensalt() 
         # Se crea la contraseña encryptada
-        contraseña_hasheada = bcrypt.hashpw(contraseña_bites,salt) 
+        contraseña_hasheada = bcrypt.hashpw(contraseña_bites, salt) 
 
         #Se obtiene la contraseña encryptada
         return contraseña_hasheada.decode() 

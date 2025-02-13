@@ -47,7 +47,7 @@ class BaseDatos:
 
 
     @staticmethod
-    def realizar_consulta(query,valores=None,tipo=None):
+    def realizar_consulta(query, valores=None, tipo=None):
         ''' 
         Función para realizar consultas SQL del modelo. En caso de que la 
         consulta sea del tipo "SELECT" también se devolverán los valores 
@@ -57,7 +57,7 @@ class BaseDatos:
         if conn:
             try:
                 cursor = conn.cursor()
-                cursor.execute(query,valores)
+                cursor.execute(query, valores)
                 conn.commit()
 
                 if tipo ==  'SELECT':

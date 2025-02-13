@@ -236,10 +236,10 @@ class CuentaCorriente:
 
 class SaldarCuentaCorriente:
     
-     ''' Esta clase crea la ventana de confirmación de pago de una cuenta 
-         corriente, donde se ingresará el monto abonado de acuerdo a la venta 
-         seleccionada en el Treeview de cuentas corrientes.
-     '''
+    ''' Esta clase crea la ventana de confirmación de pago de una cuenta 
+        corriente, donde se ingresará el monto abonado de acuerdo a la venta 
+        seleccionada en el Treeview de cuentas corrientes.
+    '''
     
 def __init__(self,root):
         self.root = root
@@ -249,52 +249,50 @@ def __init__(self,root):
         self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
         self.widgets()
 
-    def rutas(self, *paths):
-        if getattr(sys, 'frozen', False):
-            ruta_base = sys._MEIPASS
-        else:
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
+def rutas(self, *paths):
+    if getattr(sys, 'frozen', False):
+        ruta_base = sys._MEIPASS
+    else:
+        ruta_base = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(ruta_base, *paths)
+
+def widgets(self):
+    #Frames
+    self.frame_saldocc = Frame(self.root)
+    self.frame_saldocc.config(width=400,height=100,background='#EDE2E0')
+    self.frame_saldocc.place(x=0,y=0)
     
-    def widgets(self):
-        #Frames
-        self.frame_saldocc = Frame(self.root)
-        self.frame_saldocc.config(width=400,height=100,background='#EDE2E0')
-        self.frame_saldocc.place(x=0,y=0)
-        
-        #Labels
-        self.label_nuevopago = Label(self.frame_saldocc)
-        self.label_nuevopago.config(
-            text=f'Abona $', font=('century gothic',14), background='#EDE2E0'
-        )
-        self.label_nuevopago.place(relx=0.25,rely=0.28,anchor='center')
-
-        #Entries
-        self.entry_nuevopago = Entry(self.frame_saldocc)
-        self.entry_nuevopago.config(
-            font=('century gothic',14), width=15, bd=1, relief='solid'
-        )
-        self.entry_nuevopago.place(relx=0.6,rely=0.28,anchor='center')
-
-        #Buttons
-        ruta = self.rutas('../imagenes','mas.png')
-        self.boton_nuevopago = Button(self.frame_saldocc)
-        self.boton_nuevopago.config(
-            text='Agregar',
-            font=('century gothic',12,'bold'),
-            width=140,
-            background='#D3B9B4',
-            bd=2,
-            relief='groove'
-        )
-        imagen_nuevopago_pil = Image.open(ruta)
-        imagen_nuevopago_resize = imagen_nuevopago_pil.resize((25,25))
-        imagen_nuevopago_tk = ImageTk.PhotoImage(imagen_nuevopago_resize)
-        self.boton_nuevopago.config(
-            image=imagen_nuevopago_tk, compound='left', padx=15
-        )
-        self.boton_nuevopago.place(relx=0.5,rely=0.75,anchor='center')
-        self.boton_nuevopago.image = imagen_nuevopago_tk 
+    #Labels
+    self.label_nuevopago = Label(self.frame_saldocc)
+    self.label_nuevopago.config(
+        text=f'Abona $', font=('century gothic',14), background='#EDE2E0'
+    )
+    self.label_nuevopago.place(relx=0.25,rely=0.28,anchor='center')
+    #Entries
+    self.entry_nuevopago = Entry(self.frame_saldocc)
+    self.entry_nuevopago.config(
+        font=('century gothic',14), width=15, bd=1, relief='solid'
+    )
+    self.entry_nuevopago.place(relx=0.6,rely=0.28,anchor='center')
+    #Buttons
+    ruta = self.rutas('../imagenes','mas.png')
+    self.boton_nuevopago = Button(self.frame_saldocc)
+    self.boton_nuevopago.config(
+        text='Agregar',
+        font=('century gothic',12,'bold'),
+        width=140,
+        background='#D3B9B4',
+        bd=2,
+        relief='groove'
+    )
+    imagen_nuevopago_pil = Image.open(ruta)
+    imagen_nuevopago_resize = imagen_nuevopago_pil.resize((25,25))
+    imagen_nuevopago_tk = ImageTk.PhotoImage(imagen_nuevopago_resize)
+    self.boton_nuevopago.config(
+        image=imagen_nuevopago_tk, compound='left', padx=15
+    )
+    self.boton_nuevopago.place(relx=0.5,rely=0.75,anchor='center')
+    self.boton_nuevopago.image = imagen_nuevopago_tk 
 
 
 class ActualizarCuentaCorriente:

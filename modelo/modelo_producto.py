@@ -72,13 +72,21 @@ class ModeloProducto:
                         ):
         
         query = ''' INSERT INTO Productos 
-                    (codigo_producto,descripcion,precio_unitario,stock,vencimiento) 
+                        (codigo_producto,
+                        descripcion,
+                        precio_unitario,
+                        stock,
+                        vencimiento) 
                     VALUES (%s,%s,%s,%s,%s)
                 '''
         
         BaseDatos.realizar_consulta(
             query,
-            (codigo_producto,descripcion,precio_unitario,stock,vencimiento),
+            (codigo_producto,
+            descripcion,
+            precio_unitario,
+            stock,vencimiento
+            ),
             'INSERT'
         )
 
@@ -156,7 +164,8 @@ class ModeloProducto:
                             TO_CHAR(vencimiento,'DD-MM-YYYY'),
                             (vencimiento - CURRENT_DATE) AS dias_vencimiento
                         FROM Productos 
-                        WHERE activo = True AND (vencimiento BETWEEN %s AND %s)
+                        WHERE  activo = True AND
+                            (vencimiento BETWEEN %s AND %s)
                     '''
             
             params.append(desde)
@@ -221,7 +230,7 @@ class ModeloProducto:
 
     # Metodo para obtener nro_producto segun codigo y vencimiento
     @staticmethod
-    def obtener_nroproducto(codigo_producto,vencimiento):
+    def obtener_nroproducto(codigo_producto, vencimiento):
         
         query = ''' SELECT nro_producto 
                     FROM Productos 

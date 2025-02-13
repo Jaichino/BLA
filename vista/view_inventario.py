@@ -6,7 +6,7 @@ from tkcalendar import DateEntry
 from PIL import Image,ImageTk
 
 ########################### VISTA DE INVENTARIO ##############################
-''' En este fichero se lleva a cabo la creaciOn de la interfaz grAfica del 
+''' En este fichero se lleva a cabo la creacion de la interfaz grafica del 
     modulo de Inventarios.
 '''
 

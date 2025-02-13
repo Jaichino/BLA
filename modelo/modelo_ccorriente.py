@@ -15,7 +15,7 @@ class ModeloCuentaCorriente:
                     FROM CuentaCorriente
                     ORDER BY cliente
                 '''
-        return BaseDatos.realizar_consulta(query,None,'SELECT')
+        return BaseDatos.realizar_consulta(query, None, 'SELECT')
         
 
     # Metodo para mostrar informacion de cuentas corrientes
@@ -30,7 +30,7 @@ class ModeloCuentaCorriente:
                         monto_pendiente
                     FROM CuentaCorriente WHERE cliente = %s'''
         
-        return BaseDatos.realizar_consulta(query,(cliente,),'SELECT')
+        return BaseDatos.realizar_consulta(query, (cliente,), 'SELECT')
     
 
     # Metodo para ingregar un pago dentro de una cuenta corriente determinada
@@ -67,7 +67,7 @@ class ModeloCuentaCorriente:
         
         query = 'DELETE FROM CuentaCorriente WHERE cliente = %s'
         
-        BaseDatos.realizar_consulta(query,(cliente,),None)
+        BaseDatos.realizar_consulta(query, (cliente,), None)
 
 
     # Metodo para obtener ultimo nro_operación de acuerdo a cliente
@@ -78,7 +78,7 @@ class ModeloCuentaCorriente:
                     FROM CuentaCorriente WHERE cliente = %s
                 '''
         
-        return BaseDatos.realizar_consulta(query,(cliente,),'SELECT')
+        return BaseDatos.realizar_consulta(query, (cliente,), 'SELECT')
     
 
     # Metodo para obtener ultimo monto_pendiente de un cliente determinado
@@ -92,15 +92,15 @@ class ModeloCuentaCorriente:
                     ORDER BY nro_operacion DESC
                     LIMIT 1
                 '''
-        return BaseDatos.realizar_consulta(query,(cliente,),'SELECT')
+        return BaseDatos.realizar_consulta(query, (cliente,), 'SELECT')
     
 
     # Metodo para eliminar ultima operacion que se hizo en cuenta corriente
     @staticmethod
-    def eliminar_ultima_operacion(nro_operacion,cliente):
+    def eliminar_ultima_operacion(nro_operacion, cliente):
         
         query = ''' DELETE FROM CuentaCorriente 
                     WHERE nro_operacion = %s AND cliente = %s
                 '''
         
-        BaseDatos.realizar_consulta(query,(nro_operacion,cliente),None)
+        BaseDatos.realizar_consulta(query, (nro_operacion,cliente), None)

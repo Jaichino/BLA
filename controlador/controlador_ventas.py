@@ -16,7 +16,7 @@ from modelo.modelo_ventas import ModeloVentas
 from modelo.modelo_producto import ModeloProducto
 from modelo.modelo_ccorriente import ModeloCuentaCorriente
 
-######################## CONTROLADOR DE VENTAS ###############################
+######################## CONTROLADOR DE VENTAS ##############################
 
 ''' En este fichero se lleva a cabo la vinculacion entre la vista y el modelo
     del modulo Ventas
@@ -73,7 +73,7 @@ class ControladorVentas:
             self.buscar_cliente_nuevaventa
         )
 
-    ######################## INICIALIZACION DE VENTANAS ######################
+    ######################## INICIALIZACION DE VENTANAS #####################
     def abrir_ventana_consultaventas(self):
         # Creacion de ventana
         self.minimizar_root()
@@ -115,7 +115,10 @@ class ControladorVentas:
     
     def abrir_ventana_detalleventas(self):
         # Creacion de ventana
-        self.toplevel_detalle_ventas = Toplevel(self.toplevel_consulta_ventas)
+        self.toplevel_detalle_ventas = Toplevel(
+            self.toplevel_consulta_ventas
+        )
+
         self.ventana_detalle_ventas = (
             DetalleVentas(self.toplevel_detalle_ventas)
         )
@@ -205,7 +208,7 @@ class ControladorVentas:
         self.toplevel_consulta_ventas.destroy()
         self.root.deiconify()
 
-    ################################## EVENTOS ###############################
+    ################################## EVENTOS ##############################
     def buscar_cliente_nuevaventa(self,event):
         
         ''' Metodo asociado a evento para rellenar el ComboBox de clientes a
@@ -239,8 +242,8 @@ class ControladorVentas:
     
     def buscar_cliente_consultaventa(self, event):
 
-        ''' Metodo asociado a evento para filtrar los clientes e introducirlos
-            en ComboBox en ventana consulta de ventas
+        ''' Metodo asociado a evento para filtrar los clientes e 
+            introducirlos en ComboBox en ventana consulta de ventas
         '''
         clientes = ModeloVentas.clientes()
         entrada_cliente = (
@@ -299,12 +302,12 @@ class ControladorVentas:
             self.vista_ventas.entry_vencimiento['values'] = []
             self.vista_ventas.entry_vencimiento.set('')    
 
-    ######################### ACCIONES DE BOTONES ############################
+    ######################## ACCIONES DE BOTONES ############################
     def abrir_abrir_ventana_finalizacionventa(self):
         
-        ''' Metodo para la apertura de la ventana de finalizacion de venta, la
-            cual solo se abrira si existen productos dentro del carrito, caso
-            contrario se mostrara messagebox
+        ''' Metodo para la apertura de la ventana de finalizacion de venta, 
+            la cual solo se abrira si existen productos dentro del carrito, 
+            caso contrario se mostrara messagebox
         '''
         
         # Verificacion de cliente
@@ -332,7 +335,9 @@ class ControladorVentas:
         # Limpieza de campos
         self.vista_ventas.entry_precio.delete(0,'end')
         self.vista_ventas.label_en_stock.config(text='En Stock: ')
-        self.vista_ventas.label_descripcion_producto.config(text='Producto: ')
+        self.vista_ventas.label_descripcion_producto.config(
+            text = 'Producto: '
+        )
         
         try:
             # Obtencion del codigo y vencimiento
@@ -505,7 +510,10 @@ class ControladorVentas:
             nro_carrito = self.vista_ventas.tv_ventas.item(contador,'text')
             if nro_carrito > numero_carrito:
                 # Se resta 1 a los que estan por delante, otros se mantienen
-                self.vista_ventas.tv_ventas.item(contador, text=nro_carrito-1)
+                self.vista_ventas.tv_ventas.item(
+                    contador,
+                    text = nro_carrito-1
+                )
         
         # Seteo contador para que siempre arranque desde el ultimo ingresado
         children_carritos = self.vista_ventas.tv_ventas.get_children()
@@ -622,7 +630,10 @@ class ControladorVentas:
                 
                 # Descuento de productos del stock
                 for producto in self.lista_carrito:
-                    ModeloProducto.descontar_producto(producto[0],producto[2])
+                    ModeloProducto.descontar_producto(
+                        producto[0],
+                        producto[2]
+                    )
                 
                 # Confirmacion de venta
                 messagebox.showinfo(
@@ -720,7 +731,9 @@ class ControladorVentas:
                         ultimo_monto_pendiente = 0
 
                     # Actualizacion de monto pendiente
-                    monto_pendiente = ultimo_monto_pendiente + monto_pendiente_venta
+                    monto_pendiente = (
+                        ultimo_monto_pendiente + monto_pendiente_venta
+                    )
 
                     # Insercion de pago en cuenta corriente
                     ModeloCuentaCorriente.ingresar_pago_cc(
@@ -1049,7 +1062,7 @@ class ControladorVentas:
     ):
         
         base_dir = os.path.dirname(os.path.abspath(__file__))
-        ruta_facturas = os.path.join(base_dir,"Facturas")
+        ruta_facturas = os.path.join(base_dir,"../Facturas")
         if not os.path.exists(ruta_facturas):
             os.makedirs(ruta_facturas)
             
