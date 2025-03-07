@@ -1,4 +1,7 @@
+import os
+from datetime import datetime
 from tkinter import messagebox, Toplevel
+from openpyxl import Workbook
 from vista.view_inventario import InterfazInventario
 from vista.view_inventario import Vencimientos
 from vista.view_inventario import NuevoProducto
@@ -44,6 +47,10 @@ class ControladorProducto:
         )
         self.vista_inventario.boton_eliminar.config(
             command = self.boton_eliminar_producto
+        )
+
+        self.vista_inventario.boton_excel.config(
+            command = self.generar_excel
         )
         
         # Llenado de Treeview en inicio de ventana
@@ -799,4 +806,87 @@ class ControladorProducto:
                 'No se encontraron productos vencidos!'
             )
             self.llenar_treeview_vencimientos()
+            
+
+    def generar_excel(self):
+            
+            ''' Metodo para generar un archivo excel con los productos del
+                inventario. Se crea un archivo excel con la libreria openpyxl
+                y se insertan los productos del inventario en dicho archivo.
+                Se crea una carpeta 'carpeta_excels' donde se guarda el 
+                archivo generado.
+            '''
+            
+            # Obtencion de dia y hora de generacion de archivo
+            hora = datetime.now()
+            hora = hora.strftime('%d-%m_%H-%M')
+
+            # Consulta generacion de archivo excel
+            confirmacion = messagebox.askyesno(
+                'Generar Excel',
+                'Desea generar un archivo excel con los productos?'
+            )
+            if not confirmacion:
+                return
+            
+            # Obtencion de los productos del Treeview
+            codigos = []
+            info = []
+
+            children = self.vista_inventario.tv_inventario.get_children()
+
+            for child in children:
+                codigo = self.vista_inventario.tv_inventario.item(
+                    child,
+                    'text'
+                )
+
+                codigos.append(codigo)
+                
+                valores = self.vista_inventario.tv_inventario.item(
+                    child,
+                    'values'
+                )
+
+                info.append(valores)
+
+            # Creacion de archivo excel
+            wb = Workbook()
+            ws = wb.active
+            ws.title = 'Productos'
+
+            # Encabezados
+            encabezados = [
+                'Codigo',
+                'Descripcion',
+                'Precio',
+                'Stock',
+                'Vencimiento'
+            ]
+
+            ws.append(encabezados)
+
+            # Insercion de productos
+            for i in range(len(codigos)):
+                fila = [codigos[i]]
+                fila.extend(info[i])
+                ws.append(fila)
+            
+            # Guardado de archivo
+            filename = f'inventario-{hora}.xlsx'
+
+            # Creacion de carpeta y guardado de archivo
+            if not os.path.exists('carpeta_excels'):
+                os.makedirs('carpeta_excels')
+            ruta = os.path.join('carpeta_excels',filename)
+            wb.save(ruta)
+
+            # Mensaje de confirmacion
+            messagebox.showinfo(
+                'Excel Generado',
+                'Archivo excel generado correctamente!'
+            )
+
+            # Inicio de archivo excel
+            os.startfile(ruta)
             

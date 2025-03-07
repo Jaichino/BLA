@@ -29,10 +29,7 @@ class ControladorLogin:
         self.vista_login.entry_user.bind("<Return>", self.iniciar_sesion)
         self.vista_login.entry_password.bind("<Return>", self.iniciar_sesion)
         
-    ######################## COMPROBACION PASSWORDS #########################
 
-    #Funcion para recuperar usuario y contraseña ingresada en el login, y luego se compara con la contraseña almacenada en la base
-    #de datos según el usuario ingresado
     def iniciar_sesion(self,event=None):
 
         ''' Este metodo se encarga de validar el inicio de sesion del usuario
@@ -79,7 +76,6 @@ class ControladorLogin:
             )
             self.vista_login.entry_password.delete(0,'end')
     
-    ################# INICIALIZACION DE MENU PRINCIPAL ######################
 
     def abrir_menu_principal(self):
 

@@ -203,11 +203,19 @@ class ControladorReportes:
             # Generacion de grafico
             if ganancias_mensuales:
                 year,month,ganancia = zip(*ganancias_mensuales)
-                plt.plot(month,ganancia,marker='o',linestyle='-',color='#C18484')
+                plt.plot(
+                    month,
+                    ganancia,
+                    marker='o',
+                    linestyle='-',
+                    color='#C18484'
+                )
                 plt.title(f'Ganancias mensuales - {year[0]}',fontsize=16)
                 plt.xlabel('Mes',fontsize=12)
                 plt.ylabel('Ganancia',fontsize=12)
-                plt.gca().yaxis.set_major_formatter(StrMethodFormatter('{x:,.0f}'))
+                plt.gca().yaxis.set_major_formatter(
+                    StrMethodFormatter('{x:,.0f}')
+                )
                 plt.gca().xaxis.set_major_locator(MaxNLocator(integer=True))
                 plt.show()
             

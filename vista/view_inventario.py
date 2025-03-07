@@ -274,6 +274,22 @@ class InterfazInventario:
         self.boton_vencimientos.place(relx=0.88, rely=0.4, anchor='center')
         self.boton_vencimientos.image = imagen_vencimientos_tk
 
+        ruta = self.rutas('../imagenes','excel.png')
+        self.boton_excel = Button(self.frame_botones)
+        self.boton_excel.config(
+            borderwidth=0,
+            background='#EDE2E0',
+            activebackground='#EDE2E0',
+            width=50,
+            height=50
+        )
+        imagen_excel_pil = Image.open(ruta)
+        imagen_excel_resize = imagen_excel_pil.resize((30, 30))
+        imagen_excel_tk = ImageTk.PhotoImage(imagen_excel_resize)
+        self.boton_excel.config(image=imagen_excel_tk)
+        self.boton_excel.place(relx=0.95, rely=0.01)
+        self.boton_excel.image = imagen_excel_tk
+
         #Treeview
         self.tv_inventario = ttk.Treeview(
             self.frame_treeview,
@@ -861,3 +877,8 @@ class Vencimientos:
         for item in self.tv_vencimientos.get_children():
             self.tv_vencimientos.delete(item)
 
+if __name__ == '__main__':
+    from tkinter import Tk
+    root = Tk()
+    app = InterfazInventario(root)
+    root.mainloop()
