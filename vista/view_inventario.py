@@ -1,9 +1,11 @@
-import sys
-import os
+##############################################################################
+# Importaciones
+##############################################################################
+
 from tkinter import Entry, Label, Frame, Button
 from tkinter import ttk
 from tkcalendar import DateEntry
-from PIL import Image,ImageTk
+from vista.view_config import ConfigView
 
 ########################### VISTA DE INVENTARIO ##############################
 ''' En este fichero se lleva a cabo la creacion de la interfaz grafica del 
@@ -17,24 +19,41 @@ class InterfazInventario:
         self.root.title('BLA Estética - Inventario')
         self.root.geometry('1100x590+133+79')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
+        self.img = {}
+        self.root.iconbitmap(
+            ConfigView.formateo_imagen("logosec_fondo.ico")
+        )
         self.widgets()
 
     
-    def rutas(self, *paths):
-
-        ''' Metodo para el manejo correcto de rutas a la hora de realizar el
-            ejecutable con Pyinstaller
-        '''
-        
-        if getattr(sys, 'frozen', False):
-            ruta_base = sys._MEIPASS
-        else:
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
-
-    
     def widgets(self):
+
+        # Referencia a imagenes
+        self.img['filtrar'] = ConfigView.formateo_imagen(
+            'filtrar.png', 30, 30
+        )
+        self.img['sinstock'] = ConfigView.formateo_imagen(
+            'sin_stock.png', 30, 30
+        )
+        self.img['mas'] = ConfigView.formateo_imagen(
+            'mas.png', 30, 30
+        )
+        self.img['modificar'] = ConfigView.formateo_imagen(
+            'modificar.png', 30, 30
+        )
+        self.img['eliminar'] = ConfigView.formateo_imagen(
+            'eliminar.png', 30, 30
+        )
+        self.img['istock'] = ConfigView.formateo_imagen(
+            'ingresar_stock.png', 30, 30
+        )
+        self.img['vencimientos'] = ConfigView.formateo_imagen(
+            'vencimientos.png', 30, 30
+        )
+        self.img['excel'] = ConfigView.formateo_imagen(
+            'excel.png', 30, 30
+        )
+
         #Frames
         self.frame_titulo = Frame(self.root)
         self.frame_titulo.config(
@@ -119,7 +138,6 @@ class InterfazInventario:
         self.entry_descripcion.place(relx=0.25, rely=0.7, anchor='center')
 
         #Buttons
-        ruta = self.rutas('../imagenes','filtrar.png')
         self.boton_filtar = Button(self.frame_busqueda)
         self.boton_filtar.config(
             text='Filtrar',
@@ -127,22 +145,13 @@ class InterfazInventario:
             width=150,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_botonfiltrar_pil = Image.open(ruta)
-        imagen_botonfiltrar_resize = (
-            imagen_botonfiltrar_pil.resize((25, 25))
-        )
-        imagen_botonfiltrar_tk = ImageTk.PhotoImage(
-            imagen_botonfiltrar_resize
-        )
-        self.boton_filtar.config(
-            image=imagen_botonfiltrar_tk, compound='left', padx=15
+            relief='groove',
+            image=self.img['filtrar'],
+            compound='left',
+            padx=10
         )
         self.boton_filtar.place(relx=0.45, rely=0.45, anchor='center')
-        self.boton_filtar.image = imagen_botonfiltrar_tk
 
-        ruta = self.rutas('../imagenes','sin_stock.png')
         self.boton_cerostock = Button(self.frame_busqueda)
         self.boton_cerostock.config(
             text='Sin Stock',
@@ -150,22 +159,13 @@ class InterfazInventario:
             width=150,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_botoncerostock_pil = Image.open(ruta)
-        imagen_botoncerostock_resize = (
-            imagen_botoncerostock_pil.resize((25, 25))
-        )
-        imagen_botoncerostock_tk = ImageTk.PhotoImage(
-            imagen_botoncerostock_resize
-        )
-        self.boton_cerostock.config(
-            image=imagen_botoncerostock_tk, compound='left', padx=15
+            relief='groove',
+            image=self.img['sinstock'],
+            compound='left',
+            padx=10
         )
         self.boton_cerostock.place(relx=0.64, rely=0.45, anchor='center')
-        self.boton_cerostock.image = imagen_botoncerostock_tk
 
-        ruta = self.rutas('../imagenes','mas.png')
         self.boton_nuevo = Button(self.frame_botones)
         self.boton_nuevo.config(
             text='Nuevo',
@@ -173,18 +173,13 @@ class InterfazInventario:
             width=120,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_botonnuevo_pil = Image.open(ruta)
-        imagen_botonnuevo_resize = imagen_botonnuevo_pil.resize((25, 25))
-        imagen_botonnuevo_tk = ImageTk.PhotoImage(imagen_botonnuevo_resize)
-        self.boton_nuevo.config(
-            image=imagen_botonnuevo_tk, compound='left', padx=15
+            relief='groove',
+            image=self.img['mas'],
+            compound='left',
+            padx=10
         )
         self.boton_nuevo.place(relx=0.2, rely=0.5, anchor='center')
-        self.boton_nuevo.image = imagen_botonnuevo_tk
 
-        ruta = self.rutas('../imagenes','modificar.png')
         self.boton_modificar = Button(self.frame_botones)
         self.boton_modificar.config(
             text='Modificar',
@@ -192,22 +187,13 @@ class InterfazInventario:
             width=120,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_botonmodificar_pil = Image.open(ruta)
-        imagen_botonmodificar_resize = (
-            imagen_botonmodificar_pil.resize((25, 25))
-        )
-        imagen_botonmodificar_tk = ImageTk.PhotoImage(
-            imagen_botonmodificar_resize
-        )
-        self.boton_modificar.config(
-            image=imagen_botonmodificar_tk, compound='left', padx=15
+            relief='groove',
+            image=self.img['modificar'],
+            compound='left',
+            padx=10
         )
         self.boton_modificar.place(relx=0.6,rely=0.5,anchor='center')
-        self.boton_modificar.image = imagen_botonmodificar_tk
 
-        ruta = self.rutas('../imagenes','eliminar.png')
         self.boton_eliminar = Button(self.frame_botones)
         self.boton_eliminar.config(
             text='Eliminar',
@@ -215,22 +201,13 @@ class InterfazInventario:
             width=120,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_botoneliminar_pil = Image.open(ruta)
-        imagen_botoneliminar_resize = (
-            imagen_botoneliminar_pil.resize((25, 25))
-        )
-        imagen_botoneliminar_tk = ImageTk.PhotoImage(
-            imagen_botoneliminar_resize
-        )
-        self.boton_eliminar.config(
-            image=imagen_botoneliminar_tk, compound='left', padx=15
+            relief='groove',
+            image=self.img['eliminar'],
+            compound='left',
+            padx=10
         )
         self.boton_eliminar.place(relx=0.8, rely=0.5, anchor='center')
-        self.boton_eliminar.image = imagen_botoneliminar_tk
 
-        ruta = self.rutas('../imagenes','ingresar_stock.png')
         self.boton_ingresar = Button(self.frame_botones)
         self.boton_ingresar.config(
             text='Ingresar',
@@ -238,22 +215,13 @@ class InterfazInventario:
             width=120,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_botoningresar_pil = Image.open(ruta)
-        imagen_botoningresar_resize = (
-            imagen_botoningresar_pil.resize((25, 25))
-        )
-        imagen_botoningresar_tk = ImageTk.PhotoImage(
-            imagen_botoningresar_resize
-        )
-        self.boton_ingresar.config(
-            image=imagen_botoningresar_tk, compound='left', padx=15
+            relief='groove',
+            image=self.img['istock'],
+            compound='left',
+            padx=10
         )
         self.boton_ingresar.place(relx=0.4, rely=0.5, anchor='center')
-        self.boton_ingresar.image = imagen_botoningresar_tk
 
-        ruta = self.rutas('../imagenes','vencimientos.png')
         self.boton_vencimientos = Button(self.frame_busqueda)
         self.boton_vencimientos.config(
             text="Consultar\nVencimientos",
@@ -261,34 +229,23 @@ class InterfazInventario:
             font=('century gothic',14,'bold'),
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_vencimientos_pil = Image.open(ruta)
-        imagen_vencimientos_resize = imagen_vencimientos_pil.resize((30, 30))
-        imagen_vencimientos_tk = ImageTk.PhotoImage(
-            imagen_vencimientos_resize
-        )
-        self.boton_vencimientos.config(
-            image=imagen_vencimientos_tk, compound='left', padx=15
+            relief='groove',
+            image=self.img['vencimientos'],
+            compound='left',
+            padx=10
         )
         self.boton_vencimientos.place(relx=0.88, rely=0.4, anchor='center')
-        self.boton_vencimientos.image = imagen_vencimientos_tk
 
-        ruta = self.rutas('../imagenes','excel.png')
         self.boton_excel = Button(self.frame_botones)
         self.boton_excel.config(
             borderwidth=0,
             background='#EDE2E0',
             activebackground='#EDE2E0',
             width=50,
-            height=50
+            height=50,
+            image=self.img['excel']
         )
-        imagen_excel_pil = Image.open(ruta)
-        imagen_excel_resize = imagen_excel_pil.resize((30, 30))
-        imagen_excel_tk = ImageTk.PhotoImage(imagen_excel_resize)
-        self.boton_excel.config(image=imagen_excel_tk)
         self.boton_excel.place(relx=0.95, rely=0.01)
-        self.boton_excel.image = imagen_excel_tk
 
         #Treeview
         self.tv_inventario = ttk.Treeview(
@@ -352,7 +309,6 @@ class InterfazInventario:
             self.tv_inventario.delete(item)
 
 
-
 class NuevoProducto:
     
     ''' Esta clase crea la ventana se llamara cuando se presione el boton
@@ -365,19 +321,20 @@ class NuevoProducto:
         self.root.title('Nuevo Producto')
         self.root.geometry('500x400+433+110')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
+        self.img = {}
+        self.root.iconbitmap(
+            ConfigView.formateo_imagen("logosec_fondo.ico")
+        )
         self.widgets()
 
-    
-    def rutas(self, *paths):
-        if getattr(sys, 'frozen', False):
-            ruta_base = sys._MEIPASS
-        else:
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
 
-    
     def widgets(self):
+
+        # Referencia a imagenes
+        self.img['guardar'] = ConfigView.formateo_imagen(
+            'guardar.png', 30, 30
+        )
+
         #Frames
         self.frame_ventanainformacion = Frame(self.root)
         self.frame_ventanainformacion.config(
@@ -454,7 +411,6 @@ class NuevoProducto:
         self.entry_vencimiento.place(relx=0.3, rely=0.7)
     
         #Buttons
-        ruta = self.rutas('../imagenes','guardar.png')
         self.boton_guardar = Button(self.frame_ventanainformacion)
         self.boton_guardar.config(
             text='Guardar',
@@ -462,16 +418,12 @@ class NuevoProducto:
             width=140,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_guardar_pil = Image.open(ruta)
-        imagen_guardar_resize = imagen_guardar_pil.resize((30, 30))
-        imagen_guardar_tk = ImageTk.PhotoImage(imagen_guardar_resize)
-        self.boton_guardar.config(
-            image=imagen_guardar_tk, compound='left', padx=15
+            relief='groove',
+            image=self.img['guardar'],
+            compound='left',
+            padx=10
         )
         self.boton_guardar.place(relx=0.5, rely=0.9, anchor='center')
-        self.boton_guardar.image = imagen_guardar_tk
 
     
     # Metodo para limpiar entries
@@ -493,17 +445,20 @@ class ModificarProducto:
         self.root.title('Modificación de Producto')
         self.root.geometry('500x300+433+224')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
+        self.img = {}
+        self.root.iconbitmap(
+            ConfigView.formateo_imagen("logosec_fondo.ico")
+        )
         self.widgets()
     
-    def rutas(self, *paths):
-        if getattr(sys, 'frozen', False):
-            ruta_base = sys._MEIPASS
-        else:
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
 
     def widgets(self):
+
+        # Referencia a imagenes
+        self.img['guardar'] = ConfigView.formateo_imagen(
+            'guardar.png', 30, 30
+        )
+
         #Frames
         self.frame_ventanainformacion = Frame(self.root)
         self.frame_ventanainformacion.config(
@@ -552,7 +507,6 @@ class ModificarProducto:
         self.entry_stock.place(relx=0.3, rely=0.52)
 
         #Buttons
-        ruta = self.rutas('../imagenes','guardar.png')
         self.boton_guardar = Button(self.frame_ventanainformacion)
         self.boton_guardar.config(
             text='Guardar',
@@ -560,16 +514,12 @@ class ModificarProducto:
             width=140,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_guardar_pil = Image.open(ruta)
-        imagen_guardar_resize = imagen_guardar_pil.resize((30, 30))
-        imagen_guardar_tk = ImageTk.PhotoImage(imagen_guardar_resize)
-        self.boton_guardar.config(
-            image=imagen_guardar_tk, compound='left', padx=15
+            relief='groove',
+            image=self.img['guardar'],
+            compound='left',
+            padx=10
         )
         self.boton_guardar.place(relx=0.5, rely=0.8, anchor='center')
-        self.boton_guardar.image = imagen_guardar_tk
 
     # Función para limpiar los entry
     def limpiar_cajas(self):
@@ -586,23 +536,25 @@ class IngresoStock:
     '''
     
     def __init__(self, root):
+
         self.root = root
         self.root.title('Ingreso de stock')
         self.root.geometry('400x200+483+274')
         self.root.resizable(False, False)
-        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
+        self.img = {}
+        self.root.iconbitmap(
+            ConfigView.formateo_imagen("logosec_fondo.ico")
+        )
         self.widgets()
 
     
-    def rutas(self, *paths):
-        if getattr(sys, 'frozen', False):
-            ruta_base = sys._MEIPASS
-        else:
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
-
-    
     def widgets(self):
+
+        # Referencia a imagenes
+        self.img['istock'] = ConfigView.formateo_imagen(
+            'ingresar_stock.png', 30, 30
+        )
+
         #Frames
         self.frame_ingresostock = Frame(self.root)
         self.frame_ingresostock.config(
@@ -635,7 +587,6 @@ class IngresoStock:
         self.entry_ingresostock.place(relx=0.7, rely=0.3, anchor='center')
 
         #Buttons
-        ruta = self.rutas('../imagenes','ingresar_stock.png')
         self.boton_ingresostock = Button(self.frame_ingresostock)
         self.boton_ingresostock.config(
             text='Ingresar',
@@ -643,18 +594,12 @@ class IngresoStock:
             width=140,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_ingresostock_pil = Image.open(ruta)
-        imagen_ingresostock_resize = imagen_ingresostock_pil.resize((20, 20))
-        imagen_ingresostock_tk = ImageTk.PhotoImage(
-            imagen_ingresostock_resize
-        )
-        self.boton_ingresostock.config(
-            image=imagen_ingresostock_tk, compound='left', padx=15
+            relief='groove',
+            image=self.img['istock'],
+            compound='left',
+            padx=10
         )
         self.boton_ingresostock.place(relx=0.5, rely=0.55, anchor='center')
-        self.boton_ingresostock.image = imagen_ingresostock_tk    
 
     
     # Metodo para limpiar los entry
@@ -673,19 +618,23 @@ class Vencimientos:
         self.root.title('BLA Estética - Vencimiento de productos')
         self.root.geometry('1100x590+133+79')
         self.root.resizable(False, False)
-        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
+        self.img = {}
+        self.root.iconbitmap(
+            ConfigView.formateo_imagen("logosec_fondo.ico")
+        )
         self.widgets()
 
-    
-    def rutas(self, *paths):
-        if getattr(sys, 'frozen', False):
-            ruta_base = sys._MEIPASS
-        else:
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
 
-    
     def widgets(self):
+
+        # Referencia a imagenes
+        self.img['consultaventas'] = ConfigView.formateo_imagen(
+            'consulta_ventas.png', 30, 30
+        )
+        self.img['vencimientos'] = ConfigView.formateo_imagen(
+            'vencimientos.png', 30, 30
+        )
+
         #Frames
         self.frame_titulo = Frame(self.root)
         self.frame_titulo.config(
@@ -776,7 +725,6 @@ class Vencimientos:
         self.entry_hasta.place(relx=0.45, rely=0.75, anchor='center')
 
         #Buttons
-        ruta = self.rutas('../imagenes','consulta_ventas.png')
         self.boton_buscar = Button(self.frame_busqueda)
         self.boton_buscar.config(
             text='Buscar',
@@ -784,18 +732,13 @@ class Vencimientos:
             width=140,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
+            relief='groove',
+            image=self.img['consultaventas'],
+            compound='left',
+            padx=10
         )
-        imagen_buscar_pil = Image.open(ruta)
-        imagen_buscar_resize = imagen_buscar_pil.resize((30, 30))
-        imagen_buscar_tk = ImageTk.PhotoImage(imagen_buscar_resize)
-        self.boton_buscar.config(
-            image=imagen_buscar_tk, compound='left', padx=5
-        )
-        self.boton_buscar.place(relx=0.7, rely=0.45, anchor='center')
-        self.boton_buscar.image = imagen_buscar_tk
+        self.boton_buscar.place(relx=0.68, rely=0.45, anchor='center')
 
-        ruta = self.rutas('../imagenes','vencimientos.png')
         self.boton_vencido = Button(self.frame_busqueda)
         self.boton_vencido.config(
             text='Vencidos',
@@ -803,18 +746,12 @@ class Vencimientos:
             width=140,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_vencido_pil = Image.open(ruta)
-        imagen_vencido_resize = imagen_vencido_pil.resize((30,30))
-        imagen_vencido_tk = ImageTk.PhotoImage(imagen_vencido_resize)
-        self.boton_vencido.config(
-            image=imagen_vencido_tk,
+            relief='groove',
+            image=self.img['vencimientos'],
             compound='left',
-            padx=5
+            padx=10
         )
         self.boton_vencido.place(relx=0.85, rely=0.45, anchor='center')
-        self.boton_vencido.image = imagen_vencido_tk
 
         #Treeview
         self.tv_vencimientos = ttk.Treeview(
@@ -865,20 +802,15 @@ class Vencimientos:
         self.frame_treeview.grid_rowconfigure(0, weight=1)
         self.frame_treeview.grid_columnconfigure(0, weight=1)
 
-    
+
     # Metodo para limpiar los entry
     def limpiar_cajas(self):
         self.entry_codigo.delete(0,'end')
         self.entry_desde.delete(0,'end')
         self.entry_hasta.delete(0,'end')
 
+
     # Metodo para limpiar el treeview
     def limpiar_treeview(self):
         for item in self.tv_vencimientos.get_children():
             self.tv_vencimientos.delete(item)
-
-if __name__ == '__main__':
-    from tkinter import Tk
-    root = Tk()
-    app = InterfazInventario(root)
-    root.mainloop()

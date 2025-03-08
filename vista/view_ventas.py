@@ -1,11 +1,14 @@
-import sys
-import os
+##############################################################################
+# Importaciones
+##############################################################################
+
 from tkinter import Frame, Entry, Button, Label, LabelFrame, IntVar, Tk
 from tkinter import ttk
 from tkcalendar import Calendar, DateEntry
-from PIL import Image, ImageTk
+from vista.view_config import ConfigView
 
 ############################# VISTA DE VENTAS ################################
+
 ''' En este fichero se crean las interfaces graficas del modulo de ventas, se
     crea la ventana principal del modulo, ventana de consulta de ventas,
     ventana de confirmacion de ventas y ventana de ingreso de intereses
@@ -18,22 +21,29 @@ class VentanaVentas:
         self.root.title('BLA Estética - Módulo de ventas')
         self.root.resizable(False, False)
         self.root.geometry("1250x590+58+79")
-        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
+        self.img = {}
+        self.root.iconbitmap(
+            ConfigView.formateo_imagen("logosec_fondo.ico")
+        )
         self.widgets()
-    
-    def rutas(self, *paths):
 
-        ''' Metodo para el manejo de rutas de imagenes para cuando se hace
-            el ejecutable con Pyinstaller
-        '''
-        if getattr(sys, 'frozen', False):
-            ruta_base = sys._MEIPASS
-        else:
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
 
-    
     def widgets(self):
+
+        # Referencia a imagenes
+        self.img['consultaventas'] = ConfigView.formateo_imagen(
+            'consulta_ventas.png', 30, 30
+        )
+        self.img['acarrito'] = ConfigView.formateo_imagen(
+            'agregar_carrito.png', 30, 30
+        )
+        self.img['eliminar'] = ConfigView.formateo_imagen(
+            'eliminar.png', 30, 30
+        )
+        self.img['listo'] = ConfigView.formateo_imagen(
+            'listo.png', 30, 30
+        )
+
         #Frames
         self.frame_titulo = Frame(self.root)
         self.frame_titulo.config(width=1250, height=40, background='#EDE2E0')
@@ -195,7 +205,6 @@ class VentanaVentas:
         self.entry_vencimiento.place(relx=0.18, rely=0.8, anchor='center')
 
         #Botones
-        ruta = self.rutas('../imagenes','consulta_ventas.png')
         self.boton_buscar = Button(
             self.frame_entradas,
             font=('century gothic',14,'bold'),
@@ -203,18 +212,13 @@ class VentanaVentas:
             height=35,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_buscar_pil = Image.open(ruta)
-        imagen_buscar_pil_resize = imagen_buscar_pil.resize((30, 30))
-        imagen_buscar_tk = ImageTk.PhotoImage(imagen_buscar_pil_resize)
-        self.boton_buscar.config(
-            image=imagen_buscar_tk, compound='left', padx=10
+            relief='groove',
+            image=self.img['consultaventas'],
+            compound='left',
+            padx=10
         )
         self.boton_buscar.place(relx=0.3, rely=0.65, anchor='center')
-        self.boton_buscar.image = imagen_buscar_tk
 
-        ruta = self.rutas('../imagenes','agregar_carrito.png')
         self.boton_carrito = Button(
             self.frame_entradas,
             text='Agregar al carrito',
@@ -223,18 +227,13 @@ class VentanaVentas:
             height=35,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_carrito_pil = Image.open(ruta)
-        imagen_carrito_pil_resize = imagen_carrito_pil.resize((30, 30))
-        imagen_carrito_tk = ImageTk.PhotoImage(imagen_carrito_pil_resize)
-        self.boton_carrito.config(
-            image=imagen_carrito_tk, compound='left', padx=10
+            relief='groove',
+            image=self.img['acarrito'],
+            compound='left',
+            padx=10
         )
         self.boton_carrito.place(relx=0.89, rely=0.25, anchor='center')
-        self.boton_carrito.image = imagen_carrito_tk
 
-        ruta = self.rutas('../imagenes','eliminar.png')
         self.boton_eliminar_venta = Button(
             self.frame_entradas,
             text='Eliminar',
@@ -243,20 +242,13 @@ class VentanaVentas:
             height=35,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_eliminar_pil = Image.open(ruta)
-        imagen_eliminar_pil_resize = imagen_eliminar_pil.resize((30, 30))
-        imagen_eliminar_tk = ImageTk.PhotoImage(imagen_eliminar_pil_resize)
-        self.boton_eliminar_venta.config(
-            image=imagen_eliminar_tk,
+            relief='groove',
+            image=self.img['eliminar'],
             compound='left',
             padx=10
         )
         self.boton_eliminar_venta.place(relx=0.89, rely=0.75, anchor='center')
-        self.boton_eliminar_venta.image = imagen_eliminar_tk
 
-        ruta = self.rutas('../imagenes','listo.png')
         self.boton_finalizar_venta = Button(
             self.frame_resumen_venta,
             text='Finalizar Venta',
@@ -265,20 +257,15 @@ class VentanaVentas:
             height=35,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_finalizar_pil = Image.open(ruta)
-        imagen_finalizar_pil_resize = imagen_finalizar_pil.resize((30, 30))
-        imagen_finalizar_tk = ImageTk.PhotoImage(imagen_finalizar_pil_resize)
-        self.boton_finalizar_venta.config(
-            image=imagen_finalizar_tk, compound='left', padx=10
+            relief='groove',
+            image=self.img['listo'],
+            compound='left',
+            padx=10
         )
         self.boton_finalizar_venta.place(
             relx=0.45, rely=0.55, anchor='center'
         )
-        self.boton_finalizar_venta.image = imagen_finalizar_tk
 
-        ruta = self.rutas('../imagenes','consulta_ventas.png')
         self.boton_consultaventas = Button(self.frame_finalizar_venta)
         self.boton_consultaventas.config(
             text="Consultar\n Ventas",
@@ -286,20 +273,12 @@ class VentanaVentas:
             font=('century gothic',14,'bold'),
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_consultaventa_pil = Image.open(ruta)
-        imagen_consultaventa_resize = (
-            imagen_consultaventa_pil.resize((30, 30))
-        )
-        imagen_consultaventa_tk = ImageTk.PhotoImage(
-            imagen_consultaventa_resize
-        )
-        self.boton_consultaventas.config(
-            image=imagen_consultaventa_tk, compound='left', padx=10
+            relief='groove',
+            image=self.img['consultaventas'],
+            compound='left',
+            padx=10
         )
         self.boton_consultaventas.place(relx=0.1, rely=0.5, anchor='center')
-        self.boton_consultaventas.image = imagen_consultaventa_tk
         
         #Treeview
         self.style = ttk.Style(self.frame_detalle_ventas)
@@ -367,19 +346,23 @@ class ConfirmacionVenta:
         self.root.title('Confirmación de venta')
         self.root.geometry('400x450+483+149')
         self.root.resizable(False, False)
-        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
+        self.img = {}
+        self.root.iconbitmap(
+            ConfigView.formateo_imagen("logosec_fondo.ico")
+        )
         self.widgets()
 
-    
-    def rutas(self, *paths):
-        if getattr(sys, 'frozen', False):
-            ruta_base = sys._MEIPASS
-        else:
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
 
-    
     def widgets(self):
+
+        # Referencia a imagenes
+        self.img['ventas'] = ConfigView.formateo_imagen(
+            'ventas.png', 30, 30
+        )
+        self.img['tarjeta'] = ConfigView.formateo_imagen(
+            'tarjeta.png', 30, 30
+        )
+
         #Frames
         self.frame_confirmacion = Frame(self.root)
         self.frame_confirmacion.config(
@@ -475,45 +458,33 @@ class ConfirmacionVenta:
         self.modo_pago_3.pack(anchor='w', fill='both')
 
         #Buttons
-        ruta = self.rutas('../imagenes','ventas.png')
         self.boton_confirmar = Button(self.frame_confirmacion)
         self.boton_confirmar.config(
             text='Confirmar',
             font=('century gothic',14,'bold'),
             width=150,
-            padx=15,
+            padx=10,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_confirmar_pil = Image.open(ruta)
-        imagen_confirmar_resize = imagen_confirmar_pil.resize((30, 30))
-        imagen_confirmar_tk = ImageTk.PhotoImage(imagen_confirmar_resize)
-        self.boton_confirmar.config(
-            image=imagen_confirmar_tk, compound='left', anchor='center'
+            relief='groove',
+            image=self.img['ventas'],
+            compound='left'
         )
         self.boton_confirmar.place(relx=0.5, rely=0.92, anchor='center')
-        self.boton_confirmar.image = imagen_confirmar_tk
 
-        ruta = self.rutas('../imagenes','tarjeta.png')
         self.boton_interes = Button(self.frame_confirmacion)
         self.boton_interes.config(
             text='Recargo',
             font=('century gothic',14,'bold'),
             width=150,
-            padx=15,
+            padx=10,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_interes_pil = Image.open(ruta)
-        imagen_interes_resize = imagen_interes_pil.resize((30, 30))
-        imagen_interes_tk = ImageTk.PhotoImage(imagen_interes_resize)
-        self.boton_interes.config(
-            image=imagen_interes_tk, compound='left', anchor='center'
+            relief='groove',
+            image=self.img['tarjeta'],
+            compound='left'
         )
         self.boton_interes.place(relx=0.5, rely=0.65, anchor='center')
-        self.boton_interes.image = imagen_interes_tk
 
     
     # Metodo para retornar la seleccion de los Radiobuttons
@@ -533,19 +504,29 @@ class ConsultaVentas:
         self.root.title('BLA Estética - Consulta de Ventas')
         self.root.geometry('1000x590+183+79')
         self.root.resizable(False, False)
-        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
+        self.img = {}
+        self.root.iconbitmap(
+            ConfigView.formateo_imagen("logosec_fondo.ico")
+        )
         self.widgets()
 
     
-    def rutas(self, *paths):
-        if getattr(sys, 'frozen', False):
-            ruta_base = sys._MEIPASS
-        else:
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
-
-    
     def widgets(self):
+
+        # Referencia a imagenes
+        self.img['consultaventas'] = ConfigView.formateo_imagen(
+            'consulta_ventas.png', 30, 30
+        )
+        self.img['pagopendiente'] = ConfigView.formateo_imagen(
+            'pago_pendiente.png', 30, 30
+        )
+        self.img['detalle'] = ConfigView.formateo_imagen(
+            'detalle.png', 30, 30
+        )
+        self.img['eliminar'] = ConfigView.formateo_imagen(
+            'eliminar.png', 30, 30
+        )
+
         #Frames
         self.frame_titulo = Frame(self.root)
         self.frame_titulo.config(width=1000, height=40, background='#EDE2E0')
@@ -623,7 +604,6 @@ class ConsultaVentas:
         self.entry_cliente.place(relx=0.5, rely=0.22, anchor='center')
 
         #Buttons
-        ruta = self.rutas('../imagenes','consulta_ventas.png')
         self.boton_buscar = Button(self.frame_busqueda)
         self.boton_buscar.config(
             text='Buscar',
@@ -631,18 +611,13 @@ class ConsultaVentas:
             width=140,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
+            relief='groove',
+            image=self.img['consultaventas'],
+            compound='left',
+            padx=10
         )
-        imagen_buscar_pil = Image.open(ruta)
-        imagen_buscar_resize = imagen_buscar_pil.resize((25, 25))
-        imagen_buscar_tk = ImageTk.PhotoImage(imagen_buscar_resize)
-        self.boton_buscar.config(
-            image=imagen_buscar_tk, compound='left', padx=5
-        )
-        self.boton_buscar.place(relx=0.74, rely=0.25, anchor='center')
-        self.boton_buscar.image = imagen_buscar_tk
+        self.boton_buscar.place(relx=0.72, rely=0.25, anchor='center')
 
-        ruta = self.rutas('../imagenes','pago_pendiente.png')
         self.boton_pendientes = Button(self.frame_busqueda)
         self.boton_pendientes.config(
             text='Pendientes',
@@ -650,18 +625,13 @@ class ConsultaVentas:
             width=140,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
+            relief='groove',
+            image=self.img['pagopendiente'],
+            compound='left',
+            padx=10
         )
-        imagen_pendientes_pil = Image.open(ruta)
-        imagen_pendientes_resize = imagen_pendientes_pil.resize((25, 25))
-        imagen_pendientes_tk = ImageTk.PhotoImage(imagen_pendientes_resize)
-        self.boton_pendientes.config(
-            image=imagen_pendientes_tk, compound='left', padx=5
-        )
-        self.boton_pendientes.place(relx=0.74, rely=0.73, anchor='center')
-        self.boton_pendientes.image = imagen_pendientes_tk
+        self.boton_pendientes.place(relx=0.72, rely=0.73, anchor='center')
         
-        ruta = self.rutas('../imagenes','detalle.png')
         self.boton_detalle = Button(self.frame_busqueda)
         self.boton_detalle.config(
             text='Detalle',
@@ -669,18 +639,13 @@ class ConsultaVentas:
             width=140,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_detalle_pil = Image.open(ruta)
-        imagen_detalle_resize = imagen_detalle_pil.resize((25, 25))
-        imagen_detalle_tk = ImageTk.PhotoImage(imagen_detalle_resize)
-        self.boton_detalle.config(
-            image=imagen_detalle_tk, compound='left', padx=5
+            relief='groove',
+            image=self.img['detalle'],
+            compound='left',
+            padx=10
         )
         self.boton_detalle.place(relx=0.9, rely=0.25, anchor='center')
-        self.boton_detalle.image = imagen_detalle_tk
 
-        ruta = self.rutas('../imagenes','eliminar.png')
         self.boton_eliminar = Button(self.frame_busqueda)
         self.boton_eliminar.config(
             text='Eliminar',
@@ -688,18 +653,12 @@ class ConsultaVentas:
             width=140,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_eliminar_pil = Image.open(ruta)
-        imagen_eliminar_resize = imagen_eliminar_pil.resize((25, 25))
-        imagen_eliminar_tk = ImageTk.PhotoImage(imagen_eliminar_resize)
-        self.boton_eliminar.config(
-            image=imagen_eliminar_tk,
+            relief='groove',
+            image=self.img['eliminar'],
             compound='left',
-            padx=5
+            padx=10
         )
         self.boton_eliminar.place(relx=0.9, rely=0.73, anchor='center')
-        self.boton_eliminar.image = imagen_eliminar_tk
 
         #Treeview
         self.tv_consultaventas = ttk.Treeview(
@@ -762,6 +721,7 @@ class ConsultaVentas:
         self.entry_desde.delete(0,'end')
         self.entry_hasta.delete(0,'end')
     
+
     # Metodo para limpiar el treeview
     def limpiar_treeview(self):
         for item in self.tv_consultaventas.get_children():
@@ -775,23 +735,25 @@ class DetalleVentas:
     '''
     
     def __init__(self, root):
+
         self.root = root
         self.root.title('Detalle de Venta')
         self.root.geometry('900x400+233+174')
         self.root.resizable(False, False)
-        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
+        self.img = {}
+        self.root.iconbitmap(
+            ConfigView.formateo_imagen("logosec_fondo.ico")
+        )
         self.widgets()
 
     
-    def rutas(self, *paths):
-        if getattr(sys, 'frozen', False):
-            ruta_base = sys._MEIPASS
-        else:
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
-
-    
     def widgets(self):
+
+        # Referencia a imagenes
+        self.img['pdf'] = ConfigView.formateo_imagen(
+            'pdf.png', 30, 30
+        )
+
         #Frames
         self.frame_infoventa = Frame(self.root)
         self.frame_infoventa.config(
@@ -821,23 +783,18 @@ class DetalleVentas:
         self.label_nroventa.place(relx=0.5, rely=0.5, anchor='center')
 
         #Buttons
-        ruta = self.rutas('../imagenes','pdf.png')
         self.boton_pdf = Button(self.frame_imprimir)
         self.boton_pdf.config(
             text='Imprimir',
             font=('century gothic',12,'bold'),
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_pdf_pil = Image.open(ruta)
-        imagen_pdf_resize = imagen_pdf_pil.resize((25, 25))
-        imagen_pdf_tk = ImageTk.PhotoImage(imagen_pdf_resize)
-        self.boton_pdf.config(
-            image=imagen_pdf_tk, compound='left', padx=10
+            relief='groove',
+            image=self.img['pdf'],
+            compound='left',
+            padx=10
         )
         self.boton_pdf.place(relx=0.5, rely=0.5, anchor='center')
-        self.boton_pdf.image = imagen_pdf_tk
 
         #Treeview
         self.tv_detalleventas = ttk.Treeview(
@@ -884,19 +841,20 @@ class InterfazInteres:
         self.root.title('Interés por pago Débito/Crédito')
         self.root.geometry('400x200+483+274')
         self.root.resizable(False, False)
-        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
+        self.img = {}
+        self.root.iconbitmap(
+            ConfigView.formateo_imagen("logosec_fondo.ico")
+        )
         self.widgets()
 
-    
-    def rutas(self, *paths):
-        if getattr(sys, 'frozen', False):
-            ruta_base = sys._MEIPASS
-        else:
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
 
-    
     def widgets(self):
+
+        # Referencia a imagenes
+        self.img['mas'] = ConfigView.formateo_imagen(
+            'mas.png', 20, 20
+        )
+
         #Frames
         self.frame_interes = Frame(self.root)
         self.frame_interes.config(
@@ -940,13 +898,9 @@ class InterfazInteres:
             width=140,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_interes_pil = Image.open(ruta)
-        imagen_interes_resize = imagen_interes_pil.resize((20, 20))
-        imagen_interes_tk = ImageTk.PhotoImage(imagen_interes_resize)
-        self.boton_interes.config(
-            image=imagen_interes_tk, compound='left', padx=15
+            relief='groove',
+            image=self.img['mas'],
+            compound='left',
+            padx=10
         )
         self.boton_interes.place(relx=0.5, rely=0.55, anchor='center')
-        self.boton_interes.image = imagen_interes_tk

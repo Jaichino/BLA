@@ -1,8 +1,10 @@
-import sys
-import os
+##############################################################################
+# Importaciones
+##############################################################################
+
 from tkinter import Frame, Label, Button, Entry
 from tkinter import ttk
-from PIL import Image,ImageTk
+from vista.view_config import ConfigView
 
 ######################## VENTANA DE ADMINISTRADOR ############################
 ''' En este fichero se desarrolla la interfaz para el menu del administrador, 
@@ -20,25 +22,27 @@ class InterfazAdmin:
         self.root.title('Administrador')
         self.root.geometry('300x300+533+224')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas('../imagenes','logosec_fondo.ico'))
+        self.img = {}
+        self.root.iconbitmap(
+            ConfigView.formateo_imagen('logosec_fondo.ico')
+        )
         self.widgets()
     
-    def rutas(self, *paths):
-
-        ''' Metodo para el manejo de rutas de imagenes a la hora de
-            generar el ejecutable con Pyinstaller
-        '''
-        if getattr(sys, 'frozen', False):
-            ruta_base = sys._MEIPASS
-        else:
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
 
     def widgets(self):
         
         ''' Metodo que contiene los widgets que conforman la ventana del
             modulo de administrador
         '''
+        
+        # Referencia a imagenes
+        self.img['crearusuario'] = ConfigView.formateo_imagen(
+            'crear_usuario.png', 30, 30
+        )
+        self.img['eliminar'] = ConfigView.formateo_imagen(
+            'eliminar.png', 30, 30
+        )
+        
         # Frames
         self.frame_admin = Frame(self.root)
         self.frame_admin.config(width=300,height=450,background='#EDE2E0')
@@ -49,7 +53,6 @@ class InterfazAdmin:
         self.frame_divisor.place(relx=0,rely=0.4)
 
         # Botones
-        ruta = self.rutas('../imagenes','crear_usuario.png')
         self.boton_crearusuario = Button(self.frame_admin)
         self.boton_crearusuario.config(
             text='Crear Usuario',
@@ -58,22 +61,12 @@ class InterfazAdmin:
             padx=15,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_crearusuario_pil = Image.open(ruta)
-        imagen_crearusuario_resize = imagen_crearusuario_pil.resize((30,30))
-        imagen_crearusuario_tk = ImageTk.PhotoImage(
-            imagen_crearusuario_resize
-        )
-        self.boton_crearusuario.config(
-            image=imagen_crearusuario_tk,
-            compound='left',
-            anchor='center'
+            relief='groove',
+            image=self.img['crearusuario'],
+            compound='left'
         )
         self.boton_crearusuario.place(relx=0.5,rely=0.1,anchor='center')
-        self.boton_crearusuario.image = imagen_crearusuario_tk
 
-        ruta = self.rutas('../imagenes','eliminar.png')
         self.boton_eliminarusuario = Button(self.frame_admin)
         self.boton_eliminarusuario.config(
             text='Eliminar Cuenta',
@@ -82,24 +75,12 @@ class InterfazAdmin:
             padx=15,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_eliminarusuario_pil = Image.open(ruta)
-        imagen_eliminarusuario_resize = (
-            imagen_eliminarusuario_pil.resize((30,30))
-        )
-        imagen_eliminarusuario_tk = ImageTk.PhotoImage(
-            imagen_eliminarusuario_resize
-        )
-        self.boton_eliminarusuario.config(
-            image=imagen_eliminarusuario_tk,
-            compound='left',
-            anchor='center'
+            relief='groove',
+            image=self.img['eliminar'],
+            compound='left'
         )
         self.boton_eliminarusuario.place(relx=0.5,rely=0.2,anchor='center')
-        self.boton_eliminarusuario.image = imagen_eliminarusuario_tk
 
-        ruta = self.rutas('../imagenes','eliminar.png')
         self.boton_eliminarbd = Button(self.frame_admin)
         self.boton_eliminarbd.config(
             text='Limpiar Base de Datos',
@@ -108,18 +89,11 @@ class InterfazAdmin:
             padx=15,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_eliminarbd_pil = Image.open(ruta)
-        imagen_eliminarbd_resize = imagen_eliminarbd_pil.resize((30,30))
-        imagen_eliminarbd_tk = ImageTk.PhotoImage(imagen_eliminarbd_resize)
-        self.boton_eliminarbd.config(
-            image=imagen_eliminarbd_tk,
-            compound='left',
-            anchor='center'
+            relief='groove',
+            image=self.img['eliminar'],
+            compound='left'
         )
         self.boton_eliminarbd.place(relx=0.5,rely=0.35,anchor='center')
-        self.boton_eliminarbd.image = imagen_eliminarbd_tk
 
 
 class InterfazNuevoUsuario:
@@ -133,15 +107,11 @@ class InterfazNuevoUsuario:
         self.root.title('Admin - Nueva Cuenta')
         self.root.geometry('400x220+483+264')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas('../imagenes','logosec_fondo.ico'))
+        self.root.iconbitmap(
+            ConfigView.formateo_imagen('logosec_fondo.ico')
+        )
         self.widgets()
 
-    def rutas(self, *paths):
-        if getattr(sys, 'frozen', False):
-            ruta_base = sys._MEIPASS
-        else:
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
 
     def widgets(self):
         # Frames
@@ -221,15 +191,11 @@ class InterfazEliminar:
         self.root.title('Admin - Eliminar Cuenta')
         self.root.geometry('350x120+508+314')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(
+            ConfigView.formateo_imagen("logosec_fondo.ico")
+        )
         self.widgets()
-    
-    def rutas(self, *paths):
-        if getattr(sys, 'frozen', False):
-            ruta_base = sys._MEIPASS
-        else:
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
+
 
     def widgets(self):
         # Frames

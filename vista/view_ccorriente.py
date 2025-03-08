@@ -1,8 +1,10 @@
-import sys
-import os
+##############################################################################
+# Importaciones
+##############################################################################
+
 from tkinter import Frame, Label, Button, Entry
 from tkinter import ttk
-from PIL import Image,ImageTk
+from vista.view_config import ConfigView
 
 ###################### VENTANA DE CUENTA CORRIENTE ###########################
 
@@ -21,21 +23,29 @@ class CuentaCorriente:
         self.root.title('BLA Estética - Cuentas Corrientes')
         self.root.geometry('1000x590+183+79')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
+        self.img = {}
+        self.root.iconbitmap(
+            ConfigView.formateo_imagen("logosec_fondo.ico")
+        )
         self.widgets()
     
-    def rutas(self, *paths):
-
-        ''' Metodo para el manejo de rutas de imagenes cuando se realice
-            el ejecutable con Pyinstaller
-        '''
-        if getattr(sys, 'frozen', False):
-            ruta_base = sys._MEIPASS
-        else:
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
     
     def widgets(self):
+
+        # Referencia a imagenes
+        self.img['consulta_ventas'] = ConfigView.formateo_imagen(
+            'consulta_ventas.png', 30, 30
+        )
+        self.img['ventas'] = ConfigView.formateo_imagen(
+            'ventas.png', 30, 30
+        )
+        self.img['modificar'] = ConfigView.formateo_imagen(
+            'modificar.png', 30, 30
+        )
+        self.img['eliminar'] = ConfigView.formateo_imagen(
+            'eliminar.png', 30, 30
+        )
+
         #Frames
         self.frame_titulo = Frame(self.root)
         self.frame_titulo.config(width=1000,height=50,background='#EDE2E0')
@@ -102,7 +112,6 @@ class CuentaCorriente:
         self.entry_cliente.place(relx=0.2,rely=0.5,anchor='center')
 
         #Buttons
-        ruta = self.rutas('../imagenes','consulta_ventas.png')
         self.boton_buscar = Button(self.frame_busqueda)
         self.boton_buscar.config(
             text='Buscar',
@@ -110,83 +119,55 @@ class CuentaCorriente:
             width=120,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_buscar_pil = Image.open(ruta)
-        imagen_buscar_resize = imagen_buscar_pil.resize((30,30))
-        imagen_buscar_tk = ImageTk.PhotoImage(imagen_buscar_resize)
-        self.boton_buscar.config(
-            image=imagen_buscar_tk,compound='left',padx=15
+            padx=10,
+            relief='groove',
+            image=self.img['consulta_ventas'],
+            compound='left'
         )
         self.boton_buscar.place(relx=0.4,rely=0.5,anchor='center')
-        self.boton_buscar.image = imagen_buscar_tk
 
-        ruta = self.rutas('../imagenes','ventas.png')
         self.boton_agregarpago = Button(self.frame_resumencc)
         self.boton_agregarpago.config(
             text='Agregar pago',
             font=('century gothic',14,'bold'),
-            width=180,
+            width=200,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_agregarpago_pil = Image.open(ruta)
-        imagen_agregarpago_resize = imagen_agregarpago_pil.resize((30,30))
-        imagen_agregarpago_tk = ImageTk.PhotoImage(imagen_agregarpago_resize)
-        self.boton_agregarpago.config(
-            image=imagen_agregarpago_tk, compound='left', padx=15
+            padx=10,
+            relief='groove',
+            image=self.img['ventas'],
+            compound='left'
         )
         self.boton_agregarpago.place(relx=0.2,rely=0.7,anchor='center')
-        self.boton_agregarpago.image = imagen_agregarpago_tk
 
-        ruta = self.rutas('../imagenes','modificar.png')
         self.boton_actualizarpago = Button(self.frame_resumencc)
         self.boton_actualizarpago.config(
             text='Actualizar Deuda',
             font=('century gothic',14,'bold'),
-            width=180,
+            width=200,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_actualizarpago_pil = Image.open(ruta)
-        imagen_actualizarpago_resize = (
-            imagen_actualizarpago_pil.resize((30,30))
-        )
-        imagen_actualizarpago_tk = ImageTk.PhotoImage(
-            imagen_actualizarpago_resize
-        )
-        self.boton_actualizarpago.config(
-            image=imagen_actualizarpago_tk, compound='left', padx=15
+            padx=10,
+            relief='groove',
+            image=self.img['modificar'],
+            compound='left'
         )
         self.boton_actualizarpago.place(relx=0.5,rely=0.7,anchor='center')
-        self.boton_actualizarpago.image = imagen_actualizarpago_tk
 
-        ruta = self.rutas('../imagenes','eliminar.png')
         self.boton_borraroperacion = Button(self.frame_resumencc)
         self.boton_borraroperacion.config(
             text='Borrar Operación',
             font=('century gothic',14,'bold'),
-            width=180,
+            width=200,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_borraroperacion_pil = Image.open(ruta)
-        imagen_borraroperacion_resize = (
-            imagen_borraroperacion_pil.resize((30,30))
-        )
-        imagen_borraroperacion_tk = ImageTk.PhotoImage(
-            imagen_borraroperacion_resize
-        )
-        self.boton_borraroperacion.config(
-            image=imagen_borraroperacion_tk, compound='left', padx=15
+            padx=10,
+            relief='groove',
+            image=self.img['eliminar'],
+            compound='left'
         )
         self.boton_borraroperacion.place(relx=0.8,rely=0.7,anchor='center')
-        self.boton_borraroperacion.image = imagen_borraroperacion_tk
 
-    
         #Treeview
         self.tv_cc = ttk.Treeview(
             self.frame_treeview,
@@ -241,58 +222,58 @@ class SaldarCuentaCorriente:
         seleccionada en el Treeview de cuentas corrientes.
     '''
     
-def __init__(self,root):
-        self.root = root
-        self.root.title('Agregar pago a cuenta corriente')
-        self.root.geometry('400x100+483+324')
-        self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
-        self.widgets()
+    def __init__(self, root):
+            self.root = root
+            self.root.title('Agregar pago a cuenta corriente')
+            self.root.geometry('400x100+483+324')
+            self.root.resizable(False,False)
+            self.img = {}
+            self.root.iconbitmap(
+                ConfigView.formateo_imagen("logosec_fondo.ico")
+            )
+            self.widgets()
 
-def rutas(self, *paths):
-    if getattr(sys, 'frozen', False):
-        ruta_base = sys._MEIPASS
-    else:
-        ruta_base = os.path.dirname(os.path.abspath(__file__))
-    return os.path.join(ruta_base, *paths)
 
-def widgets(self):
-    #Frames
-    self.frame_saldocc = Frame(self.root)
-    self.frame_saldocc.config(width=400,height=100,background='#EDE2E0')
-    self.frame_saldocc.place(x=0,y=0)
-    
-    #Labels
-    self.label_nuevopago = Label(self.frame_saldocc)
-    self.label_nuevopago.config(
-        text=f'Abona $', font=('century gothic',14), background='#EDE2E0'
-    )
-    self.label_nuevopago.place(relx=0.25,rely=0.28,anchor='center')
-    #Entries
-    self.entry_nuevopago = Entry(self.frame_saldocc)
-    self.entry_nuevopago.config(
-        font=('century gothic',14), width=15, bd=1, relief='solid'
-    )
-    self.entry_nuevopago.place(relx=0.6,rely=0.28,anchor='center')
-    #Buttons
-    ruta = self.rutas('../imagenes','mas.png')
-    self.boton_nuevopago = Button(self.frame_saldocc)
-    self.boton_nuevopago.config(
-        text='Agregar',
-        font=('century gothic',12,'bold'),
-        width=140,
-        background='#D3B9B4',
-        bd=2,
-        relief='groove'
-    )
-    imagen_nuevopago_pil = Image.open(ruta)
-    imagen_nuevopago_resize = imagen_nuevopago_pil.resize((25,25))
-    imagen_nuevopago_tk = ImageTk.PhotoImage(imagen_nuevopago_resize)
-    self.boton_nuevopago.config(
-        image=imagen_nuevopago_tk, compound='left', padx=15
-    )
-    self.boton_nuevopago.place(relx=0.5,rely=0.75,anchor='center')
-    self.boton_nuevopago.image = imagen_nuevopago_tk 
+    def widgets(self):
+
+        # Referencia a imagenes
+        self.img['mas'] = ConfigView.formateo_imagen(
+            'mas.png', 30, 30
+        )
+
+        #Frames
+        self.frame_saldocc = Frame(self.root)
+        self.frame_saldocc.config(width=400,height=100,background='#EDE2E0')
+        self.frame_saldocc.place(x=0,y=0)
+
+        #Labels
+        self.label_nuevopago = Label(self.frame_saldocc)
+        self.label_nuevopago.config(
+            text=f'Abona $', font=('century gothic',14), background='#EDE2E0'
+        )
+        self.label_nuevopago.place(relx=0.25,rely=0.28,anchor='center')
+
+        #Entries
+        self.entry_nuevopago = Entry(self.frame_saldocc)
+        self.entry_nuevopago.config(
+            font=('century gothic',14), width=15, bd=1, relief='solid'
+        )
+        self.entry_nuevopago.place(relx=0.6,rely=0.28,anchor='center')
+
+        #Buttons
+        self.boton_nuevopago = Button(self.frame_saldocc)
+        self.boton_nuevopago.config(
+            text='Agregar',
+            font=('century gothic',12,'bold'),
+            width=140,
+            background='#D3B9B4',
+            bd=2,
+            padx=10,
+            relief='groove',
+            image=self.img['mas'],
+            compound='left'
+        )
+        self.boton_nuevopago.place(relx=0.5,rely=0.75,anchor='center')
 
 
 class ActualizarCuentaCorriente:
@@ -307,17 +288,20 @@ class ActualizarCuentaCorriente:
         self.root.title('Actualizar cuenta corriente')
         self.root.geometry('400x100+483+324')
         self.root.resizable(False,False)
-        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
+        self.img = {}
+        self.root.iconbitmap(
+            ConfigView.formateo_imagen("logosec_fondo.ico")
+        )
         self.widgets()
 
-    def rutas(self, *paths):
-        if getattr(sys, 'frozen', False):
-            ruta_base = sys._MEIPASS
-        else:
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
     
     def widgets(self):
+
+        # Referencia a imagenes
+        self.img['mas'] = ConfigView.formateo_imagen(
+            'mas.png', 30, 30
+        )
+
         #Frames
         self.frame_actualizacioncc = Frame(self.root)
         self.frame_actualizacioncc.config(
@@ -340,7 +324,6 @@ class ActualizarCuentaCorriente:
         self.entry_actualizacion.place(relx=0.6,rely=0.28,anchor='center')
 
         #Buttons
-        ruta = self.rutas('../imagenes','mas.png')
         self.boton_actualizacion = Button(self.frame_actualizacioncc)
         self.boton_actualizacion.config(
             text='Agregar',
@@ -348,18 +331,9 @@ class ActualizarCuentaCorriente:
             width=140,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_actualizacion_pil = Image.open(ruta)
-        imagen_actualizacion_resize = (
-            imagen_actualizacion_pil.resize((25,25))
-        )
-        imagen_actualizacion_tk = ImageTk.PhotoImage(
-            imagen_actualizacion_resize
-        )
-        self.boton_actualizacion.config(
-            image=imagen_actualizacion_tk, compound='left', padx=15
+            padx=10,
+            relief='groove',
+            image=self.img['mas'],
+            compound='left'
         )
         self.boton_actualizacion.place(relx=0.5,rely=0.75,anchor='center')
-        self.boton_actualizacion.image = imagen_actualizacion_tk 
-

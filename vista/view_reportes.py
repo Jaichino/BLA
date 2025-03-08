@@ -1,8 +1,10 @@
-import sys
-import os
+##############################################################################
+# Importaciones
+##############################################################################
+
 from tkinter import Button,Frame,Label
 from tkinter import ttk
-from PIL import Image,ImageTk
+from vista.view_config import ConfigView
 
 ############################ VISTA DE REPORTES ###############################
 ''' En este fichero se desarrolla la interfaz para el modulo de reportes, el 
@@ -17,23 +19,32 @@ class InterfazReportes:
         self.root.title('BLA - Reportes')
         self.root.geometry('350x350+508+199')
         self.root.resizable(False, False)
-        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
+        self.img = {}
+        self.root.iconbitmap(
+            ConfigView.formateo_imagen("logosec_fondo.ico")
+        )
         self.widgets()
 
-    
-    def rutas(self, *paths):
 
-        ''' Metodo para el manejo de rutas de imagenes a la hora de realizar
-            ejecutable con Pyinstaller
-        '''
-        if getattr(sys, 'frozen', False):  # Ejecutable generado con PyInstaller
-            ruta_base = sys._MEIPASS
-        else:  # Ejecución normal en el entorno de desarrollo
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
-
-    
     def widgets(self):
+
+        # Referencia a imagenes
+        self.img['ventas'] = ConfigView.formateo_imagen(
+            'ventas.png', 30, 30
+        )
+        self.img['deuda'] = ConfigView.formateo_imagen(
+            'deuda.png', 30, 30
+        )
+        self.img['dineroinventario'] = ConfigView.formateo_imagen(
+            'dinero_inventario.png', 30, 30
+        )
+        self.img['estadistica'] = ConfigView.formateo_imagen(
+            'estadistica.png', 30, 30
+        )
+        self.img['reportes'] = ConfigView.formateo_imagen(
+            'reportes.png', 30, 30
+        )
+
         # Frames
         self.frame_reportes = Frame(self.root)
         self.frame_reportes.config(
@@ -42,7 +53,6 @@ class InterfazReportes:
         self.frame_reportes.place(relx=0, rely=0)
 
         # Botones
-        ruta = self.rutas('../imagenes','ventas.png')
         self.boton_gananciastotales = Button(self.frame_reportes)
         self.boton_gananciastotales.config(
             text='Ganancias Totales',
@@ -51,26 +61,14 @@ class InterfazReportes:
             padx=10,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_gananciastotales_pil = Image.open(ruta)
-        imagen_gananciastotales_resize = (
-            imagen_gananciastotales_pil.resize((30, 30))
-        )
-        imagen_gananciastotales_tk = ImageTk.PhotoImage(
-            imagen_gananciastotales_resize
-        )
-        self.boton_gananciastotales.config(
-            image=imagen_gananciastotales_tk,
+            relief='groove',
+            image=self.img['ventas'],
             compound='left',
-            anchor='center'
         )
         self.boton_gananciastotales.place(
             relx=0.5, rely=0.1, anchor='center'
         )
-        self.boton_gananciastotales.image = imagen_gananciastotales_tk
 
-        ruta = self.rutas('../imagenes','deuda.png')
         self.boton_montocc = Button(self.frame_reportes)
         self.boton_montocc.config(
             text='Monto Adeudado',
@@ -79,18 +77,12 @@ class InterfazReportes:
             padx=10,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_montocc_pil = Image.open(ruta)
-        imagen_montocc_resize = imagen_montocc_pil.resize((30, 30))
-        imagen_montocc_tk = ImageTk.PhotoImage(imagen_montocc_resize)
-        self.boton_montocc.config(
-            image=imagen_montocc_tk, compound='left', anchor='center'
+            relief='groove',
+            image=self.img['deuda'],
+            compound='left',
         )
         self.boton_montocc.place(relx=0.5, rely=0.3, anchor='center')
-        self.boton_montocc.image = imagen_montocc_tk
 
-        ruta = self.rutas('../imagenes','dinero_inventario.png')
         self.boton_monto_inventario = Button(self.frame_reportes)
         self.boton_monto_inventario.config(
             text='Monto en Inventario',
@@ -99,22 +91,12 @@ class InterfazReportes:
             padx=10,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_monto_inventario_pil = Image.open(ruta)
-        imagen_monto_inventario_resize = (
-            imagen_monto_inventario_pil.resize((30, 30))
-        )
-        imagen_monto_inventario_tk = ImageTk.PhotoImage(
-            imagen_monto_inventario_resize
-        )
-        self.boton_monto_inventario.config(
-            image=imagen_monto_inventario_tk, compound='left', anchor='center'
+            relief='groove',
+            image=self.img['dineroinventario'],
+            compound='left'
         )
         self.boton_monto_inventario.place(relx=0.5, rely=0.5, anchor='center')
-        self.boton_monto_inventario.image = imagen_monto_inventario_tk
 
-        ruta = self.rutas('../imagenes','estadistica.png')
         self.boton_masvendidos = Button(self.frame_reportes)
         self.boton_masvendidos.config(
             text='Productos más vendidos',
@@ -123,17 +105,12 @@ class InterfazReportes:
             padx=10,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
+            relief='groove',
+            image=self.img['estadistica'],
+            compound='left'
         )
-        imagen_masvendidos_pil = Image.open(ruta)
-        imagen_masvendidos_resize = imagen_masvendidos_pil.resize((30, 30))
-        imagen_masvendidos_tk = ImageTk.PhotoImage(imagen_masvendidos_resize)
-        self.boton_masvendidos.config(
-            image=imagen_masvendidos_tk, compound='left', anchor='center')
         self.boton_masvendidos.place(relx=0.5, rely=0.7, anchor='center')
-        self.boton_masvendidos.image = imagen_masvendidos_tk
 
-        ruta = self.rutas('../imagenes','reportes.png')
         self.boton_var_ganancias = Button(self.frame_reportes)
         self.boton_var_ganancias.config(
             text='Ganancias Mensuales',
@@ -142,21 +119,11 @@ class InterfazReportes:
             padx=10,
             background='#D3B9B4',
             bd=2,
-            relief='groove'
-        )
-        imagen_var_ganancias_pil = Image.open(ruta)
-        imagen_var_ganancias_resize = (
-            imagen_var_ganancias_pil.resize((30, 30))
-        )
-        imagen_var_ganancias_tk = ImageTk.PhotoImage(
-            imagen_var_ganancias_resize
-        )
-        self.boton_var_ganancias.config(
-            image=imagen_var_ganancias_tk, compound='left', anchor='center'
+            relief='groove',
+            image=self.img['reportes'],
+            compound='left'
         )
         self.boton_var_ganancias.place(relx=0.5, rely=0.9, anchor='center')
-        self.boton_var_ganancias.image = imagen_var_ganancias_tk
-
 
 class GananciasTotales:
     
@@ -165,19 +132,14 @@ class GananciasTotales:
         self.root.title('Ganancias Totales')
         self.root.geometry('350x220+508+264')
         self.root.resizable(False, False)
-        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(
+            ConfigView.formateo_imagen("logosec_fondo.ico")
+        )
         self.widgets()
 
     
-    def rutas(self, *paths):
-        if getattr(sys, 'frozen', False):
-            ruta_base = sys._MEIPASS
-        else:
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
-
-    
     def widgets(self):
+
         # Frames
         self.frame_reportes = Frame(self.root)
         self.frame_reportes.config(
@@ -250,18 +212,11 @@ class DeudasTotales:
         self.root.title('Deudas Totales')
         self.root.geometry('350x100+508+324')
         self.root.resizable(False, False)
-        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(
+            ConfigView.formateo_imagen("logosec_fondo.ico"))
         self.widgets()
 
-    
-    def rutas(self, *paths):
-        if getattr(sys, 'frozen', False):
-            ruta_base = sys._MEIPASS
-        else:
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
 
-    
     def widgets(self):
         # Frames
         self.frame_reportes = Frame(self.root)
@@ -286,16 +241,9 @@ class MontoInventario:
         self.root.title('Valor total de Inventario')
         self.root.geometry('350x100+508+324')
         self.root.resizable(False, False)
-        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(
+            ConfigView.formateo_imagen("logosec_fondo.ico"))
         self.widgets()
-
-    
-    def rutas(self, *paths):
-        if getattr(sys, 'frozen', False):
-            ruta_base = sys._MEIPASS
-        else:
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
 
     
     def widgets(self):
@@ -325,18 +273,12 @@ class GananciasMensuales:
         self.root.title('Ganancias Mensuales')
         self.root.geometry('350x100+508+324')
         self.root.resizable(False, False)
-        self.root.iconbitmap(self.rutas("../imagenes", "logosec_fondo.ico"))
+        self.root.iconbitmap(
+            ConfigView.formateo_imagen("logosec_fondo.ico")
+        )
         self.widgets()
 
-    
-    def rutas(self, *paths):
-        if getattr(sys, 'frozen', False):
-            ruta_base = sys._MEIPASS
-        else:
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
 
-    
     def widgets(self):
         # Frames
         self.frame_reportes = Frame(self.root)
@@ -374,4 +316,3 @@ class GananciasMensuales:
             relief='groove'
         )
         self.boton_calcular.place(relx=0.5, rely=0.75, anchor='center')
-

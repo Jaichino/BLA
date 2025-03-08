@@ -1,8 +1,10 @@
-import sys
-import os
+##############################################################################
+# Importaciones
+##############################################################################
+
 from tkinter import Entry,Label,Button,Frame
 from tkinter import ttk
-from PIL import Image, ImageTk
+from vista.view_config import ConfigView
 
 ############################ VISTA DEL LOGIN #################################
 
@@ -17,23 +19,21 @@ class LoginApp:
         self.root.title('BLA Estética - Login')
         self.root.geometry('600x350+383+199')
         self.root.resizable(0, 0)
-        self.root.iconbitmap(self.rutas('../imagenes','logosec_fondo.ico')) 
-        self.create_widgets()
+        self.img = {}
+        self.root.iconbitmap(
+            ConfigView.formateo_imagen('logosec_fondo.ico')
+        ) 
+        self.widgets()
 
-    def rutas(self, *paths):
 
-        ''' Metodo para el manejo de rutas de imagenes a la hora de realizar
-            ejecutable con Pyinstaller
-        '''
-        if getattr(sys, 'frozen', False):
-            ruta_base = sys._MEIPASS
-        else:
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
-
-    
-    def create_widgets(self):
-        # Creación de Frames
+    def widgets(self):
+        
+        # Referencia a imagenes
+        self.img['logo'] = ConfigView.formateo_imagen(
+            'logo_sin_fondo.png', 250, 250
+        )
+        
+        # Frames
         self.frame_logo = Frame(self.root)
         self.frame_logo.config(width=250, height=350)
         self.frame_logo.place(x=0, y=0)
@@ -103,15 +103,10 @@ class LoginApp:
         self.login_button.place(relx=0.5, rely=0.85, anchor='center')
 
         #Imagen
-        ruta = self.rutas('../imagenes','logo_sin_fondo.png')
-        imagen = Image.open(ruta)
-        imagen_modificada = imagen.resize((250, 250))
-        imagen_tk = ImageTk.PhotoImage(imagen_modificada)
-        self.label_imagen = Label(self.frame_logo, image=imagen_tk)
+        self.label_imagen = Label(self.frame_logo, image=self.img['logo'])
         self.label_imagen.place(relx=0.5, rely=0.48, anchor='center')
-        self.label_imagen.image = imagen_tk
 
-    
+
     # Metodo para limpiar entry
     def limpiar_caja_password (self):
         self.entry_password.delete(0,'end')
