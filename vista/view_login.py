@@ -21,7 +21,7 @@ class LoginApp:
         self.root.resizable(0, 0)
         self.img = {}
         self.root.iconbitmap(
-            ConfigView.formateo_imagen('logosec_fondo.ico')
+            ConfigView.formateo_imagen(ConfigView.img['icosec'])
         ) 
         self.widgets()
 
@@ -30,7 +30,7 @@ class LoginApp:
         
         # Referencia a imagenes
         self.img['logo'] = ConfigView.formateo_imagen(
-            'logo_sin_fondo.png', 250, 250
+            ConfigView.img['logosinfondo'], 250, 250
         )
         
         # Frames

@@ -21,7 +21,7 @@ class MenuPrincipal:
         self.root.resizable(0, 0)
         self.img = {}
         self.root.iconbitmap(
-            ConfigView.formateo_imagen("logosec_fondo.ico")
+            ConfigView.formateo_imagen(ConfigView.img['icosec'])
         )
         self.widgets()
 
@@ -30,22 +30,22 @@ class MenuPrincipal:
 
         # Referencia a imagenes
         self.img['ventas'] = ConfigView.formateo_imagen(
-            'ventas.png', 50, 50
+            ConfigView.img['ventas'], 50, 50
         )
         self.img['cuentacorriente'] = ConfigView.formateo_imagen(
-            'cuenta_corriente.png', 50, 50
+            ConfigView.img['ccorriente'], 50, 50
         )
         self.img['inventario'] = ConfigView.formateo_imagen(
-            'inventario.png', 50, 50
+            ConfigView.img['inventario'], 50, 50
         )
         self.img['reportes'] = ConfigView.formateo_imagen(
-            'reportes.png', 80, 80
+            ConfigView.img['reportes'], 80, 80
         )
         self.img['administrador'] = ConfigView.formateo_imagen(
-            'administrador.png', 40, 40
+            ConfigView.img['admin'], 40, 40
         )
         self.img['logo'] = ConfigView.formateo_imagen(
-            'logo_sin_fondo.png', 150, 150
+            ConfigView.img['logosinfondo'], 150, 150
         )
 
         #Frames

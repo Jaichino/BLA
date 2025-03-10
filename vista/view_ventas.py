@@ -23,7 +23,7 @@ class VentanaVentas:
         self.root.geometry("1250x590+58+79")
         self.img = {}
         self.root.iconbitmap(
-            ConfigView.formateo_imagen("logosec_fondo.ico")
+            ConfigView.formateo_imagen(ConfigView.img['icosec'])
         )
         self.widgets()
 
@@ -32,16 +32,16 @@ class VentanaVentas:
 
         # Referencia a imagenes
         self.img['consultaventas'] = ConfigView.formateo_imagen(
-            'consulta_ventas.png', 30, 30
+            ConfigView.img['consultaventa'], 30, 30
         )
         self.img['acarrito'] = ConfigView.formateo_imagen(
-            'agregar_carrito.png', 30, 30
+            ConfigView.img['acarrito'], 30, 30
         )
         self.img['eliminar'] = ConfigView.formateo_imagen(
-            'eliminar.png', 30, 30
+            ConfigView.img['eliminar'], 30, 30
         )
         self.img['listo'] = ConfigView.formateo_imagen(
-            'listo.png', 30, 30
+            ConfigView.img['listo'], 30, 30
         )
 
         #Frames
@@ -350,7 +350,7 @@ class ConfirmacionVenta:
         self.root.resizable(False, False)
         self.img = {}
         self.root.iconbitmap(
-            ConfigView.formateo_imagen("logosec_fondo.ico")
+            ConfigView.formateo_imagen(ConfigView.img['icosec'])
         )
         self.widgets()
 
@@ -359,10 +359,10 @@ class ConfirmacionVenta:
 
         # Referencia a imagenes
         self.img['ventas'] = ConfigView.formateo_imagen(
-            'ventas.png', 30, 30
+            ConfigView.img['ventas'], 30, 30
         )
         self.img['tarjeta'] = ConfigView.formateo_imagen(
-            'tarjeta.png', 30, 30
+            ConfigView.img['tarjeta'], 30, 30
         )
 
         #Frames
@@ -508,7 +508,7 @@ class ConsultaVentas:
         self.root.resizable(False, False)
         self.img = {}
         self.root.iconbitmap(
-            ConfigView.formateo_imagen("logosec_fondo.ico")
+            ConfigView.formateo_imagen(ConfigView.img['icosec'])
         )
         self.widgets()
 
@@ -517,16 +517,16 @@ class ConsultaVentas:
 
         # Referencia a imagenes
         self.img['consultaventas'] = ConfigView.formateo_imagen(
-            'consulta_ventas.png', 30, 30
+            ConfigView.img['consultaventa'], 30, 30
         )
         self.img['pagopendiente'] = ConfigView.formateo_imagen(
-            'pago_pendiente.png', 30, 30
+            ConfigView.img['pagopendiente'], 30, 30
         )
         self.img['detalle'] = ConfigView.formateo_imagen(
-            'detalle.png', 30, 30
+            ConfigView.img['detalle'], 30, 30
         )
         self.img['eliminar'] = ConfigView.formateo_imagen(
-            'eliminar.png', 30, 30
+            ConfigView.img['eliminar'], 30, 30
         )
 
         #Frames
@@ -748,7 +748,7 @@ class DetalleVentas:
         self.root.resizable(False, False)
         self.img = {}
         self.root.iconbitmap(
-            ConfigView.formateo_imagen("logosec_fondo.ico")
+            ConfigView.formateo_imagen(ConfigView.img['icosec'])
         )
         self.widgets()
 
@@ -757,7 +757,7 @@ class DetalleVentas:
 
         # Referencia a imagenes
         self.img['pdf'] = ConfigView.formateo_imagen(
-            'pdf.png', 30, 30
+            ConfigView.img['pdf'], 30, 30
         )
 
         #Frames
@@ -849,7 +849,7 @@ class InterfazInteres:
         self.root.resizable(False, False)
         self.img = {}
         self.root.iconbitmap(
-            ConfigView.formateo_imagen("logosec_fondo.ico")
+            ConfigView.formateo_imagen(ConfigView.img['icosec'])
         )
         self.widgets()
 
@@ -858,7 +858,7 @@ class InterfazInteres:
 
         # Referencia a imagenes
         self.img['mas'] = ConfigView.formateo_imagen(
-            'mas.png', 20, 20
+            ConfigView.img['mas'], 20, 20
         )
 
         #Frames

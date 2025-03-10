@@ -24,7 +24,7 @@ class InterfazAdmin:
         self.root.resizable(False,False)
         self.img = {}
         self.root.iconbitmap(
-            ConfigView.formateo_imagen('logosec_fondo.ico')
+            ConfigView.formateo_imagen(ConfigView.img['icosec'])
         )
         self.widgets()
     
@@ -37,10 +37,10 @@ class InterfazAdmin:
         
         # Referencia a imagenes
         self.img['crearusuario'] = ConfigView.formateo_imagen(
-            'crear_usuario.png', 30, 30
+            ConfigView.img['cusuario'], 30, 30
         )
         self.img['eliminar'] = ConfigView.formateo_imagen(
-            'eliminar.png', 30, 30
+            ConfigView.img['eliminar'], 30, 30
         )
         
         # Frames
@@ -112,7 +112,7 @@ class InterfazNuevoUsuario:
         self.root.geometry('400x220+483+264')
         self.root.resizable(False,False)
         self.root.iconbitmap(
-            ConfigView.formateo_imagen('logosec_fondo.ico')
+            ConfigView.formateo_imagen(ConfigView.img['icosec'])
         )
         self.widgets()
 
@@ -196,7 +196,7 @@ class InterfazEliminar:
         self.root.geometry('350x120+508+314')
         self.root.resizable(False,False)
         self.root.iconbitmap(
-            ConfigView.formateo_imagen("logosec_fondo.ico")
+            ConfigView.formateo_imagen(ConfigView.img['icosec'])
         )
         self.widgets()
 

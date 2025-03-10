@@ -22,7 +22,7 @@ class InterfazInventario:
         self.root.resizable(False,False)
         self.img = {}
         self.root.iconbitmap(
-            ConfigView.formateo_imagen("logosec_fondo.ico")
+            ConfigView.formateo_imagen(ConfigView.img['icosec'])
         )
         self.widgets()
 
@@ -31,28 +31,28 @@ class InterfazInventario:
 
         # Referencia a imagenes
         self.img['filtrar'] = ConfigView.formateo_imagen(
-            'filtrar.png', 30, 30
+            ConfigView.img['filtrar'], 30, 30
         )
         self.img['sinstock'] = ConfigView.formateo_imagen(
-            'sin_stock.png', 30, 30
+            ConfigView.img['sinstock'], 30, 30
         )
         self.img['mas'] = ConfigView.formateo_imagen(
-            'mas.png', 30, 30
+            ConfigView.img['mas'], 30, 30
         )
         self.img['modificar'] = ConfigView.formateo_imagen(
-            'modificar.png', 30, 30
+            ConfigView.img['modificar'], 30, 30
         )
         self.img['eliminar'] = ConfigView.formateo_imagen(
-            'eliminar.png', 30, 30
+            ConfigView.img['eliminar'], 30, 30
         )
         self.img['istock'] = ConfigView.formateo_imagen(
-            'ingresar_stock.png', 30, 30
+            ConfigView.img['istock'], 30, 30
         )
         self.img['vencimientos'] = ConfigView.formateo_imagen(
-            'vencimientos.png', 30, 30
+            ConfigView.img['vencimientos'], 30, 30
         )
         self.img['excel'] = ConfigView.formateo_imagen(
-            'excel.png', 30, 30
+            ConfigView.img['excel'], 30, 30
         )
 
         #Frames
@@ -324,7 +324,7 @@ class NuevoProducto:
         self.root.resizable(False,False)
         self.img = {}
         self.root.iconbitmap(
-            ConfigView.formateo_imagen("logosec_fondo.ico")
+            ConfigView.formateo_imagen(ConfigView.img['icosec'])
         )
         self.widgets()
 
@@ -333,7 +333,7 @@ class NuevoProducto:
 
         # Referencia a imagenes
         self.img['guardar'] = ConfigView.formateo_imagen(
-            'guardar.png', 30, 30
+            ConfigView.img['guardar'], 30, 30
         )
 
         #Frames
@@ -454,7 +454,7 @@ class ModificarProducto:
         self.root.resizable(False,False)
         self.img = {}
         self.root.iconbitmap(
-            ConfigView.formateo_imagen("logosec_fondo.ico")
+            ConfigView.formateo_imagen(ConfigView.img['icosec'])
         )
         self.widgets()
     
@@ -463,7 +463,7 @@ class ModificarProducto:
 
         # Referencia a imagenes
         self.img['guardar'] = ConfigView.formateo_imagen(
-            'guardar.png', 30, 30
+            ConfigView.img['guardar'], 30, 30
         )
 
         #Frames
@@ -560,7 +560,7 @@ class IngresoStock:
         self.root.resizable(False, False)
         self.img = {}
         self.root.iconbitmap(
-            ConfigView.formateo_imagen("logosec_fondo.ico")
+            ConfigView.formateo_imagen(ConfigView.img['icosec'])
         )
         self.widgets()
 
@@ -569,7 +569,7 @@ class IngresoStock:
 
         # Referencia a imagenes
         self.img['istock'] = ConfigView.formateo_imagen(
-            'ingresar_stock.png', 30, 30
+            ConfigView.img['istock'], 30, 30
         )
 
         #Frames
@@ -637,7 +637,7 @@ class Vencimientos:
         self.root.resizable(False, False)
         self.img = {}
         self.root.iconbitmap(
-            ConfigView.formateo_imagen("logosec_fondo.ico")
+            ConfigView.formateo_imagen(ConfigView.img['icosec'])
         )
         self.widgets()
 
@@ -646,10 +646,10 @@ class Vencimientos:
 
         # Referencia a imagenes
         self.img['consultaventas'] = ConfigView.formateo_imagen(
-            'consulta_ventas.png', 30, 30
+            ConfigView.img['consultaventa'], 30, 30
         )
         self.img['vencimientos'] = ConfigView.formateo_imagen(
-            'vencimientos.png', 30, 30
+            ConfigView.img['vencimientos'], 30, 30
         )
 
         #Frames

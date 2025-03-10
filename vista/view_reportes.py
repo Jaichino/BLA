@@ -21,7 +21,7 @@ class InterfazReportes:
         self.root.resizable(False, False)
         self.img = {}
         self.root.iconbitmap(
-            ConfigView.formateo_imagen("logosec_fondo.ico")
+            ConfigView.formateo_imagen(ConfigView.img['icosec'])
         )
         self.widgets()
 
@@ -30,19 +30,19 @@ class InterfazReportes:
 
         # Referencia a imagenes
         self.img['ventas'] = ConfigView.formateo_imagen(
-            'ventas.png', 30, 30
+            ConfigView.img['ventas'], 30, 30
         )
         self.img['deuda'] = ConfigView.formateo_imagen(
-            'deuda.png', 30, 30
+            ConfigView.img['deuda'], 30, 30
         )
         self.img['dineroinventario'] = ConfigView.formateo_imagen(
-            'dinero_inventario.png', 30, 30
+            ConfigView.img['dineroinventario'], 30, 30
         )
         self.img['estadistica'] = ConfigView.formateo_imagen(
-            'estadistica.png', 30, 30
+            ConfigView.img['estadistica'], 30, 30
         )
         self.img['reportes'] = ConfigView.formateo_imagen(
-            'reportes.png', 30, 30
+            ConfigView.img['reportes'], 30, 30
         )
 
         # Frames
@@ -133,7 +133,7 @@ class GananciasTotales:
         self.root.geometry('350x220+508+264')
         self.root.resizable(False, False)
         self.root.iconbitmap(
-            ConfigView.formateo_imagen("logosec_fondo.ico")
+            ConfigView.formateo_imagen(ConfigView.img['icosec'])
         )
         self.widgets()
 
@@ -215,7 +215,7 @@ class DeudasTotales:
         self.root.geometry('350x100+508+324')
         self.root.resizable(False, False)
         self.root.iconbitmap(
-            ConfigView.formateo_imagen("logosec_fondo.ico"))
+            ConfigView.formateo_imagen(ConfigView.img['icosec']))
         self.widgets()
 
 
@@ -244,7 +244,7 @@ class MontoInventario:
         self.root.geometry('350x100+508+324')
         self.root.resizable(False, False)
         self.root.iconbitmap(
-            ConfigView.formateo_imagen("logosec_fondo.ico"))
+            ConfigView.formateo_imagen(ConfigView.img['icosec']))
         self.widgets()
 
     
@@ -276,7 +276,7 @@ class GananciasMensuales:
         self.root.geometry('350x100+508+324')
         self.root.resizable(False, False)
         self.root.iconbitmap(
-            ConfigView.formateo_imagen("logosec_fondo.ico")
+            ConfigView.formateo_imagen(ConfigView.img['icosec'])
         )
         self.widgets()
 

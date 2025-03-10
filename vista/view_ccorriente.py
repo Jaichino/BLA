@@ -25,7 +25,7 @@ class CuentaCorriente:
         self.root.resizable(False,False)
         self.img = {}
         self.root.iconbitmap(
-            ConfigView.formateo_imagen("logosec_fondo.ico")
+            ConfigView.formateo_imagen(ConfigView.img['icosec'])
         )
         self.widgets()
     
@@ -34,16 +34,16 @@ class CuentaCorriente:
 
         # Referencia a imagenes
         self.img['consulta_ventas'] = ConfigView.formateo_imagen(
-            'consulta_ventas.png', 30, 30
+            ConfigView.img['consultaventa'], 30, 30
         )
         self.img['ventas'] = ConfigView.formateo_imagen(
-            'ventas.png', 30, 30
+            ConfigView.img['ventas'], 30, 30
         )
         self.img['modificar'] = ConfigView.formateo_imagen(
-            'modificar.png', 30, 30
+            ConfigView.img['modificar'], 30, 30
         )
         self.img['eliminar'] = ConfigView.formateo_imagen(
-            'eliminar.png', 30, 30
+            ConfigView.img['eliminar'], 30, 30
         )
 
         #Frames
@@ -239,7 +239,7 @@ class SaldarCuentaCorriente:
             self.root.resizable(False,False)
             self.img = {}
             self.root.iconbitmap(
-                ConfigView.formateo_imagen("logosec_fondo.ico")
+                ConfigView.formateo_imagen(ConfigView.img['icosec'])
             )
             self.widgets()
 
@@ -248,7 +248,7 @@ class SaldarCuentaCorriente:
 
         # Referencia a imagenes
         self.img['mas'] = ConfigView.formateo_imagen(
-            'mas.png', 30, 30
+            ConfigView.img['mas'], 30, 30
         )
 
         #Frames
@@ -305,7 +305,7 @@ class ActualizarCuentaCorriente:
         self.root.resizable(False,False)
         self.img = {}
         self.root.iconbitmap(
-            ConfigView.formateo_imagen("logosec_fondo.ico")
+            ConfigView.formateo_imagen(ConfigView.img['icosec'])
         )
         self.widgets()
 
@@ -314,7 +314,7 @@ class ActualizarCuentaCorriente:
 
         # Referencia a imagenes
         self.img['mas'] = ConfigView.formateo_imagen(
-            'mas.png', 30, 30
+            ConfigView.img['mas'], 30, 30
         )
 
         #Frames
