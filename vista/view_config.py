@@ -9,6 +9,10 @@ from PIL import Image, ImageTk
 
 class ConfigView():
 
+    ##########################################################################
+    # Imagenes de la aplicacion
+    ##########################################################################
+
     imagenes = {
         'admin':'imagenes/administrador.png',
         'acarrito' : 'imagenes/agregar-carrito.png',
@@ -42,6 +46,33 @@ class ConfigView():
         'ventas': 'imagenes/ventas.png',
     }
 
+    ##########################################################################
+    # Colores y fuentes utilizadas
+    ##########################################################################
+
+    clr = {
+        'hard':'#C18484',
+        'medium':'#D3B9B4',
+        'soft': '#EDE2E0'
+    }
+
+    fnt = {
+        'titulo': ('century gothic',28,'bold'),
+        'titmodulo': ('century gothic',20,'bold'),
+        'btnmenu': ('century gothic',18,'bold'),
+        'text10': ('century gothic',10),
+        'text12': ('century gothic',12),
+        'text14': ('century gothic',14),
+        'text16': ('century gothic',16),
+        'text12-b': ('century gothic',12,'bold'),
+        'text14-b': ('century gothic',14,'bold'),
+        'text16-b': ('century gothic',16,'bold'),
+        'text18-b': ('century gothic',18,'bold'),
+    }
+
+    ##########################################################################
+    # Metodo para manejo de rutas
+    ##########################################################################
 
     @staticmethod
     def rutas(*paths):
@@ -56,6 +87,10 @@ class ConfigView():
             ruta_base = os.path.dirname(os.path.abspath(__file__))
         return os.path.join(ruta_base, *paths)
 
+
+    ##########################################################################
+    # Metodo formateo de imagenes
+    ##########################################################################
 
     @staticmethod
     def formateo_imagen(img, x=None, y=None):
@@ -75,4 +110,3 @@ class ConfigView():
             im_tk = ImageTk.PhotoImage(im_res)
 
             return im_tk
-

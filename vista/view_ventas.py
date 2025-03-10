@@ -46,18 +46,20 @@ class VentanaVentas:
 
         #Frames
         self.frame_titulo = Frame(self.root)
-        self.frame_titulo.config(width=1250, height=40, background='#EDE2E0')
+        self.frame_titulo.config(
+            width=1250, height=40, background=ConfigView.clr['soft']
+        )
         self.frame_titulo.place(x=0, y=0)
 
         self.frame_separador = Frame(self.root)
         self.frame_separador.config(
-            width=1250, height=4, background='#C18484'
+            width=1250, height=4, background=ConfigView.clr['hard']
         )
         self.frame_separador.place(x=0, y=36)
 
         self.frame_entradas = Frame(self.root)
         self.frame_entradas.config(
-            width=1250, height=152, background='#EDE2E0'
+            width=1250, height=152, background=ConfigView.clr['soft']
         )
         self.frame_entradas.place(x=0, y=38)
 
@@ -67,19 +69,19 @@ class VentanaVentas:
 
         self.frame_resumen_venta = Frame(self.root)
         self.frame_resumen_venta.config(
-            width=1250, height=80, background='#EDE2E0'
+            width=1250, height=80, background=ConfigView.clr['soft']
         )
         self.frame_resumen_venta.place(x=0, y=400)
 
         self.frame_finalizar_venta = Frame(self.root)
         self.frame_finalizar_venta.config(
-            width=1250, height=80, background='#EDE2E0'
+            width=1250, height=80, background=ConfigView.clr['soft']
         )
         self.frame_finalizar_venta.place(x=0, y=480)
 
         self.frame_informacion = Frame(self.root)
         self.frame_informacion.config(
-            width=1250, height=30, background='#D3B9B4'
+            width=1250, height=30, background=ConfigView.clr['medium']
         )
         self.frame_informacion.place(x=0, y=560)
         
@@ -87,17 +89,17 @@ class VentanaVentas:
         self.label_titulo = Label(
             self.frame_titulo,
             text='VENTAS',
-            font=('century gothic',20,'bold'),
-            background='#EDE2E0',
-            foreground='#C18484'
+            font=ConfigView.fnt['titmodulo'],
+            background=ConfigView.clr['soft'],
+            foreground=ConfigView.clr['hard']
         )
         self.label_titulo.place(relx=0.5,rely=0.5,anchor='center')
 
         self.label_codigo_producto = Label(
             self.frame_entradas,
             text='Código',
-            font=('century gothic',12),
-            background='#EDE2E0'
+            font=ConfigView.fnt['text12'],
+            background=ConfigView.clr['soft']
         )
         self.label_codigo_producto.place(
             relx=0.054, rely=0.5, anchor='center'
@@ -106,63 +108,63 @@ class VentanaVentas:
         self.label_cliente = Label(
             self.frame_entradas,
             text='Cliente',
-            font=('century gothic',12),
-            background='#EDE2E0'
+            font=ConfigView.fnt['text12'],
+            background=ConfigView.clr['soft']
         )
         self.label_cliente.place(relx=0.05, rely=0.2, anchor='center')
 
         self.label_precio = Label(
             self.frame_entradas,
             text='Precio',
-            font=('century gothic',12),
-            background='#EDE2E0'
+            font=ConfigView.fnt['text12'],
+            background=ConfigView.clr['soft']
         )
         self.label_precio.place(relx=0.38, rely=0.5, anchor='center')
 
         self.label_cantidad = Label(
             self.frame_entradas,
             text='Cantidad',
-            font=('century gothic',12),
-            background='#EDE2E0'
+            font=ConfigView.fnt['text12'],
+            background=ConfigView.clr['soft']
         )
         self.label_cantidad.place(relx=0.38, rely=0.8, anchor='center')
 
         self.label_vencimiento = Label(
             self.frame_entradas,
             text='Vencimiento',
-            font=('century gothic',12),
-            background='#EDE2E0'
+            font=ConfigView.fnt['text12'],
+            background=ConfigView.clr['soft']
         )
         self.label_vencimiento.place(relx=0.05, rely=0.8, anchor='center')
         
         self.label_total_venta = Label(
             self.frame_resumen_venta,
             text=f'Total de la venta: $ ',
-            font=('century gothic',18,'bold'),
-            background='#EDE2E0'
+            font=ConfigView.fnt['text18-b'],
+            background=ConfigView.clr['soft']
         )
         self.label_total_venta.place(relx=0.75, rely=0.5, anchor='center')
 
         self.label_usuario = Label(
             self.frame_informacion,
-            font=('century gothic',12),
-            background='#D3B9B4'
+            font=ConfigView.fnt['text12'],
+            background=ConfigView.clr['medium']
         )
         self.label_usuario.place(relx=0.05, rely=0.5, anchor='center')
 
         self.label_en_stock = Label(
             self.frame_entradas,
             text='En stock:',
-            font=('century gothic',12),
-            background='#EDE2E0'
+            font=ConfigView.fnt['text12'],
+            background=ConfigView.clr['soft']
         )
         self.label_en_stock.place(relx=0.53, rely=0.8, anchor='center')
 
         self.label_descripcion_producto = Label(
             self.frame_entradas,
-            font=('century gothic',12),
+            font=ConfigView.fnt['text12'],
             text='Producto: ',
-            background='#D3B9B4'
+            background=ConfigView.clr['medium']
         )
         self.label_descripcion_producto.place(x=450, y=15)
 
@@ -170,21 +172,21 @@ class VentanaVentas:
         self.entry_codigo_producto = Entry(
             self.frame_entradas,
             width=20,
-            font=('century gothic',12),
+            font=ConfigView.fnt['text12'],
             bd=1,
             relief='solid'
         )
         self.entry_codigo_producto.place(relx=0.18, rely=0.5, anchor='center') 
 
         self.entry_cliente = ttk.Combobox(
-            self.frame_entradas, width=18, font=('century gothic',12)
+            self.frame_entradas, width=18, font=ConfigView.fnt['text12']
         )
         self.entry_cliente.place(relx=0.18, rely=0.2, anchor='center')
 
         self.entry_precio = Entry(
             self.frame_entradas,
             width=15,
-            font=('century gothic',12),
+            font=ConfigView.fnt['text12'],
             bd=1,
             relief='solid'
         )
@@ -193,24 +195,24 @@ class VentanaVentas:
         self.entry_cantidad = Entry(
             self.frame_entradas,
             width=5,
-            font=('century gothic',12),
+            font=ConfigView.fnt['text12'],
             bd=1,
             relief='solid'
         )
         self.entry_cantidad.place(relx=0.445, rely=0.8, anchor='center')
 
         self.entry_vencimiento = ttk.Combobox(
-            self.frame_entradas, width=18, font=('century gothic',12)
+            self.frame_entradas, width=18, font=ConfigView.fnt['text12']
         )
         self.entry_vencimiento.place(relx=0.18, rely=0.8, anchor='center')
 
         #Botones
         self.boton_buscar = Button(
             self.frame_entradas,
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=50,
             height=35,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['consultaventas'],
@@ -222,10 +224,10 @@ class VentanaVentas:
         self.boton_carrito = Button(
             self.frame_entradas,
             text='Agregar al carrito',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=200,
             height=35,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['acarrito'],
@@ -237,10 +239,10 @@ class VentanaVentas:
         self.boton_eliminar_venta = Button(
             self.frame_entradas,
             text='Eliminar',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=200,
             height=35,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['eliminar'],
@@ -252,10 +254,10 @@ class VentanaVentas:
         self.boton_finalizar_venta = Button(
             self.frame_resumen_venta,
             text='Finalizar Venta',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=250,
             height=35,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['listo'],
@@ -270,8 +272,8 @@ class VentanaVentas:
         self.boton_consultaventas.config(
             text="Consultar\n Ventas",
             width=200,
-            font=('century gothic',14,'bold'),
-            background='#D3B9B4',
+            font=ConfigView.fnt['text14-b'],
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['consultaventas'],
@@ -284,9 +286,9 @@ class VentanaVentas:
         self.style = ttk.Style(self.frame_detalle_ventas)
         self.style.configure(
             "Treeview.Heading",
-            font=('century gothic',12,'bold')
+            font=ConfigView.fnt['text12-b']
         )
-        self.style.configure("Treeview", font=('century gothic',10))
+        self.style.configure("Treeview", font=ConfigView.fnt['text10'])
 
         self.tv_ventas = ttk.Treeview(
             self.frame_detalle_ventas,
@@ -366,7 +368,7 @@ class ConfirmacionVenta:
         #Frames
         self.frame_confirmacion = Frame(self.root)
         self.frame_confirmacion.config(
-            width=400, height=450, background='#EDE2E0'
+            width=400, height=450, background=ConfigView.clr['soft']
         )
         self.frame_confirmacion.place(relx=0, rely=0)
 
@@ -374,31 +376,31 @@ class ConfirmacionVenta:
         self.label_numero_venta = Label(self.frame_confirmacion)
         self.label_numero_venta.config(
             text=f'Venta #',
-            font=('century gothic',20,'bold'),
-            background='#EDE2E0'
+            font=ConfigView.fnt['titmodulo'],
+            background=ConfigView.clr['soft']
         )
         self.label_numero_venta.place(relx=0.5, rely=0.1, anchor='center')
 
         self.label_total_venta = Label(self.frame_confirmacion)
         self.label_total_venta.config(
             text=f'Total a pagar: $',
-            font=('century gothic',18,'bold'),
-            background='#EDE2E0'
+            font=ConfigView.fnt['text18-b'],
+            background=ConfigView.clr['soft']
         )
         self.label_total_venta.place(relx=0.5, rely=0.2, anchor='center')
 
         self.label_entrega = Label(self.frame_confirmacion)
         self.label_entrega.config(
             text='Entrega: $',
-            font=('century gothic',16,'bold'),
-            background='#EDE2E0'
+            font=ConfigView.fnt['text16-b'],
+            background=ConfigView.clr['soft']
         )
         self.label_entrega.place(relx=0.06, rely=0.75)
 
         #Entries
         self.entry_entrega = Entry(self.frame_confirmacion)
         self.entry_entrega.config(
-            width=18, font=('century gothic',16), bd=1, relief='solid'
+            width=18, font=ConfigView.fnt['text16'], bd=1, relief='solid'
         )
         self.entry_entrega.place(relx=0.35, rely=0.75)
 
@@ -409,8 +411,8 @@ class ConfirmacionVenta:
             padx=10,
             pady=10,
             width=100,
-            background='#EDE2E0',
-            font=('century gothic',14)
+            background=ConfigView.clr['soft'],
+            font=ConfigView.fnt['text14']
         )
         self.labelframe.place(relx=0.5, rely=0.43, anchor='center')
 
@@ -421,8 +423,8 @@ class ConfirmacionVenta:
         self.style = ttk.Style()
         self.style.configure(
             "Custom.TRadiobutton",
-            background='#EDE2E0',
-            font=('century gothic',12)
+            background=ConfigView.clr['soft'],
+            font=ConfigView.fnt['text12']
         )
         self.modo_pago_1 = ttk.Radiobutton(
             self.labelframe,
@@ -461,10 +463,10 @@ class ConfirmacionVenta:
         self.boton_confirmar = Button(self.frame_confirmacion)
         self.boton_confirmar.config(
             text='Confirmar',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=150,
             padx=10,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['ventas'],
@@ -475,10 +477,10 @@ class ConfirmacionVenta:
         self.boton_interes = Button(self.frame_confirmacion)
         self.boton_interes.config(
             text='Recargo',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=150,
             padx=10,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['tarjeta'],
@@ -529,24 +531,26 @@ class ConsultaVentas:
 
         #Frames
         self.frame_titulo = Frame(self.root)
-        self.frame_titulo.config(width=1000, height=40, background='#EDE2E0')
+        self.frame_titulo.config(
+            width=1000, height=40, background=ConfigView.clr['soft']
+        )
         self.frame_titulo.place(x=0,y=0)
 
         self.frame_busqueda = Frame(self.root)
         self.frame_busqueda.config(
-            width=1000, height=90, background='#EDE2E0'
+            width=1000, height=90, background=ConfigView.clr['soft']
         )
         self.frame_busqueda.place(x=0, y=40)
 
         self.frame_treeview = Frame(self.root)
         self.frame_treeview.config(
-            width=1000, height=430, background="#EDE2E0"
+            width=1000, height=430, background=ConfigView.clr['soft']
         )
         self.frame_treeview.place(x=0, y=130)
 
         self.frame_informacion = Frame(self.root)
         self.frame_informacion.config(
-            width=1000, height=30, background='#EDE2E0'
+            width=1000, height=30, background=ConfigView.clr['soft']
         )
         self.frame_informacion.place(x=0, y=560)
 
@@ -554,38 +558,40 @@ class ConsultaVentas:
         self.label_titulo = Label(self.frame_titulo)
         self.label_titulo.config(
             text='CONSULTA DE VENTAS',
-            font=('century gothic',18,'bold'),
-            background="#EDE2E0",
-            foreground='#C18484'
+            font=ConfigView.fnt['text18-b'],
+            background=ConfigView.clr['soft'],
+            foreground=ConfigView.clr['hard']
         )
         self.label_titulo.place(relx=0.5, rely=0.5, anchor='center')
 
         self.label_desde = Label(self.frame_busqueda)
         self.label_desde.config(
             text='Desde:',
-            font=('century gothic',14),
-            background="#EDE2E0"
+            font=ConfigView.fnt['text14'],
+            background=ConfigView.clr['soft']
         )
         self.label_desde.place(relx=0.05, rely=0.2, anchor='center')
 
         self.label_hasta = Label(self.frame_busqueda)
         self.label_hasta.config(
             text='Hasta:',
-            font=('century gothic',14),
-            background="#EDE2E0"
+            font=ConfigView.fnt['text14'],
+            background=ConfigView.clr['soft']
         )
         self.label_hasta.place(relx=0.05, rely=0.7, anchor='center')
 
         self.label_cliente = Label(self.frame_busqueda)
         self.label_cliente.config(
-            text='Cliente', font=('century gothic',14), background="#EDE2E0"
+            text='Cliente', 
+            font=ConfigView.fnt['text14'], 
+            background=ConfigView.clr['soft']
         )
         self.label_cliente.place(relx=0.35, rely=0.2, anchor='center')
 
         #Entries
         self.entry_desde = DateEntry(
             self.frame_busqueda,
-            font=('century gothic',12),
+            font=ConfigView.fnt['text12'],
             width=20,
             date_pattern="dd-mm-yyyy"
         )
@@ -593,23 +599,23 @@ class ConsultaVentas:
 
         self.entry_hasta = DateEntry(
             self.frame_busqueda,
-            font=('century gothic',12),
+            font=ConfigView.fnt['text12'],
             width=20,
             date_pattern="dd-mm-yyyy"
         )
         self.entry_hasta.place(relx=0.2, rely=0.72, anchor='center')
 
         self.entry_cliente = ttk.Combobox(self.frame_busqueda)
-        self.entry_cliente.config(font=('century gothic',14), width=18)
+        self.entry_cliente.config(font=ConfigView.fnt['text14'], width=18)
         self.entry_cliente.place(relx=0.5, rely=0.22, anchor='center')
 
         #Buttons
         self.boton_buscar = Button(self.frame_busqueda)
         self.boton_buscar.config(
             text='Buscar',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=140,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['consultaventas'],
@@ -621,9 +627,9 @@ class ConsultaVentas:
         self.boton_pendientes = Button(self.frame_busqueda)
         self.boton_pendientes.config(
             text='Pendientes',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=140,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['pagopendiente'],
@@ -635,9 +641,9 @@ class ConsultaVentas:
         self.boton_detalle = Button(self.frame_busqueda)
         self.boton_detalle.config(
             text='Detalle',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=140,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['detalle'],
@@ -649,9 +655,9 @@ class ConsultaVentas:
         self.boton_eliminar = Button(self.frame_busqueda)
         self.boton_eliminar.config(
             text='Eliminar',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=140,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['eliminar'],
@@ -670,9 +676,9 @@ class ConsultaVentas:
         self.style = ttk.Style(self.frame_treeview)
         self.style.configure(
             "Treeview.Heading",
-            font=('century gothic',11,'bold')
+            font=ConfigView.fnt['text12-b']
         )
-        self.style.configure("Treeview", font=('century gothic',10))
+        self.style.configure("Treeview", font=ConfigView.fnt['text10'])
 
         self.tv_consultaventas.column("#0", width=80,anchor='center')
         self.tv_consultaventas.column("col1", width=150,anchor='center')
@@ -757,19 +763,19 @@ class DetalleVentas:
         #Frames
         self.frame_infoventa = Frame(self.root)
         self.frame_infoventa.config(
-            width=900, height=50, background="#EDE2E0"
+            width=900, height=50, background=ConfigView.clr['soft']
         )
         self.frame_infoventa.place(x=0, y=0)
 
         self.frame_tvdetalle = Frame(self.root)
         self.frame_tvdetalle.config(
-            width=900, height=300, background="#EDE2E0"
+            width=900, height=300, background=ConfigView.clr['soft']
         )
         self.frame_tvdetalle.place(x=0, y=50)
 
         self.frame_imprimir = Frame(self.root)
         self.frame_imprimir.config(
-            width=900, height=50, background="#EDE2E0"
+            width=900, height=50, background=ConfigView.clr['soft']
         )
         self.frame_imprimir.place(x=0, y=350)
 
@@ -777,8 +783,8 @@ class DetalleVentas:
         self.label_nroventa = Label(self.frame_infoventa)
         self.label_nroventa.config(
             text='Venta # ',
-            font=('century gothic',16,'bold'),
-            background="#EDE2E0"
+            font=ConfigView.fnt['text16-b'],
+            background=ConfigView.clr['soft']
         )
         self.label_nroventa.place(relx=0.5, rely=0.5, anchor='center')
 
@@ -786,8 +792,8 @@ class DetalleVentas:
         self.boton_pdf = Button(self.frame_imprimir)
         self.boton_pdf.config(
             text='Imprimir',
-            font=('century gothic',12,'bold'),
-            background='#D3B9B4',
+            font=ConfigView.fnt['text12-b'],
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['pdf'],
@@ -805,7 +811,7 @@ class DetalleVentas:
         
         self.style = ttk.Style(self.frame_tvdetalle)
         self.style.configure(
-            "Treeview.Heading", font=('century gothic',10,'bold')
+            "Treeview.Heading", font=ConfigView.fnt['text12-b']
         )
 
         self.tv_detalleventas.column("#0", width=200,anchor='center')
@@ -858,7 +864,7 @@ class InterfazInteres:
         #Frames
         self.frame_interes = Frame(self.root)
         self.frame_interes.config(
-            width=400, height=300, background='#EDE2E0'
+            width=400, height=300, background=ConfigView.clr['soft']
         )
         self.frame_interes.place(x=0, y=0)
 
@@ -866,23 +872,23 @@ class InterfazInteres:
         self.label_titulo = Label(self.frame_interes)
         self.label_titulo.config(
             text='Ingreso de Intereses',
-            font=('century gothic',18,'bold'),
-            background='#EDE2E0'
+            font=ConfigView.fnt['text18-b'],
+            background=ConfigView.clr['soft']
         )
         self.label_titulo.place(relx=0.5, rely=0.1, anchor='center')
 
         self.label_interes = Label(self.frame_interes)
         self.label_interes.config(
             text='Monto interés',
-            font=('century gothic',14),
-            background='#EDE2E0'
+            font=ConfigView.fnt['text14'],
+            background=ConfigView.clr['soft']
         )
         self.label_interes.place(relx=0.3, rely=0.3, anchor='center')
 
         #Entries
         self.entry_interes = Entry(self.frame_interes)
         self.entry_interes.config(
-            font=('century gothic',14),
+            font=ConfigView.fnt['text14'],
             width=10,
             bd=1,
             relief='solid'
@@ -890,13 +896,12 @@ class InterfazInteres:
         self.entry_interes.place(relx=0.7, rely=0.3, anchor='center')
 
         #Buttons
-        ruta = self.rutas('../imagenes','mas.png')
         self.boton_interes = Button(self.frame_interes)
         self.boton_interes.config(
             text='Ingresar',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=140,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['mas'],

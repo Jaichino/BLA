@@ -48,7 +48,7 @@ class InterfazReportes:
         # Frames
         self.frame_reportes = Frame(self.root)
         self.frame_reportes.config(
-            width=350, height=350, background='#EDE2E0'
+            width=350, height=350, background=ConfigView.clr['soft']
         )
         self.frame_reportes.place(relx=0, rely=0)
 
@@ -56,10 +56,10 @@ class InterfazReportes:
         self.boton_gananciastotales = Button(self.frame_reportes)
         self.boton_gananciastotales.config(
             text='Ganancias Totales',
-            font=('century gothic',12,'bold'),
+            font=ConfigView.fnt['text12-b'],
             width=260,
             padx=10,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['ventas'],
@@ -72,10 +72,10 @@ class InterfazReportes:
         self.boton_montocc = Button(self.frame_reportes)
         self.boton_montocc.config(
             text='Monto Adeudado',
-            font=('century gothic',12,'bold'),
+            font=ConfigView.fnt['text12-b'],
             width=260,
             padx=10,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['deuda'],
@@ -86,10 +86,10 @@ class InterfazReportes:
         self.boton_monto_inventario = Button(self.frame_reportes)
         self.boton_monto_inventario.config(
             text='Monto en Inventario',
-            font=('century gothic',12,'bold'),
+            font=ConfigView.fnt['text12-b'],
             width=260,
             padx=10,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['dineroinventario'],
@@ -100,10 +100,10 @@ class InterfazReportes:
         self.boton_masvendidos = Button(self.frame_reportes)
         self.boton_masvendidos.config(
             text='Productos más vendidos',
-            font=('century gothic',12,'bold'),
+            font=ConfigView.fnt['text12-b'],
             width=260,
             padx=10,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['estadistica'],
@@ -114,10 +114,10 @@ class InterfazReportes:
         self.boton_var_ganancias = Button(self.frame_reportes)
         self.boton_var_ganancias.config(
             text='Ganancias Mensuales',
-            font=('century gothic',12,'bold'),
+            font=ConfigView.fnt['text12-b'],
             width=260,
             padx=10,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['reportes'],
@@ -143,50 +143,52 @@ class GananciasTotales:
         # Frames
         self.frame_reportes = Frame(self.root)
         self.frame_reportes.config(
-            width=350, height=220, background='#EDE2E0'
+            width=350, height=220, background=ConfigView.clr['soft']
         )
         self.frame_reportes.place(relx=0, rely=0)
 
         self.frame_divisor = Frame(self.root)
-        self.frame_divisor.config(width=350, height=2, background='#C18484')
+        self.frame_divisor.config(
+            width=350, height=2, background=ConfigView.clr['hard']
+        )
         self.frame_divisor.place(x=0, y=120)
 
         # Labels
         self.label_año = Label(
             self.frame_reportes,
             text='Año',
-            font=('century gothic',12),
-            background='#EDE2E0'
+            font=ConfigView.fnt['text12'],
+            background=ConfigView.clr['soft']
         )
         self.label_año.place(x=10, y=20)
 
         self.label_mes = Label(
             self.frame_reportes,
             text='Mes',
-            font=('century gothic',12),
-            background='#EDE2E0'
+            font=ConfigView.fnt['text12'],
+            background=ConfigView.clr['soft']
         )
         self.label_mes.place(x=180, y=20)
 
         self.label_monto = Label(
             self.frame_reportes,
             text='$',
-            font=('century gothic',18,'bold'),
-            background='#EDE2E0'
+            font=ConfigView.fnt['text18-b'],
+            background=ConfigView.clr['soft']
         )
         self.label_monto.place(relx=0.5, rely=0.75, anchor='center')
 
         # ComboBox
         self.entry_año = ttk.Combobox(
             self.frame_reportes,
-            font=('century gothic',12),
+            font=ConfigView.fnt['text12'],
             width=6
         )
         self.entry_año.place(x=60, y=20)
 
         self.entry_mes = ttk.Combobox(
             self.frame_reportes,
-            font=('century gothic',12),
+            font=ConfigView.fnt['text12'],
             width=6
         )
         self.entry_mes.place(x=230, y=20)
@@ -195,10 +197,10 @@ class GananciasTotales:
         self.boton_calcular = Button(self.frame_reportes)
         self.boton_calcular.config(
             text='Calcular',
-            font=('century gothic',12,'bold'),
+            font=ConfigView.fnt['text12-b'],
             width=10,
             padx=10,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove'
         )
@@ -221,15 +223,15 @@ class DeudasTotales:
         # Frames
         self.frame_reportes = Frame(self.root)
         self.frame_reportes.config(
-            width=350, height=100, background='#EDE2E0'
+            width=350, height=100, background=ConfigView.clr['soft']
         )
         self.frame_reportes.place(relx=0, rely=0)
 
         self.label_monto = Label(
             self.frame_reportes,
             text='$',
-            font=('century gothic',18,'bold'),
-            background='#EDE2E0'
+            font=ConfigView.fnt['text18-b'],
+            background=ConfigView.clr['soft']
         )
         self.label_monto.place(relx=0.5, rely=0.5, anchor='center')
 
@@ -250,7 +252,7 @@ class MontoInventario:
         # Frames
         self.frame_reportes = Frame(self.root)
         self.frame_reportes.config(
-            width=350, height=100, background='#EDE2E0'
+            width=350, height=100, background=ConfigView.clr['soft']
         )
         self.frame_reportes.place(relx=0, rely=0)
 
@@ -258,8 +260,8 @@ class MontoInventario:
         self.label_valorinventario = Label(
             self.frame_reportes,
             text='$',
-            font=('century gothic',18,'bold'),
-            background='#EDE2E0'
+            font=ConfigView.fnt['text18-b'],
+            background=ConfigView.clr['soft']
         )
         self.label_valorinventario.place(
             relx=0.5, rely=0.5, anchor='center'
@@ -283,7 +285,7 @@ class GananciasMensuales:
         # Frames
         self.frame_reportes = Frame(self.root)
         self.frame_reportes.config(
-            width=350, height=100, background='#EDE2E0'
+            width=350, height=100, background=ConfigView.clr['soft']
         )
         self.frame_reportes.place(relx=0, rely=0)
 
@@ -291,15 +293,15 @@ class GananciasMensuales:
         self.label_año = Label(
             self.frame_reportes,
             text='Año',
-            font=('century gothic',12),
-            background='#EDE2E0'
+            font=ConfigView.fnt['text12'],
+            background=ConfigView.clr['soft']
         )
         self.label_año.place(relx=0.32, rely=0.25, anchor='center')
 
         # ComboBox
         self.entry_año = ttk.Combobox(
             self.frame_reportes,
-            font=('century gothic',12),
+            font=ConfigView.fnt['text12'],
             width=10
         )
         self.entry_año.place(relx=0.6, rely=0.24, anchor='center')
@@ -308,10 +310,10 @@ class GananciasMensuales:
         self.boton_calcular = Button(self.frame_reportes)
         self.boton_calcular.config(
             text='Mostrar',
-            font=('century gothic',12,'bold'),
+            font=ConfigView.fnt['text12-b'],
             width=10,
             padx=10,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove'
         )

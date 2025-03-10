@@ -59,34 +59,36 @@ class MenuPrincipal:
 
         self.frame_informacion = Frame(self.root)
         self.frame_informacion.config(
-            width=800, height=30, background='#D3B9B4'
+            width=800, height=30, background=ConfigView.clr['medium']
         )
         self.frame_informacion.place(x=0, y=480)
 
         #Imagen
-        self.label_imagen = Label(self.frame_encabezado, image=self.img['logo'])
+        self.label_imagen = Label(
+            self.frame_encabezado, image=self.img['logo']
+        )
         self.label_imagen.place(relx=0.1, rely=0.58, anchor='center')
 
         #Labels
         self.label_encabezado = Label(
             self.frame_encabezado,
             text='Sistema de Gestión - BLA Estética',
-            font=('century gothic',28,'bold'),
-            foreground='#C18484'
+            font=ConfigView.fnt['titulo'],
+            foreground=ConfigView.clr['hard']
         )
         self.label_encabezado.place(relx=0.58, rely=0.58, anchor='center')
 
         self.label_usuario = Label(
             self.frame_informacion,
-            font=('century gothic',12),
-            background='#D3B9B4'
+            font=ConfigView.fnt['text12'],
+            background=ConfigView.clr['medium']
         )
         self.label_usuario.place(relx=0.1, rely=0.5, anchor='center')
 
         self.label_hora = Label(
             self.frame_informacion,
-            font=('century gothic',12),
-            background='#D3B9B4'
+            font=ConfigView.fnt['text12'],
+            background=ConfigView.clr['medium']
         )
         self.label_hora.place(relx=0.75, rely=0.5, anchor='center')
 
@@ -96,8 +98,8 @@ class MenuPrincipal:
             text="Ventas",
             width=300,
             height=120,
-            font=('century gothic',18,'bold'),
-            background='#D3B9B4',
+            font=ConfigView.fnt['text18-b'],
+            background=ConfigView.clr['medium'],
             image=self.img['ventas'],
             compound='top',
             pady=10
@@ -109,8 +111,8 @@ class MenuPrincipal:
             text="Cuentas\n Corrientes",
             width=300,
             height=120,
-            font=('century gothic',18,'bold'),
-            background='#D3B9B4',
+            font=ConfigView.fnt['text18-b'],
+            background=ConfigView.clr['medium'],
             image=self.img['cuentacorriente'],
             compound='top',
             pady=10
@@ -122,8 +124,8 @@ class MenuPrincipal:
             text="Productos",
             width=300,
             height=120,
-            font=('century gothic',18,'bold'),
-            background='#D3B9B4',
+            font=ConfigView.fnt['text18-b'],
+            background=ConfigView.clr['medium'],
             image=self.img['inventario'],
             compound='top',
             pady=10
@@ -135,8 +137,8 @@ class MenuPrincipal:
             text="Reportes",
             width=300,
             height=120,
-            font=('century gothic',18,'bold'),
-            background='#D3B9B4',
+            font=ConfigView.fnt['text18-b'],
+            background=ConfigView.clr['medium'],
             image=self.img['reportes'],
             compound='top',
             pady=10

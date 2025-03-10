@@ -48,30 +48,38 @@ class CuentaCorriente:
 
         #Frames
         self.frame_titulo = Frame(self.root)
-        self.frame_titulo.config(width=1000,height=50,background='#EDE2E0')
+        self.frame_titulo.config(
+            width=1000, height=50, background=ConfigView.clr['soft']
+        )
         self.frame_titulo.place(x=0,y=0)
 
         self.frame_separador = Frame(self.root)
-        self.frame_separador.config(width=1000,height=2,background='#C18484')
+        self.frame_separador.config(
+            width=1000, height=2, background=ConfigView.clr['hard']
+        )
         self.frame_separador.place(x=0,y=40)
 
         self.frame_busqueda = Frame(self.root)
-        self.frame_busqueda.config(width=1000,height=80,background='#EDE2E0')
+        self.frame_busqueda.config(
+            width=1000, height=80, background=ConfigView.clr['soft']
+        )
         self.frame_busqueda.place(x=0,y=50)
 
         self.frame_treeview = Frame(self.root)
-        self.frame_treeview.config(width=1000,height=360,background='#EDE2E0')
+        self.frame_treeview.config(
+            width=1000, height=360, background=ConfigView.clr['soft']
+        )
         self.frame_treeview.place(x=0,y=130)
 
         self.frame_resumencc = Frame(self.root)
         self.frame_resumencc.config(
-            width=1000, height=105, background='#EDE2E0'
+            width=1000, height=105, background=ConfigView.clr['soft']
         )
         self.frame_resumencc.place(x=0,y=455)
 
         self.frame_informacion = Frame(self.root)
         self.frame_informacion.config(
-            width=1000, height=30, background='#D3B9B4'
+            width=1000, height=30, background=ConfigView.clr['medium']
         )
         self.frame_informacion.place(x=0,y=560)
 
@@ -79,45 +87,47 @@ class CuentaCorriente:
         self.label_titulo = Label(self.frame_titulo)
         self.label_titulo.config(
             text='CUENTAS CORRIENTES',
-            font=('century gothic',20,'bold'),
-            background="#EDE2E0",
-            foreground='#C18484'
+            font=ConfigView.fnt['titmodulo'],
+            background=ConfigView.clr['soft'],
+            foreground=ConfigView.clr['hard']
         )
         self.label_titulo.place(relx=0.5,rely=0.42,anchor='center')
 
         self.label_cliente = Label(self.frame_busqueda)
         self.label_cliente.config(
-            text='Cliente', font=('century gothic',14), background="#EDE2E0"
+            text='Cliente', 
+            font=ConfigView.fnt['text14'], 
+            background=ConfigView.clr['soft']
         )
         self.label_cliente.place(relx=0.05,rely=0.5,anchor='center')
 
         self.label_deudatotal = Label(self.frame_resumencc)
         self.label_deudatotal.config(
             text=f'Deuda Total: $ ',
-            font=('century gothic',16,'bold'),
-            background="#EDE2E0"
+            font=ConfigView.fnt['text16-b'],
+            background=ConfigView.clr['soft']
         )
         self.label_deudatotal.place(relx=0.5,rely=0.25,anchor='center')
 
         self.label_usuario = Label(
             self.frame_informacion,
-            font=('century gothic',12),
-            background='#D3B9B4'
+            font=ConfigView.fnt['text12'],
+            background=ConfigView.clr['medium']
         )
         self.label_usuario.place(relx=0.1,rely=0.5,anchor='center')
 
         #Entries
         self.entry_cliente = ttk.Combobox(self.frame_busqueda)
-        self.entry_cliente.config(font=('century gothic',12),width=20)
+        self.entry_cliente.config(font=ConfigView.fnt['text12'],width=20)
         self.entry_cliente.place(relx=0.2,rely=0.5,anchor='center')
 
         #Buttons
         self.boton_buscar = Button(self.frame_busqueda)
         self.boton_buscar.config(
             text='Buscar',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=120,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             padx=10,
             relief='groove',
@@ -129,9 +139,9 @@ class CuentaCorriente:
         self.boton_agregarpago = Button(self.frame_resumencc)
         self.boton_agregarpago.config(
             text='Agregar pago',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=200,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             padx=10,
             relief='groove',
@@ -143,9 +153,9 @@ class CuentaCorriente:
         self.boton_actualizarpago = Button(self.frame_resumencc)
         self.boton_actualizarpago.config(
             text='Actualizar Deuda',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=200,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             padx=10,
             relief='groove',
@@ -157,9 +167,9 @@ class CuentaCorriente:
         self.boton_borraroperacion = Button(self.frame_resumencc)
         self.boton_borraroperacion.config(
             text='Borrar Operación',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=200,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             padx=10,
             relief='groove',
@@ -177,14 +187,14 @@ class CuentaCorriente:
 
         self.style = ttk.Style(self.frame_treeview)
         self.style.configure(
-            "Treeview.Heading", font=('century gothic',12,'bold')
+            "Treeview.Heading", font=ConfigView.fnt['text12-b']
         )
-        self.style.configure("Treeview",font=('century gothic',10))
+        self.style.configure("Treeview",font=ConfigView.fnt['text10'])
         
         self.tv_cc.heading('#0',text='N° Operación',anchor='center')
         self.tv_cc.heading('col1',text='Fecha',anchor='center')
         self.tv_cc.heading('col2',text='Tipo',anchor='center')
-        self.tv_cc.heading('col3',text='Monto Operación',anchor='center') 
+        self.tv_cc.heading('col3',text='Monto Operación',anchor='center')
         self.tv_cc.heading('col4',text='Monto Pendiente',anchor='center')
 
         self.tv_cc.column('#0',width=140,anchor='center')
@@ -218,7 +228,7 @@ class CuentaCorriente:
 class SaldarCuentaCorriente:
     
     ''' Esta clase crea la ventana de confirmación de pago de una cuenta 
-        corriente, donde se ingresará el monto abonado de acuerdo a la venta 
+        corriente, donde se ingresará el monto abonado de acuerdo a la venta
         seleccionada en el Treeview de cuentas corrientes.
     '''
     
@@ -243,20 +253,24 @@ class SaldarCuentaCorriente:
 
         #Frames
         self.frame_saldocc = Frame(self.root)
-        self.frame_saldocc.config(width=400,height=100,background='#EDE2E0')
+        self.frame_saldocc.config(
+            width=400, height=100, background=ConfigView.clr['soft']
+        )
         self.frame_saldocc.place(x=0,y=0)
 
         #Labels
         self.label_nuevopago = Label(self.frame_saldocc)
         self.label_nuevopago.config(
-            text=f'Abona $', font=('century gothic',14), background='#EDE2E0'
+            text=f'Abona $',
+            font=ConfigView.fnt['text14'], 
+            background=ConfigView.clr['soft']
         )
         self.label_nuevopago.place(relx=0.25,rely=0.28,anchor='center')
 
         #Entries
         self.entry_nuevopago = Entry(self.frame_saldocc)
         self.entry_nuevopago.config(
-            font=('century gothic',14), width=15, bd=1, relief='solid'
+            font=ConfigView.fnt['text14'], width=15, bd=1, relief='solid'
         )
         self.entry_nuevopago.place(relx=0.6,rely=0.28,anchor='center')
 
@@ -264,9 +278,9 @@ class SaldarCuentaCorriente:
         self.boton_nuevopago = Button(self.frame_saldocc)
         self.boton_nuevopago.config(
             text='Agregar',
-            font=('century gothic',12,'bold'),
+            font=ConfigView.fnt['text12-b'],
             width=140,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             padx=10,
             relief='groove',
@@ -284,6 +298,7 @@ class ActualizarCuentaCorriente:
     '''
     
     def __init__(self,root):
+
         self.root = root
         self.root.title('Actualizar cuenta corriente')
         self.root.geometry('400x100+483+324')
@@ -305,21 +320,23 @@ class ActualizarCuentaCorriente:
         #Frames
         self.frame_actualizacioncc = Frame(self.root)
         self.frame_actualizacioncc.config(
-            width=400, height=100, background='#EDE2E0'
+            width=400, height=100, background=ConfigView.clr['soft']
         )
         self.frame_actualizacioncc.place(x=0,y=0)
         
         #Labels
         self.label_actualizacion = Label(self.frame_actualizacioncc)
         self.label_actualizacion.config(
-            text=f'Monto $', font=('century gothic',14), background='#EDE2E0'
+            text=f'Monto $', 
+            font=ConfigView.fnt['text14'], 
+            background=ConfigView.clr['soft']
         )
         self.label_actualizacion.place(relx=0.25,rely=0.28,anchor='center')
 
         #Entries
         self.entry_actualizacion = Entry(self.frame_actualizacioncc)
         self.entry_actualizacion.config(
-            font=('century gothic',14), width=15, bd=1, relief='solid'
+            font=ConfigView.fnt['text14'], width=15, bd=1, relief='solid'
         )
         self.entry_actualizacion.place(relx=0.6,rely=0.28,anchor='center')
 
@@ -327,9 +344,9 @@ class ActualizarCuentaCorriente:
         self.boton_actualizacion = Button(self.frame_actualizacioncc)
         self.boton_actualizacion.config(
             text='Agregar',
-            font=('century gothic',12,'bold'),
+            font=ConfigView.fnt['text12-b'],
             width=140,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             padx=10,
             relief='groove',

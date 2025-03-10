@@ -15,6 +15,7 @@ from vista.view_config import ConfigView
 class InterfazInventario:
 
     def __init__(self,root):
+
         self.root = root
         self.root.title('BLA Estética - Inventario')
         self.root.geometry('1100x590+133+79')
@@ -57,37 +58,37 @@ class InterfazInventario:
         #Frames
         self.frame_titulo = Frame(self.root)
         self.frame_titulo.config(
-            width=1100, height=50, background='#EDE2E0'
+            width=1100, height=50, background=ConfigView.clr['soft']
         )
         self.frame_titulo.place(x=0,y=0)
 
         self.frame_separador = Frame(self.root)
         self.frame_separador.config(
-            width=1100, height=2, background='#C18484'
+            width=1100, height=2, background=ConfigView.clr['hard']
         )
         self.frame_separador.place(x=0,y=40)
 
         self.frame_busqueda = Frame(self.root)
         self.frame_busqueda.config(
-            width=1100, height=80, background='#EDE2E0'
+            width=1100, height=80, background=ConfigView.clr['soft']
         )
         self.frame_busqueda.place(x=0,y=50)
 
         self.frame_treeview = Frame(self.root)
         self.frame_treeview.config(
-            width=1100, height=350, background='#EDE2E0'
+            width=1100, height=350, background=ConfigView.clr['soft']
         )
         self.frame_treeview.place(x=0,y=130)
 
         self.frame_botones = Frame(self.root)
         self.frame_botones.config(
-            width=1100, height=80, background='#EDE2E0'
+            width=1100, height=80, background=ConfigView.clr['soft']
         )
         self.frame_botones.place(x=0,y=480)
         
         self.frame_informacion = Frame(self.root)
         self.frame_informacion.config(
-            width=1100, height=30, background='#D3B9B4'
+            width=1100, height=30, background=ConfigView.clr['medium']
         )
         self.frame_informacion.place(x=0,y=560)
 
@@ -95,45 +96,45 @@ class InterfazInventario:
         self.label_titulo = Label(self.frame_titulo)
         self.label_titulo.config(
             text='PRODUCTOS',
-            font=('century gothic',20,'bold'),
-            background='#EDE2E0',
-            foreground='#C18484'
+            font=ConfigView.fnt['titmodulo'],
+            background=ConfigView.clr['soft'],
+            foreground=ConfigView.clr['hard']
         )
         self.label_titulo.place(relx=0.5, rely=0.42, anchor='center')
 
         self.label_codigo = Label(self.frame_busqueda)
         self.label_codigo.config(
             text='Código',
-            font=('century gothic',14,'bold'),
-            background="#EDE2E0"
+            font=ConfigView.fnt['text14-b'],
+            background=ConfigView.clr['soft']
         )
         self.label_codigo.place(relx=0.08, rely=0.15, anchor='center')
 
         self.label_descripcion = Label(self.frame_busqueda)
         self.label_descripcion.config(
             text='Descripción',
-            font=('century gothic',14,'bold'),
-            background="#EDE2E0"
+            font=ConfigView.fnt['text14-b'],
+            background=ConfigView.clr['soft']
         )
         self.label_descripcion.place(relx=0.08, rely=0.65, anchor='center')
 
         self.label_usuario = Label(
             self.frame_informacion,
-            font=('century gothic',12),
-            background='#D3B9B4'
+            font=ConfigView.fnt['text12'],
+            background=ConfigView.clr['medium']
         )
         self.label_usuario.place(relx=0.1, rely=0.5, anchor='center')
 
         #Entries
         self.entry_codigo = Entry(self.frame_busqueda)
         self.entry_codigo.config(
-            font=('century gothic',16), width=15, bd=1, relief='solid'
+            font=ConfigView.fnt['text16'], width=15, bd=1, relief='solid'
         )
         self.entry_codigo.place(relx=0.25, rely=0.2, anchor='center')
 
         self.entry_descripcion = Entry(self.frame_busqueda)
         self.entry_descripcion.config(
-            font=('century gothic',16), width=15, bd=1, relief='solid'
+            font=ConfigView.fnt['text16'], width=15, bd=1, relief='solid'
         )
         self.entry_descripcion.place(relx=0.25, rely=0.7, anchor='center')
 
@@ -141,9 +142,9 @@ class InterfazInventario:
         self.boton_filtar = Button(self.frame_busqueda)
         self.boton_filtar.config(
             text='Filtrar',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=150,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['filtrar'],
@@ -155,9 +156,9 @@ class InterfazInventario:
         self.boton_cerostock = Button(self.frame_busqueda)
         self.boton_cerostock.config(
             text='Sin Stock',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=150,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['sinstock'],
@@ -169,9 +170,9 @@ class InterfazInventario:
         self.boton_nuevo = Button(self.frame_botones)
         self.boton_nuevo.config(
             text='Nuevo',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=120,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['mas'],
@@ -183,9 +184,9 @@ class InterfazInventario:
         self.boton_modificar = Button(self.frame_botones)
         self.boton_modificar.config(
             text='Modificar',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=120,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['modificar'],
@@ -197,9 +198,9 @@ class InterfazInventario:
         self.boton_eliminar = Button(self.frame_botones)
         self.boton_eliminar.config(
             text='Eliminar',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=120,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['eliminar'],
@@ -211,9 +212,9 @@ class InterfazInventario:
         self.boton_ingresar = Button(self.frame_botones)
         self.boton_ingresar.config(
             text='Ingresar',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=120,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['istock'],
@@ -226,8 +227,8 @@ class InterfazInventario:
         self.boton_vencimientos.config(
             text="Consultar\nVencimientos",
             width=180,
-            font=('century gothic',14,'bold'),
-            background='#D3B9B4',
+            font=ConfigView.fnt['text14-b'],
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['vencimientos'],
@@ -239,8 +240,8 @@ class InterfazInventario:
         self.boton_excel = Button(self.frame_botones)
         self.boton_excel.config(
             borderwidth=0,
-            background='#EDE2E0',
-            activebackground='#EDE2E0',
+            background=ConfigView.clr['soft'],
+            activebackground=ConfigView.clr['soft'],
             width=50,
             height=50,
             image=self.img['excel']
@@ -256,9 +257,9 @@ class InterfazInventario:
         
         self.style = ttk.Style(self.frame_treeview)
         self.style.configure(
-            "Treeview.Heading", font=('century gothic',12,'bold')
+            "Treeview.Heading", font=ConfigView.fnt['text12-b']
         )
-        self.style.configure("Treeview", font=('century gothic',10))
+        self.style.configure("Treeview", font=ConfigView.fnt['text10'])
 
         self.tv_inventario.column("#0", width=130,anchor='center')
         self.tv_inventario.column("col1", width=570,anchor='center')
@@ -338,73 +339,79 @@ class NuevoProducto:
         #Frames
         self.frame_ventanainformacion = Frame(self.root)
         self.frame_ventanainformacion.config(
-            width=500, height=400, background='#EDE2E0'
+            width=500, height=400, background=ConfigView.clr['soft']
         )
         self.frame_ventanainformacion.place(relx=0, rely=0)
 
         #Labels
         self.label_codigo = Label(self.frame_ventanainformacion)
         self.label_codigo.config(
-            text='Código', font=('century gothic',14), background='#EDE2E0'
+            text='Código', 
+            font=ConfigView.fnt['text14'], 
+            background=ConfigView.clr['soft']
         )
         self.label_codigo.place(relx=0.05, rely=0.1)
 
         self.label_descripcion = Label(self.frame_ventanainformacion)
         self.label_descripcion.config(
             text='Descripción',
-            font=('century gothic',14),
-            background='#EDE2E0'
+            font=ConfigView.fnt['text14'],
+            background=ConfigView.clr['soft']
         )
         self.label_descripcion.place(relx=0.05, rely=0.25)
 
         self.label_precio = Label(self.frame_ventanainformacion)
         self.label_precio.config(
-            text='Precio', font=('century gothic',14), background='#EDE2E0'
+            text='Precio', 
+            font=ConfigView.fnt['text14'], 
+            background=ConfigView.clr['soft']
         )
         self.label_precio.place(relx=0.05, rely=0.4)
 
         self.label_stock = Label(self.frame_ventanainformacion)
         self.label_stock.config(
-            text='Stock', font=('century gothic',14), background='#EDE2E0'
+            text='Stock', 
+            font=ConfigView.fnt['text14'], 
+            background=ConfigView.clr['soft']
         )
         self.label_stock.place(relx=0.05,rely=0.55)
 
         self.label_vencimiento = Label(self.frame_ventanainformacion)
         self.label_vencimiento.config(
             text='Vencimiento',
-            font=('century gothic',14),
-            background='#EDE2E0'
+            font=ConfigView.fnt['text14'],
+            background=ConfigView.clr['soft']
         )
         self.label_vencimiento.place(relx=0.05, rely=0.7)
 
         #Entries
         self.entry_codigo = Entry(self.frame_ventanainformacion)
         self.entry_codigo.config(
-            width=28, font=('century gothic',14), bd=1, relief='solid'
+            width=28, font=ConfigView.fnt['text14'], bd=1, relief='solid'
         )
         self.entry_codigo.place(relx=0.3, rely=0.1)
 
         self.entry_descripcion = Entry(self.frame_ventanainformacion)
         self.entry_descripcion.config(
-            width=28, font=('century gothic',14), bd=1, relief='solid'
+            width=28, font=ConfigView.fnt['text14'], bd=1, relief='solid'
         )
         self.entry_descripcion.place(relx=0.3,rely=0.25)
 
         self.entry_precio = Entry(self.frame_ventanainformacion)
         self.entry_precio.config(
-            width=28, font=('century gothic',14), bd=1, relief='solid'
+            width=28, font=ConfigView.fnt['text14'], bd=1, relief='solid'
         )
         self.entry_precio.place(relx=0.3, rely=0.4)
 
         self.entry_stock = Entry(self.frame_ventanainformacion)
         self.entry_stock.config(
-            width=28, font=('century gothic',14), bd=1, relief='solid'
+            width=28, font=ConfigView.fnt['text14'], bd=1, relief='solid'
         )
         self.entry_stock.place(relx=0.3, rely=0.55)
 
         self.entry_vencimiento = DateEntry(
             self.frame_ventanainformacion,
-            font=('century gothic',14),
+            font=ConfigView.fnt['text14'],
             width=26,
             date_pattern="dd-mm-yyyy"
         )
@@ -414,9 +421,9 @@ class NuevoProducto:
         self.boton_guardar = Button(self.frame_ventanainformacion)
         self.boton_guardar.config(
             text='Guardar',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=140,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['guardar'],
@@ -462,7 +469,7 @@ class ModificarProducto:
         #Frames
         self.frame_ventanainformacion = Frame(self.root)
         self.frame_ventanainformacion.config(
-            width=500, height=300, background='#EDE2E0'
+            width=500, height=300, background=ConfigView.clr['soft']
         )
         self.frame_ventanainformacion.place(relx=0, rely=0)
 
@@ -470,39 +477,49 @@ class ModificarProducto:
         self.label_descripcion = Label(self.frame_ventanainformacion)
         self.label_descripcion.config(
             text='Descripción', 
-            font=('century gothic',14), 
-            background='#EDE2E0'
+            font=ConfigView.fnt['text14'], 
+            background=ConfigView.clr['soft']
         )
         self.label_descripcion.place(relx=0.05, rely=0.1)
 
         self.label_precio = Label(self.frame_ventanainformacion)
         self.label_precio.config(
-            text='Precio', font=('century gothic',14), background='#EDE2E0'
+            text='Precio', 
+            font=ConfigView.fnt['text14'], 
+            background=ConfigView.clr['soft']
         )
         self.label_precio.place(relx=0.05, rely=0.3)
 
         self.label_stock = Label(self.frame_ventanainformacion)
         self.label_stock.config(
-            text='Stock', font=('century gothic',14), background='#EDE2E0'
+            text='Stock', 
+            font=ConfigView.fnt['text14'], 
+            background=ConfigView.clr['soft']
         )
         self.label_stock.place(relx=0.05, rely=0.5)
 
         #Entries
         self.entry_descripcion = Entry(self.frame_ventanainformacion)
         self.entry_descripcion.config(
-            width=28, font=('century gothic',14), bd=1, relief='solid'
+            width=28, 
+            font=ConfigView.fnt['text14'], 
+            bd=1, 
+            relief='solid'
         )
         self.entry_descripcion.place(relx=0.3, rely=0.12)
 
         self.entry_precio = Entry(self.frame_ventanainformacion)
         self.entry_precio.config(
-            width=28, font=('century gothic',14), bd=1, relief='solid'
+            width=28, 
+            font=ConfigView.fnt['text14'], 
+            bd=1, 
+            relief='solid'
         )
         self.entry_precio.place(relx=0.3, rely=0.32)
 
         self.entry_stock = Entry(self.frame_ventanainformacion)
         self.entry_stock.config(
-            width=28, font=('century gothic',14), bd=1, relief='solid'
+            width=28, font=ConfigView.fnt['text14'], bd=1, relief='solid'
         )
         self.entry_stock.place(relx=0.3, rely=0.52)
 
@@ -510,9 +527,9 @@ class ModificarProducto:
         self.boton_guardar = Button(self.frame_ventanainformacion)
         self.boton_guardar.config(
             text='Guardar',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=140,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['guardar'],
@@ -558,7 +575,7 @@ class IngresoStock:
         #Frames
         self.frame_ingresostock = Frame(self.root)
         self.frame_ingresostock.config(
-            width=400, height=300, background='#EDE2E0'
+            width=400, height=300, background=ConfigView.clr['soft']
         )
         self.frame_ingresostock.place(x=0, y=0)
 
@@ -566,23 +583,23 @@ class IngresoStock:
         self.label_titulo = Label(self.frame_ingresostock)
         self.label_titulo.config(
             text='Ingreso de stock',
-            font=('century gothic',18,'bold'),
-            background='#EDE2E0'
+            font=ConfigView.fnt['text18-b'],
+            background=ConfigView.clr['soft']
         )
         self.label_titulo.place(relx=0.5, rely=0.1, anchor='center')
 
         self.label_ingresostock = Label(self.frame_ingresostock)
         self.label_ingresostock.config(
             text='Cantidad a ingresar',
-            font=('century gothic',14),
-            background='#EDE2E0'
+            font=ConfigView.fnt['text14'],
+            background=ConfigView.clr['soft']
         )
         self.label_ingresostock.place(relx=0.3, rely=0.3, anchor='center')
 
         #Entries
         self.entry_ingresostock = Entry(self.frame_ingresostock)
         self.entry_ingresostock.config(
-            font=('century gothic',14), width=10, bd=1, relief='solid'
+            font=ConfigView.fnt['text14'], width=10, bd=1, relief='solid'
         )
         self.entry_ingresostock.place(relx=0.7, rely=0.3, anchor='center')
 
@@ -590,9 +607,9 @@ class IngresoStock:
         self.boton_ingresostock = Button(self.frame_ingresostock)
         self.boton_ingresostock.config(
             text='Ingresar',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=140,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['istock'],
@@ -638,31 +655,31 @@ class Vencimientos:
         #Frames
         self.frame_titulo = Frame(self.root)
         self.frame_titulo.config(
-            width=1100, height=50, background='#EDE2E0'
+            width=1100, height=50, background=ConfigView.clr['soft']
         )
         self.frame_titulo.place(x=0, y=0)
 
         self.frame_separador = Frame(self.root)
         self.frame_separador.config(
-            width=1100, height=2, background='#C18484'
+            width=1100, height=2, background=ConfigView.clr['hard']
         )
         self.frame_separador.place(x=0, y=40)
 
         self.frame_busqueda = Frame(self.root)
         self.frame_busqueda.config(
-            width=1100, height=80, background='#EDE2E0'
+            width=1100, height=80, background=ConfigView.clr['soft']
         )
         self.frame_busqueda.place(x=0, y=50)
 
         self.frame_treeview = Frame(self.root)
         self.frame_treeview.config(
-            width=1100, height=430, background='#EDE2E0'
+            width=1100, height=430, background=ConfigView.clr['soft']
         )
         self.frame_treeview.place(x=0, y=130)
 
         self.frame_informacion = Frame(self.root)
         self.frame_informacion.config(
-            width=1100, height=30, background='#EDE2E0'
+            width=1100, height=30, background=ConfigView.clr['soft']
         )
         self.frame_informacion.place(x=0, y=560)
 
@@ -670,33 +687,33 @@ class Vencimientos:
         self.label_titulo = Label(self.frame_titulo)
         self.label_titulo.config(
             text='CONSULTA DE VENCIMIENTOS',
-            font=('century gothic',20,'bold'),
-            background="#EDE2E0",
-            foreground='#C18484'
+            font=ConfigView.fnt['titmodulo'],
+            background=ConfigView.clr['soft'],
+            foreground=ConfigView.clr['hard']
         )
         self.label_titulo.place(relx=0.5, rely=0.42, anchor='center')
 
         self.label_codigo = Label(self.frame_busqueda)
         self.label_codigo.config(
             text='Código',
-            font=('century gothic',14),
-            background="#EDE2E0"
+            font=ConfigView.fnt['text14'],
+            background=ConfigView.clr['soft']
         )
         self.label_codigo.place(relx=0.05, rely=0.25, anchor='center')
         
         self.label_desde = Label(self.frame_busqueda)
         self.label_desde.config(
             text='Desde:',
-            font=('century gothic',14),
-            background="#EDE2E0"
+            font=ConfigView.fnt['text14'],
+            background=ConfigView.clr['soft']
         )
         self.label_desde.place(relx=0.32, rely=0.2, anchor='center')
 
         self.label_hasta = Label(self.frame_busqueda)
         self.label_hasta.config(
             text='Hasta:',
-            font=('century gothic',14),
-            background="#EDE2E0"
+            font=ConfigView.fnt['text14'],
+            background=ConfigView.clr['soft']
         )
         self.label_hasta.place(relx=0.32, rely=0.7, anchor='center')
 
@@ -704,13 +721,13 @@ class Vencimientos:
         #Entries
         self.entry_codigo = Entry(self.frame_busqueda)
         self.entry_codigo.config(
-            font=('century gothic',12), width=20, bd=1, relief='solid'
+            font=ConfigView.fnt['text12'], width=20, bd=1, relief='solid'
         )
         self.entry_codigo.place(relx=0.18, rely=0.25, anchor='center')
 
         self.entry_desde = DateEntry(
             self.frame_busqueda,
-            font=('century gothic',12),
+            font=ConfigView.fnt['text12'],
             width=20,
             date_pattern="dd-mm-yyyy"
         )
@@ -718,7 +735,7 @@ class Vencimientos:
 
         self.entry_hasta = DateEntry(
             self.frame_busqueda,
-            font=('century gothic',12),
+            font=ConfigView.fnt['text12'],
             width=20,
             date_pattern="dd-mm-yyyy"
         )
@@ -728,9 +745,9 @@ class Vencimientos:
         self.boton_buscar = Button(self.frame_busqueda)
         self.boton_buscar.config(
             text='Buscar',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=140,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['consultaventas'],
@@ -742,9 +759,9 @@ class Vencimientos:
         self.boton_vencido = Button(self.frame_busqueda)
         self.boton_vencido.config(
             text='Vencidos',
-            font=('century gothic',14,'bold'),
+            font=ConfigView.fnt['text14-b'],
             width=140,
-            background='#D3B9B4',
+            background=ConfigView.clr['medium'],
             bd=2,
             relief='groove',
             image=self.img['vencimientos'],
@@ -762,9 +779,9 @@ class Vencimientos:
         
         self.style = ttk.Style(self.frame_treeview)
         self.style.configure(
-            "Treeview.Heading", font=('century gothic',12,'bold')
+            "Treeview.Heading", font=ConfigView.fnt['text12-b']
         )
-        self.style.configure("Treeview",font=('century gothic',10))
+        self.style.configure("Treeview",font=ConfigView.fnt['text10'])
 
         self.tv_vencimientos.column("#0", width=150, anchor='center')
         self.tv_vencimientos.column("col1", width=550, anchor='center')
