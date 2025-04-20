@@ -7,6 +7,7 @@ from reportlab.pdfgen import canvas
 from reportlab.platypus import Table, TableStyle
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
+from vista.view_config import ConfigView
 from vista.view_ventas import VentanaVentas
 from vista.view_ventas import ConsultaVentas
 from vista.view_ventas import DetalleVentas
@@ -1039,19 +1040,6 @@ class ControladorVentas:
     
     
     ########################### GENERACION DE FACTURAS ######################
-    def rutas(self, *paths):
-        
-        ''' Metodo para asignacion de rutas correctamente a la hora de
-            realizar el ejecutable con PyInstaller
-        '''
-        
-        if getattr(sys, 'frozen', False):
-            ruta_base = sys._MEIPASS
-        else:
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
-    
-    
     def generar_factura_pdf(
         self,
         cliente,
@@ -1060,9 +1048,13 @@ class ControladorVentas:
         nro_factura,
         fecha,interes
     ):
-        
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        ruta_facturas = os.path.join(base_dir,"../Facturas")
+        if getattr(sys, 'frozen', False):
+            base_dir = sys._MEIPASS
+        else:
+            base_dir = os.path.dirname(os.path.abspath(__file__))
+
+        ruta_facturas = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../Facturas")
+        ruta_facturas = os.path.abspath(ruta_facturas)
         if not os.path.exists(ruta_facturas):
             os.makedirs(ruta_facturas)
             
@@ -1082,7 +1074,9 @@ class ControladorVentas:
         estilo_normal = styles['Normal']
 
         # Introduccion del logo de la empresa en esquina superior
-        ruta = self.rutas('../imagenes','logo_sin_fondo.png')
+        ruta = ConfigView.formateo_imagen(
+            img='logo_sin_fondo.png', x=None, y=None
+        )
         ruta_logo = ruta
         ancho_logo = 200
         alto_logo = 200

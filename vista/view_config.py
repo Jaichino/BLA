@@ -12,7 +12,6 @@ class ConfigView():
     ##########################################################################
     # Imagenes de la aplicacion
     ##########################################################################
-
     img = {
         'admin':'administrador.png',
         'acarrito' : 'agregar_carrito.png',
@@ -83,9 +82,13 @@ class ConfigView():
 
         if getattr(sys, 'frozen', False):
             ruta_base = sys._MEIPASS
+
         else:
             ruta_base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(ruta_base, *paths)
+            ruta_base = os.path.abspath(os.path.join(ruta_base, ".."))
+        
+        return os.path.join(ruta_base,"imagenes", *paths)
+        
 
 
     ##########################################################################
@@ -98,7 +101,7 @@ class ConfigView():
         ''' Método para el formateo de imagenes.
         '''
 
-        imagen = ConfigView.rutas('../imagenes', img)
+        imagen = ConfigView.rutas(img)
 
         if x is None and y is None:
             return imagen

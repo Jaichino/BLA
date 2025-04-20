@@ -41,7 +41,7 @@ class MenuPrincipal:
         self.img['reportes'] = ConfigView.formateo_imagen(
             ConfigView.img['reportes'], 80, 80
         )
-        self.img['administrador'] = ConfigView.formateo_imagen(
+        self.img['admin'] = ConfigView.formateo_imagen(
             ConfigView.img['admin'], 40, 40
         )
         self.img['logo'] = ConfigView.formateo_imagen(
@@ -150,6 +150,6 @@ class MenuPrincipal:
             width=50, 
             height=50, 
             borderwidth=0,
-            image=self.img['administrador']
+            image=self.img['admin']
         )
         self.boton_administrador.place(relx=0.93, rely=0.865)
